@@ -1,26 +1,30 @@
-import 'react-app-polyfill/ie11'; // For IE 11 support
-import 'react-app-polyfill/stable';
-import 'core-js';
-import './polyfill'
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import "react-app-polyfill/ie11"; // For IE 11 support
+import "react-app-polyfill/stable";
+import "core-js";
+import "./polyfill";
+import React from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 
-import { icons } from './assets/icons'
+import { icons } from "./assets/icons";
 
-import { Provider } from 'react-redux'
-import store from './store'
+import { Provider } from "react-redux";
+import store from "./store/index";
 
-React.icons = icons
+axios.defaults.withCredentials = false;
+axios.defaults.baseURL = "http://192.241.131.11:11000/api/v1";
+
+React.icons = icons;
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App/>
+      <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

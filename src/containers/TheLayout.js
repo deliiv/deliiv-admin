@@ -1,34 +1,28 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import classNames from 'classnames'
-import {
-  TheContent,
-  TheSidebar,
-  TheAside,
-  TheFooter,
-  TheHeader
-} from './index'
+import React from "react";
+import { useSelector } from "react-redux";
+import classNames from "classnames";
+import { TheContent, TheSidebar, TheFooter, TheHeader } from "./index";
 
 const TheLayout = () => {
-  const darkMode = useSelector(state => state.darkMode)
+  const darkMode = useSelector((state) => state.UI.darkMode);
   const classes = classNames(
-    'c-app c-default-layout',
-    darkMode && 'c-dark-theme'
-  )
+    "c-app c-default-layout",
+    darkMode && "c-dark-theme"
+  );
 
   return (
     <div className={classes}>
-      <TheSidebar/>
-      <TheAside/>
+      <TheSidebar />
+      {/* <TheAside/> */}
       <div className="c-wrapper">
-        <TheHeader/>
+        <TheHeader />
         <div className="c-body">
-          <TheContent/>
+          <TheContent />
         </div>
-        <TheFooter/>
+        <TheFooter />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TheLayout
+export default TheLayout;

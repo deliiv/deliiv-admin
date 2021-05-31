@@ -1,10 +1,10 @@
 // todo: disabled button styles
 button {
   &:disabled {
-    cursor: default;
+    cursor: not-allowed;
   }
   &.disabled {
-    cursor: default;
+    cursor: not-allowed;
   }
 }
 
@@ -19,4 +19,11 @@ button {
   .c-icon {
     margin-top: 0 !important;
   }
+}
+
+.c-dark-theme .c-sidebar {
+  background-color: #65589c;
+}
+.c-sidebar {
+  background-color: #65589c;
 }

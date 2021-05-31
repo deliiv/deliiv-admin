@@ -12,9 +12,11 @@ import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { getBadge } from "../../utils/orderStatusColor";
 
-const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown"));
+const WidgetsDropdown = lazy(() =>
+  import("../../views/widgets/WidgetsDropdown")
+);
 
-const Dashboard = () => {
+const Orders = () => {
   const orders = useSelector((state) => state.orders.orders);
   const totalOrders = useSelector((state) => state.orders.totalOrders);
 
@@ -117,4 +119,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Orders;
