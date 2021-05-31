@@ -5,6 +5,8 @@ import "./scss/style.scss";
 
 import { useDispatch } from "react-redux";
 import { fetchOrders } from "./store/order-actions";
+import { fetchCustomers } from "./store/customer-actions";
+import { fetchServicemen } from "./store/serviceman-actions";
 
 const loading = (
   <div className="pt-3 text-center">
@@ -27,8 +29,15 @@ const Page500 = React.lazy(() => import("./views/pages/page500/Page500"));
 const App = () => {
   const dispatch = useDispatch();
 
+  //Initial API calls
   React.useEffect(() => {
     dispatch(fetchOrders());
+  }, []);
+  React.useEffect(() => {
+    dispatch(fetchCustomers());
+  }, []);
+  React.useEffect(() => {
+    dispatch(fetchServicemen());
   }, []);
 
   return (

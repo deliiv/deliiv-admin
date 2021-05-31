@@ -14,9 +14,12 @@ import { getBadge } from "../../utils/orderStatusColor";
 
 const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown"));
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const orders = useSelector((state) => state.orders.orders);
   const totalOrders = useSelector((state) => state.orders.totalOrders);
+  const totalServicemen = useSelector(
+    (state) => state.servicemen.totalServicemen
+  );
 
   const fields = [
     { key: "order_id", label: "Order Id" },
@@ -49,8 +52,8 @@ const Dashboard = () => {
       title: "All Orders",
       totalAmount: totalOrders.toString() || "0",
     },
-    { title: "New Order", totalAmount: "450" },
-    { title: "Service man", totalAmount: "450" },
+    { title: "New Order", totalAmount: "unavailable" },
+    { title: "Service man", totalAmount: totalServicemen.toString() || "0" },
   ];
 
   return (
@@ -66,8 +69,8 @@ const Dashboard = () => {
                   fields={fields}
                   items-per-page-select
                   items-per-page="5"
+                  columnFilter
                   hover
-                  sorter
                   pagination
                   table-filter
                   cleaner
@@ -101,7 +104,17 @@ const Dashboard = () => {
                     ),
                     view: (order) => (
                       <td>
-                        <CButton size="sm" color="info" className="ml-3">
+                        <CButton
+                          size="sm"
+                          color="info"
+                          className="ml-3"
+                          onClick={() =>
+                            props.history.push({
+                              pathname: `orders/order`,
+                              state: order._id,
+                            })
+                          }
+                        >
                           View
                         </CButton>
                       </td>

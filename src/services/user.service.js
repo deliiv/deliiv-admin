@@ -16,11 +16,11 @@ class UserService {
     });
   }
 
-  async getBrands() {
+  async getSingleOrder(id) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get("/brand/fetchAllBrands/", config)
+        .get(`/order/${id}`, config)
         .then((response) => {
           resolve(response);
         })
@@ -30,11 +30,11 @@ class UserService {
     });
   }
 
-  async getProducts() {
+  async getCustomers() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get("/products/", config)
+        .get("/users/allUsers", config)
         .then((response) => {
           resolve(response);
         })
@@ -44,11 +44,25 @@ class UserService {
     });
   }
 
-  async getCategories() {
+  async getServicemen() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get("/get_categories/", config)
+        .get("/servicemen", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async getServiceman(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/servicemen/${id}`, config)
         .then((response) => {
           resolve(response);
         })

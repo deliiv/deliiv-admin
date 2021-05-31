@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   CHeader,
@@ -25,8 +25,8 @@ import { uiActions } from "../store/ui-slice";
 
 const TheHeader = () => {
   const dispatch = useDispatch();
-  const darkMode = useSelector((state) => state.UI.darkMode);
-  const sidebarShow = useSelector((state) => state.UI.sidebarShow);
+  //const darkMode = useSelector((state) => state.UI.darkMode);
+  //const sidebarShow = useSelector((state) => state.UI.sidebarShow);
 
   const toggleSidebar = () => {
     // const val = [true, "responsive"].includes(sidebarShow)

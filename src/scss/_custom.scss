@@ -8,3 +8,17 @@ button:disabled {
   justify-content: center;
   align-items: center;
 }
+
+.space-out {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 58%;
+  height: 5rem;
+  width: 5rem;
+}

@@ -8,6 +8,7 @@ import {
   CRow,
 } from "@coreui/react";
 import React, { lazy } from "react";
+import { useRouteMatch } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { getBadge } from "../../utils/orderStatusColor";
@@ -16,9 +17,15 @@ const WidgetsDropdown = lazy(() =>
   import("../../views/widgets/WidgetsDropdown")
 );
 
-const Orders = () => {
+const Orders = (props) => {
+  //route match
+  const { path, url } = useRouteMatch();
+
+  //Orders
   const orders = useSelector((state) => state.orders.orders);
   const totalOrders = useSelector((state) => state.orders.totalOrders);
+  const completedOrders = useSelector((state) => state.orders.completedOrders);
+  const pendingOrders = useSelector((state) => state.orders.pendingOrders);
 
   const fields = [
     { key: "order_id", label: "Order Id" },
@@ -51,8 +58,11 @@ const Orders = () => {
       title: "All Orders",
       totalAmount: totalOrders.toString() || "0",
     },
-    { title: "New Order", totalAmount: "450" },
-    { title: "Service man", totalAmount: "450" },
+    {
+      title: "Completed Orders",
+      totalAmount: completedOrders.toString() || "0",
+    },
+    { title: "Pending Orders", totalAmount: pendingOrders.toString() || "0" },
   ];
 
   return (
@@ -68,8 +78,8 @@ const Orders = () => {
                   fields={fields}
                   items-per-page-select
                   items-per-page="5"
+                  columnFilter
                   hover
-                  sorter
                   pagination
                   table-filter
                   cleaner
@@ -103,7 +113,17 @@ const Orders = () => {
                     ),
                     view: (order) => (
                       <td>
-                        <CButton size="sm" color="info" className="ml-3">
+                        <CButton
+                          size="sm"
+                          color="info"
+                          className="ml-3"
+                          onClick={() =>
+                            props.history.push({
+                              pathname: `${url}/order`,
+                              state: order._id,
+                            })
+                          }
+                        >
                           View
                         </CButton>
                       </td>

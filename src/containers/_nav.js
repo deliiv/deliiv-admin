@@ -14,14 +14,14 @@ const _nav = [
   {
     _tag: "CSidebarNavItem",
     name: "Customers",
-    to: "/theme/typography",
+    to: "/customers",
     icon: "cil-user",
   },
   {
     _tag: "CSidebarNavItem",
     name: "Servicemen",
-    to: "/theme/typography",
-    icon: "cil-user",
+    to: "/servicemen",
+    icon: "cil-puzzle",
   },
   {
     _tag: "CSidebarNavItem",
