@@ -83,7 +83,7 @@ const Login = (props) => {
   const backgroundColor = useSelector((state) => state.UI.backgroundColor);
 
   return (
-    <div className="c-app c-default-layout flex-row align-items-center">
+    <div className="c-app c-default-layout c-dark-theme flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md="8">
@@ -149,7 +149,7 @@ const Login = (props) => {
               </CCard>
               <CCard
                 className="text-white py-5 d-md-down-none"
-                style={{ width: "44%", backgroundColor: "#fff" }}
+                style={{ width: "44%" }}
               >
                 <CCardBody className="text-center center-flex">
                   <div>

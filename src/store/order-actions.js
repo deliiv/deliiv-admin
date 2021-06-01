@@ -12,6 +12,7 @@ export const fetchOrders = () => {
     try {
       const res = await fetchData();
       dispatch(orderActions.setOrders({ ordersData: res.data.orders }));
+      dispatch(orderActions.setNewOrders({ ordersData: res.data.orders }));
     } catch (error) {
       console.log(error);
     }

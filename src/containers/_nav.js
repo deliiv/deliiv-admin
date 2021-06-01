@@ -21,13 +21,13 @@ const _nav = [
     _tag: "CSidebarNavItem",
     name: "Servicemen",
     to: "/servicemen",
-    icon: "cil-puzzle",
+    icon: "cil-settings",
   },
   {
     _tag: "CSidebarNavItem",
-    name: "Admins",
-    to: "/theme/typography",
-    icon: "cil-user",
+    name: "Costing",
+    to: "/costing",
+    icon: "cil-money",
   },
 
   // {

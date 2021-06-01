@@ -5,6 +5,7 @@ const initialState = {
   totalOrders: 0,
   completedOrders: 0,
   pendingOrders: 0,
+  newOrders: null,
 };
 
 const orderSlice = createSlice({
@@ -20,6 +21,14 @@ const orderSlice = createSlice({
       state.pendingOrders = action.payload.ordersData.filter((order) => {
         return order.status === "pending";
       }).length;
+    },
+    setNewOrders: (state, action) => {
+      const start = new Date();
+      start.setHours(0, 0, 0);
+
+      state.newOrders = action.payload.ordersData.filter((order) => {
+        return order.date_created > start;
+      });
     },
   },
 });

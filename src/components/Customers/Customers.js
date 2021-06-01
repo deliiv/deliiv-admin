@@ -60,8 +60,14 @@ const Customers = (props) => {
                   items-per-page="5"
                   hover
                   pagination
+                  columnFilter
                   table-filter
                   cleaner
+                  overTableSlot={
+                    <div className="center-flex">
+                      <h3>Customers</h3>
+                    </div>
+                  }
                   scopedSlots={{
                     customername: (customer) => (
                       <td>

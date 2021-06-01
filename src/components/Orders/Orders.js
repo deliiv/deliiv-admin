@@ -82,6 +82,11 @@ const Orders = (props) => {
                   hover
                   pagination
                   table-filter
+                  overTableSlot={
+                    <div className="center-flex">
+                      <h3>Orders</h3>
+                    </div>
+                  }
                   cleaner
                   scopedSlots={{
                     order_id: (order) => <td>{order.order_id}</td>,

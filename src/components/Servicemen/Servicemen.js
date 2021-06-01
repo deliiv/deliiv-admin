@@ -72,6 +72,11 @@ const Servicemen = (props) => {
                   pagination
                   table-filter
                   cleaner
+                  overTableSlot={
+                    <div className="center-flex">
+                      <h3>Servicemen</h3>
+                    </div>
+                  }
                   scopedSlots={{
                     name: (serviceman) => (
                       <td>

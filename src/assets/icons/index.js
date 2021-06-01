@@ -125,6 +125,7 @@ import {
   cilWarning,
   cilAccountLogout,
   cilGift,
+  cilMoney,
 } from "@coreui/icons";
 
 export const icons = Object.assign(
@@ -228,6 +229,7 @@ export const icons = Object.assign(
     cilX,
     cilXCircle,
     cilWarning,
+    cilMoney,
   },
   {
     cifUs,

@@ -1,4 +1,6 @@
+import CIcon from "@coreui/icons-react";
 import {
+  CAlert,
   CBadge,
   CButton,
   CCard,
@@ -6,6 +8,7 @@ import {
   CCol,
   CDataTable,
   CRow,
+  CSpinner,
 } from "@coreui/react";
 import React, { lazy } from "react";
 import { useSelector } from "react-redux";
@@ -17,6 +20,7 @@ const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown"));
 const Dashboard = (props) => {
   const orders = useSelector((state) => state.orders.orders);
   const totalOrders = useSelector((state) => state.orders.totalOrders);
+  const newOrders = useSelector((state) => state.orders.newOrders);
   const totalServicemen = useSelector(
     (state) => state.servicemen.totalServicemen
   );
@@ -52,8 +56,11 @@ const Dashboard = (props) => {
       title: "All Orders",
       totalAmount: totalOrders.toString() || "0",
     },
-    { title: "New Order", totalAmount: "unavailable" },
-    { title: "Service man", totalAmount: totalServicemen.toString() || "0" },
+    {
+      title: "New Orders",
+      totalAmount: newOrders ? newOrders.length.toString() : "una",
+    },
+    { title: "Servicemen", totalAmount: totalServicemen.toString() || "0" },
   ];
 
   return (
@@ -65,15 +72,30 @@ const Dashboard = (props) => {
             <CCardBody>
               {orders && (
                 <CDataTable
-                  items={orders}
+                  items={newOrders}
                   fields={fields}
                   items-per-page-select
                   items-per-page="5"
                   columnFilter
+                  loadingSlot={<CSpinner size="lg" />}
+                  noItemsViewSlot={
+                    <div className="center-flex">
+                      <h1 className="text-center ">No New Orders</h1>
+                      <CIcon
+                        name="cil-ban"
+                        customClasses="ban-icon text-danger ml-2"
+                      />
+                    </div>
+                  }
+                  overTableSlot={
+                    <div className="center-flex">
+                      <h3>New Orders</h3>
+                    </div>
+                  }
                   hover
                   pagination
                   table-filter
-                  cleaner
+                  //cleaner
                   scopedSlots={{
                     order_id: (order) => <td>{order.order_id}</td>,
                     order_date: (order) => (
