@@ -1,5 +1,5 @@
 import React from "react";
-import UserService from "src/services/user.service";
+import UserService from "../../services/user.service";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
