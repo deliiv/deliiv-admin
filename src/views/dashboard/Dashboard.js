@@ -132,8 +132,7 @@ const Dashboard = (props) => {
                           className="ml-3"
                           onClick={() =>
                             props.history.push({
-                              pathname: `orders/order`,
-                              state: order._id,
+                              pathname: `/jobs/job-${order._id}`,
                             })
                           }
                         >

@@ -15,6 +15,13 @@ button:disabled {
   align-items: center;
 }
 
+.job-column {
+  display: inline-flex;
+  flex-direction: column;
+  width: 10rem;
+  gap: 0.5rem;
+}
+
 .loader {
   position: fixed;
   top: 50%;

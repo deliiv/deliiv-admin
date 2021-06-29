@@ -73,8 +73,7 @@ const Customers = (props) => {
                       <td>
                         <Link
                           to={{
-                            pathname: `${url}/customer`,
-                            state: customer._id,
+                            pathname: `${url}/customer-${customer._id}`,
                           }}
                         >
                           {customer ? customer.fullname : null}

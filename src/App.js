@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { fetchOrders } from "./store/order-actions";
 import { fetchCustomers } from "./store/customer-actions";
 import { fetchServicemen } from "./store/serviceman-actions";
+import { fetchServices } from "./store/service-actions";
 
 const loading = (
   <div className="pt-3 text-center">
@@ -32,13 +33,16 @@ const App = () => {
   //Initial API calls
   React.useEffect(() => {
     dispatch(fetchOrders());
-  }, []);
+  }, [dispatch]);
   React.useEffect(() => {
     dispatch(fetchCustomers());
-  }, []);
+  }, [dispatch]);
   React.useEffect(() => {
     dispatch(fetchServicemen());
-  }, []);
+  }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(fetchServices());
+  }, [dispatch]);
 
   return (
     <HashRouter>

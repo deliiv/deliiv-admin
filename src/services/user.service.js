@@ -44,6 +44,20 @@ class UserService {
     });
   }
 
+  async getSingleCustomer(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/users/userdetails/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
   async getServicemen() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -72,11 +86,11 @@ class UserService {
     });
   }
 
-  async getPromos() {
+  async getServices() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get("/promo/all", config)
+        .get("/service", config)
         .then((response) => {
           resolve(response);
         })
@@ -84,64 +98,6 @@ class UserService {
           reject(error);
         });
     });
-  }
-
-  async getAvailablePromos() {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get("/promo/getAllAvailablePromo", config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  async getPromoProducts(id) {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get(`/promo/getPromoProducts/${id}`, config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  async newProduct(data) {
-    const config = await authHeader();
-    return axios.post("/new_product", data, config);
-  }
-
-  async uploadProductImage(data) {
-    const config = await authHeader();
-    return axios.post("/new_product/updateImage", data, config);
-  }
-
-  async editProduct(data) {
-    const config = await authHeader();
-    return axios.post("/new_product/edit", data, config);
-  }
-
-  async markForPromo(data) {
-    const config = await authHeader();
-    return axios.post("/promo/markForPromo", data, config);
-  }
-
-  async deleteProductImage(data) {
-    const config = await authHeader();
-    return axios.post("/new_product/deleteImage", data, config);
-  }
-
-  async addProject(data) {
-    const config = await authHeader();
-    return axios.post("/project/", data, config);
   }
 }
 

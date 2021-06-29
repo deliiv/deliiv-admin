@@ -7,20 +7,26 @@ const _nav = [
   },
   {
     _tag: "CSidebarNavItem",
-    name: "Orders",
-    to: "/orders",
+    name: "Jobs",
+    to: "/jobs",
     icon: "cil-gift",
   },
   {
     _tag: "CSidebarNavItem",
     name: "Customers",
     to: "/customers",
-    icon: "cil-user",
+    icon: "cil-group",
   },
   {
     _tag: "CSidebarNavItem",
     name: "Servicemen",
     to: "/servicemen",
+    icon: "cil-user",
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Services",
+    to: "/services",
     icon: "cil-settings",
   },
   {

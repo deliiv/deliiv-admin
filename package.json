@@ -37,6 +37,8 @@
     "codemirror": "^5.58.3",
     "core-js": "^3.8.1",
     "enzyme": "^3.11.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-react": "^7.24.0",
     "formik": "^2.2.6",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
@@ -54,6 +56,7 @@
     "react-select": "^3.1.1",
     "react-text-mask-hoc": "^0.11.0",
     "redux": "~4.0.5",
+    "save-dev": "^0.0.1-security",
     "spinkit": "~2.0.1",
     "yup": "^0.32.8"
   },

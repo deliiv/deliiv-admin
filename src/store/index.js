@@ -3,6 +3,7 @@ import uiSlice from "./ui-slice";
 import orderSlice from "./order-slice";
 import customerSlice from "./customer-slice";
 import servicemanSlice from "./serviceman-slice";
+import serviceSlice from "./serviceSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     orders: orderSlice.reducer,
     customers: customerSlice.reducer,
     servicemen: servicemanSlice.reducer,
+    services: serviceSlice.reducer,
   },
 });
 

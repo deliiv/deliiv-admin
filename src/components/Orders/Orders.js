@@ -8,7 +8,7 @@ import {
   CRow,
 } from "@coreui/react";
 import React, { lazy } from "react";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { getBadge } from "../../utils/orderStatusColor";
@@ -29,7 +29,8 @@ const Orders = (props) => {
 
   const fields = [
     { key: "order_id", label: "Order Id" },
-    "order_date",
+    { key: "order_date", label: "Order Date and Time" },
+    { key: "service_details", label: "Service Type" },
     {
       key: "customername",
       _style: { minWidth: "15%" },
@@ -50,6 +51,7 @@ const Orders = (props) => {
       _style: { minWidth: "1%" },
     },
     { key: "status", _style: { minWidth: "10%" } },
+    { key: "assigned_serviceman", label: "Assigned Serviceman" },
     { key: "view", label: "" },
   ];
 
@@ -96,8 +98,19 @@ const Orders = (props) => {
                         {formatTime(order.date_created)}
                       </td>
                     ),
+                    service_details: (order) => (
+                      <td>{order.service_details.title}</td>
+                    ),
                     customername: (order) => (
-                      <td>{order.customer ? order.customer.fullname : null}</td>
+                      <td>
+                        <Link
+                          to={{
+                            pathname: `/customers/customer-${order.customer._id}`,
+                          }}
+                        >
+                          {order.customer ? order.customer.fullname : null}
+                        </Link>
+                      </td>
                     ),
                     customernumber: (order) => (
                       <td>{order.customer ? order.customer.phone : null}</td>
@@ -116,6 +129,9 @@ const Orders = (props) => {
                         </CBadge>
                       </td>
                     ),
+                    assigned_serviceman: (order) => (
+                      <td>{order.serviceman.name}</td>
+                    ),
                     view: (order) => (
                       <td>
                         <CButton
@@ -124,8 +140,7 @@ const Orders = (props) => {
                           className="ml-3"
                           onClick={() =>
                             props.history.push({
-                              pathname: `${url}/order`,
-                              state: order._id,
+                              pathname: `${url}/job-${order._id}`,
                             })
                           }
                         >
