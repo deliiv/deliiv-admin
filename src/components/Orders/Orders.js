@@ -140,7 +140,7 @@ const Orders = (props) => {
                           className="ml-3"
                           onClick={() =>
                             props.history.push({
-                              pathname: `${url}/job-${order._id}`,
+                              pathname: `${url}/order-${order._id}`,
                             })
                           }
                         >

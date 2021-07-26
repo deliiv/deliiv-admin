@@ -1,13 +1,21 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import WidgetsDropdown from "src/views/widgets/WidgetsDropdown";
-import { CCard, CCardBody, CCol, CDataTable, CRow } from "@coreui/react";
-import { Link, useRouteMatch } from "react-router-dom";
+import {
+  CCard,
+  CCardBody,
+  CCol,
+  CDataTable,
+  CRow,
+  CButton,
+} from "@coreui/react";
+import { Link, useRouteMatch, useHistory } from "react-router-dom";
 
 import { formateDate, formatTime } from "../../utils/formatDate";
 
 const Servicemen = (props) => {
   const { path, url } = useRouteMatch();
+  const history = useHistory();
 
   const servicemen = useSelector((state) => state.servicemen.servicemen);
   const totalServicemen = useSelector(
@@ -57,6 +65,14 @@ const Servicemen = (props) => {
 
   return (
     <>
+      <CButton
+        size="md"
+        color="primary"
+        className="mb-4 float-md-right"
+        onClick={() => history.push(`${url}/add`)}
+      >
+        Add +
+      </CButton>
       <WidgetsDropdown widgetList={widgetList} />
       <CRow>
         <CCol>

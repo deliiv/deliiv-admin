@@ -7,8 +7,8 @@ const _nav = [
   },
   {
     _tag: "CSidebarNavItem",
-    name: "Jobs",
-    to: "/jobs",
+    name: "Orders",
+    to: "/orders",
     icon: "cil-gift",
   },
   {

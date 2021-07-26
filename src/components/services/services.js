@@ -6,7 +6,6 @@ import { commaDelimitNumber } from "../../utils/formatPrice";
 
 const Services = (props) => {
   const services = useSelector((state) => state.services.services);
-  console.log(services);
 
   const fields = [
     {

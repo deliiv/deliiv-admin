@@ -12,6 +12,7 @@ export const fetchServices = () => {
     try {
       const res = await fetchData();
       dispatch(serviceActions.setServices({ serviceData: res.data.services }));
+      dispatch(serviceActions.setServiceObject({ service: res.data.services }));
     } catch (error) {
       console.log(error);
     }

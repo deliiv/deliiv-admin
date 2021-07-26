@@ -72,6 +72,20 @@ class UserService {
     });
   }
 
+  async addServicemen(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/servicemen/add", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
   async getServiceman(id) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
