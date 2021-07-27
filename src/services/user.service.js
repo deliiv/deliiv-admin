@@ -1,5 +1,6 @@
 import axios from "axios";
 import authHeader from "./auth.header";
+import qs from "qs";
 
 class UserService {
   async getOrders() {
@@ -90,7 +91,7 @@ class UserService {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get(`/servicemen/${id}`, config)
+        .get(`/servicemen/serviceman/${id}`, config)
         .then((response) => {
           resolve(response);
         })
@@ -105,6 +106,27 @@ class UserService {
     return new Promise((resolve, reject) => {
       axios
         .get("/service", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async addService(body) {
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+
+    let data = qs.stringify(body);
+
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/service/add", data, config)
         .then((response) => {
           resolve(response);
         })

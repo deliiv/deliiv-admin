@@ -13,6 +13,7 @@ const Serviceman = React.lazy(() =>
   import("./components/Servicemen/Serviceman")
 );
 const Services = React.lazy(() => import("./components/services/services"));
+const AddService = React.lazy(() => import("./components/services/addService"));
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -41,6 +42,12 @@ const routes = [
     path: "/services",
     name: "Services",
     component: Services,
+    exact: true,
+  },
+  {
+    path: "/services/add-service",
+    name: "Add Service",
+    component: AddService,
   },
 ];
 

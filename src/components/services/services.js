@@ -1,10 +1,20 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { CCard, CCardBody, CCol, CDataTable, CRow } from "@coreui/react";
+import {
+  CCard,
+  CCardBody,
+  CCol,
+  CDataTable,
+  CRow,
+  CButton,
+} from "@coreui/react";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { commaDelimitNumber } from "../../utils/formatPrice";
+import { useHistory, useRouteMatch } from "react-router";
 
 const Services = (props) => {
+  const history = useHistory();
+  const { url } = useRouteMatch();
   const services = useSelector((state) => state.services.services);
 
   const fields = [
@@ -31,7 +41,22 @@ const Services = (props) => {
 
   return (
     <>
-      <div>..Services</div>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <CButton
+          size="md"
+          color="primary"
+          className="mb-4"
+          onClick={() => history.push(`${url}/add-service`)}
+        >
+          Add +
+        </CButton>
+      </div>
       <CRow>
         <CCol>
           <CCard>

@@ -49,6 +49,7 @@ const AddServiceman = (props) => {
       .then(() => {
         setLoading(false);
         history.push("/servicemen");
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
