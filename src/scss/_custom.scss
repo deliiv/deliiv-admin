@@ -34,3 +34,13 @@ button:disabled {
   width: 2rem;
   height: 2rem;
 }
+
+.hoverline {
+  text-decoration: none;
+  text-underline-offset: 5px;
+  &:hover {
+    text-decoration: underline;
+    transition: all 0.8s;
+    text-underline-offset: 5px;
+  }
+}

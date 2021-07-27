@@ -135,6 +135,86 @@ class UserService {
         });
     });
   }
+
+  async updateService(body, id) {
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+
+    let data = qs.stringify(body);
+
+    return new Promise((resolve, reject) => {
+      axios
+        .put(`/service/${id}`, data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async deleteService(id) {
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+
+    return new Promise((resolve, reject) => {
+      axios
+        .delete(`/service/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async getAllSubpartCategoryWithId(id) {
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/part/getAllSubpartCategory/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async addSubPartCategory(body) {
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+
+    let data = qs.stringify(body);
+
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/part/addSubpartCategory", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }
 
 export default new UserService();
