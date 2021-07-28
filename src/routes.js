@@ -35,7 +35,7 @@ const routes = [
     exact: true,
   },
   {
-    path: "/servicemen/serviceman",
+    path: "/servicemen/serviceman-:id",
     name: "Serviceman",
     component: Serviceman,
   },

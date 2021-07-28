@@ -38,7 +38,7 @@ const SubPartCategories = (props) => {
     },
     {
       key: "sub_service",
-      label: "Sub Parts",
+      label: "Add Part",
       _style: { minWidth: "1%" },
     },
     {
@@ -72,7 +72,7 @@ const SubPartCategories = (props) => {
           className="mb-4"
           onClick={() => setSubPartModal(true)}
         >
-          Add +
+          Add SubPart+
         </CButton>
       </div>
       <CRow>

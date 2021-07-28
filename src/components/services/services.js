@@ -69,7 +69,7 @@ const Services = (props) => {
           className="mb-4"
           onClick={() => history.push(`${url}/add-service`)}
         >
-          Add +
+          Add Service+
         </CButton>
       </div>
       <CRow>

@@ -98,8 +98,7 @@ const Servicemen = (props) => {
                       <td>
                         <Link
                           to={{
-                            pathname: `${url}/serviceman`,
-                            state: serviceman._id,
+                            pathname: `${url}/serviceman-${serviceman._id}`,
                           }}
                         >
                           {serviceman ? serviceman.name : null}

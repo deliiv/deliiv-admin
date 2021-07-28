@@ -115,7 +115,7 @@ const UpdateService = (props) => {
                   </span>
                 )}
                 <span className={`${loading && "text-primary"}`}>
-                  Update Serviceman
+                  Update Service
                 </span>
               </CButton>
             </CCardBody>

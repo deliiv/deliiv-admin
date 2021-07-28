@@ -44,7 +44,12 @@ const AddSubPartCategory = (props) => {
   return (
     <>
       <CCardBody>
-        <form onSubmit={submitForm}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            submitForm();
+          }}
+        >
           <CCol sm="12">
             <CFormGroup>
               <CLabel>Title</CLabel>
