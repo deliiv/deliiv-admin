@@ -6,35 +6,39 @@ import {
   CDataTable,
   CButton,
   CModal,
+  CSpinner,
 } from "@coreui/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, Route, useRouteMatch, useHistory } from "react-router";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 import userService from "src/services/user.service";
-import { formateDate, formatTime } from "src/utils/formatDate";
 import AddSubPartCategory from "./addSubPartCategory";
+import Parts from "./parts";
 
 const SubPartCategories = (props) => {
+  const [loading, setLoading] = useState(false);
+  const backgroundColor = useSelector((state) => state.UI.backgroundColor);
   const [subParts, setSubParts] = useState("");
   const [subPartModal, setSubPartModal] = useState(false);
   const { id } = useParams();
+  const { path, url } = useRouteMatch();
   useEffect(() => {
+    setLoading(true);
     userService
       .getAllSubpartCategoryWithId(id)
       .then((res) => {
         setSubParts(res.data.sub_part_category);
+        setLoading(false);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [id]);
 
   const fields = [
     {
       key: "title",
-      _style: { minWidth: "15%" },
+      _style: { minWidth: "15%", textAlign: "center" },
       label: "Part",
-    },
-    {
-      key: "date_created",
-      _style: { minWidth: "1%" },
     },
   ];
 
@@ -49,26 +53,41 @@ const SubPartCategories = (props) => {
       >
         <AddSubPartCategory id={id} />
       </CModal>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
-      >
-        <CButton
-          size="md"
-          color="primary"
-          className="mb-4"
-          onClick={() => setSubPartModal(true)}
-        >
-          Add SubPart+
-        </CButton>
-      </div>
       <CRow>
-        <CCol>
-          <CCard>
-            <CCardBody>
+        <CCol sm="4.5">
+          <CCard style={{ position: "relative" }}>
+            {loading && (
+              <CSpinner
+                className="loader"
+                style={{
+                  position: "absolute",
+                  height: "3.5rem",
+                  width: "3.5rem",
+                }}
+                size="sm"
+              />
+            )}
+            <CCardBody style={{ position: "relative" }}>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  position: "absolute",
+                  top: ".5rem",
+                  right: "1rem",
+                  zIndex: "200",
+                }}
+              >
+                <CButton
+                  size="md"
+                  color="primary"
+                  className="mb-4"
+                  onClick={() => setSubPartModal(true)}
+                >
+                  Add SubPart+
+                </CButton>
+              </div>
               {subParts && (
                 <CDataTable
                   items={subParts}
@@ -81,14 +100,32 @@ const SubPartCategories = (props) => {
                   cleaner
                   overTableSlot={
                     <div className="center-flex">
-                      <h3>Sub Parts</h3>
+                      <h3>SubPart Categories</h3>
                     </div>
                   }
                   scopedSlots={{
-                    date_created: (service) => (
-                      <td>
-                        {formateDate(service.date_created)}{" "}
-                        {formatTime(service.date_created)}
+                    title: (service) => (
+                      <td
+                        style={{
+                          textAlign: "center",
+                        }}
+                      >
+                        <NavLink
+                          to={`${url}/parts-${service._id}`}
+                          style={{
+                            border: `1px  solid ${backgroundColor}`,
+                            padding: ".35rem 1rem",
+                            borderRadius: "7.5px",
+                            width: "100%",
+                            display: "inline-block",
+                          }}
+                          activeStyle={{
+                            color: "white",
+                            backgroundColor: `${backgroundColor}`,
+                          }}
+                        >
+                          {service.title}
+                        </NavLink>
                       </td>
                     ),
                   }}
@@ -96,6 +133,11 @@ const SubPartCategories = (props) => {
               )}
             </CCardBody>
           </CCard>
+        </CCol>
+        <CCol>
+          <Route path={`${path}/parts-:partsId`}>
+            <Parts />
+          </Route>
         </CCol>
       </CRow>
     </>

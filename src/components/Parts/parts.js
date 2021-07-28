@@ -1,48 +1,93 @@
-import React from "react";
-import { useSelector } from "react-redux";
 import {
+  CRow,
+  CCol,
   CCard,
   CCardBody,
-  CCol,
   CDataTable,
-  CRow,
   CButton,
+  CSpinner,
   CModal,
 } from "@coreui/react";
-import { formateDate, formatTime } from "../../utils/formatDate";
-import { commaDelimitNumber } from "../../utils/formatPrice";
-import { useHistory, useRouteMatch } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import userService from "src/services/user.service";
+import { commaDelimitNumber } from "src/utils/formatPrice";
+import AddPart from "./addPart";
 
 const Parts = (props) => {
-  const history = useHistory();
-  const { url } = useRouteMatch();
-  const parts = useSelector((state) => state.services.parts);
-  const [modalId, setModalId] = useState("");
-  //console.log(parts);
+  const [loading, setLoading] = useState(false);
+  const [partModal, setPartModal] = useState(false);
+  const [parts, setParts] = useState("");
+  const { partsId } = useParams();
+
+  useEffect(() => {
+    setLoading(true);
+    userService
+      .getParts(partsId)
+      .then((res) => {
+        setParts(res.data.part);
+        setLoading(false);
+      })
+      .catch((error) => console.log(error));
+  }, [partsId]);
 
   const fields = [
     {
-      key: "name",
+      key: "title",
       _style: { minWidth: "15%" },
       label: "Part",
     },
     {
-      key: "date_created",
-      _style: { minWidth: "1%" },
+      key: "price",
+      label: "Fees",
     },
     {
-      key: "sub_service",
-      label: "Sub Parts",
-      _style: { minWidth: "1%" },
+      key: "view",
+      label: "Actions",
+      _style: { minWidth: "1%", textAlign: "center" },
     },
   ];
 
   return (
     <>
-      <CRow>
-        <CCol>
+      <CModal
+        show={partModal}
+        backdrop
+        centered
+        fade
+        onClosed={() => setPartModal(false)}
+      >
+        <AddPart id={partsId} />
+      </CModal>
+      <CRow style={{ position: "relative" }}>
+        {loading && (
+          <CSpinner
+            className="loader"
+            style={{ position: "absolute", height: "3.5rem", width: "3.5rem" }}
+            size="sm"
+          />
+        )}
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "flex-end",
+            position: "absolute",
+            top: "1rem",
+            right: "2rem",
+            zIndex: "200",
+          }}
+        >
+          <CButton
+            size="md"
+            color="success"
+            className="mb-4"
+            onClick={() => setPartModal(true)}
+          >
+            Add Part+
+          </CButton>
+        </div>
+        <CCol sm="12">
           <CCard>
             <CCardBody>
               {parts && (
@@ -61,24 +106,30 @@ const Parts = (props) => {
                     </div>
                   }
                   scopedSlots={{
-                    name: (service) => <td>{service.title}</td>,
-                    date_created: (service) => (
-                      <td>
-                        {formateDate(service.date_created)}{" "}
-                        {formatTime(service.date_created)}
-                      </td>
+                    price: (part) => (
+                      <td>&#x20A6; {commaDelimitNumber(part.price)}</td>
                     ),
-                    sub_service: (service) => (
-                      <td>
+                    view: (service) => (
+                      <td
+                        style={{
+                          textAlign: "center",
+                        }}
+                      >
                         <CButton
-                          color="primary"
-                          variant="ghost"
+                          color="warning"
+                          variant="outline"
                           size="sm"
-                          onClick={() =>
-                            history.push(`${url}/subpart-${service._id}`)
-                          }
+                          className="mx-1"
                         >
-                          View
+                          edit
+                        </CButton>
+                        <CButton
+                          color="danger"
+                          variant="outline"
+                          size="sm"
+                          className="mx-1"
+                        >
+                          delete
                         </CButton>
                       </td>
                     ),

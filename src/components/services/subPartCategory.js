@@ -91,7 +91,7 @@ const SubPartCategories = (props) => {
                   cleaner
                   overTableSlot={
                     <div className="center-flex">
-                      <h3>Sub Parts</h3>
+                      <h3>SubPart Categories</h3>
                     </div>
                   }
                   scopedSlots={{

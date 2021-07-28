@@ -31,8 +31,8 @@ const _nav = [
   },
   {
     _tag: "CSidebarNavItem",
-    name: "Parts",
-    to: "/parts",
+    name: "Parts Categories",
+    to: "/parts-category",
     icon: "cil-view-column",
   },
   {

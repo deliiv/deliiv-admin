@@ -18,7 +18,9 @@ const UpdateService = React.lazy(() =>
   import("./components/services/updateService")
 );
 const SubParts = React.lazy(() => import("./components/Parts/subPartCategory"));
-const Parts = React.lazy(() => import("./components/Parts/parts"));
+const PartsCategory = React.lazy(() =>
+  import("./components/Parts/partsCategory")
+);
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -65,15 +67,8 @@ const routes = [
     component: SubParts,
   },
   {
-    path: "/parts",
-    name: "Parts",
-    component: Parts,
-    exact: true,
-  },
-  {
-    path: "/parts/subpart-:id",
-    name: "Sub-Part Categories",
-    component: SubParts,
+    path: "/parts-category",
+    component: PartsCategory,
   },
 ];
 

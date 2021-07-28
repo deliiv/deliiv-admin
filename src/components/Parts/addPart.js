@@ -12,12 +12,13 @@ import checkEmptyProperties from "src/utils/checkEmptyProperties";
 import userService from "src/services/user.service";
 import { useParams } from "react-router";
 
-const AddSubPartCategory = (props) => {
+const AddPart = (props) => {
   const [loading, setLoading] = React.useState(false);
-  const { id } = useParams();
+  const { partsId } = useParams();
   const [state, setState] = useState({
     title: "",
-    partCategory: props.id,
+    price: "",
+    subpart_category: props.id,
   });
 
   const inputChangeHandler = (event) => {
@@ -34,16 +35,18 @@ const AddSubPartCategory = (props) => {
     setState((prevState) => {
       return {
         ...prevState,
-        partCategory: id,
+        subpart_category: partsId,
+        price: "",
         title: "",
       };
     });
-  }, [id]);
+  }, [partsId]);
 
   const submitForm = () => {
     setLoading(true);
+    const data = { ...state, price: +state.price };
     userService
-      .addSubPartCategory(state)
+      .addPart(data)
       .then(() => {
         setLoading(false);
         window.location.reload();
@@ -75,10 +78,23 @@ const AddSubPartCategory = (props) => {
             </CFormGroup>
           </CCol>
 
+          <CCol sm="12">
+            <CFormGroup>
+              <CLabel>Price</CLabel>
+              <CInput
+                type="number"
+                size="md"
+                value={state.price}
+                name="price"
+                onChange={inputChangeHandler}
+              />
+            </CFormGroup>
+          </CCol>
+
           <CButton
             style={{ position: "relative" }}
             size="md"
-            color="primary"
+            color="success"
             className="mb-4 mr-3 float-right"
             disabled={checkEmptyProperties(state)}
             onClick={submitForm}
@@ -95,9 +111,7 @@ const AddSubPartCategory = (props) => {
                 <CSpinner size="sm" />
               </span>
             )}
-            <span className={`${loading && "text-primary"}`}>
-              Add Sub-Part Category
-            </span>
+            <span className={`${loading && "text-primary"}`}>Add Part</span>
           </CButton>
         </form>
       </CCardBody>
@@ -105,4 +119,4 @@ const AddSubPartCategory = (props) => {
   );
 };
 
-export default AddSubPartCategory;
+export default AddPart;

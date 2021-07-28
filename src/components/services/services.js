@@ -33,7 +33,7 @@ const Services = (props) => {
     userService
       .addPartCategory(data)
       .then(() => {
-        history.push("/parts");
+        history.push("/parts-category");
         setLoading(false);
         window.location.reload();
       })

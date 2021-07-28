@@ -22,7 +22,7 @@ export const fetchServices = () => {
 export const fetchParts = () => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const response = await UserService.getParts();
+      const response = await UserService.getPartsCategory();
 
       return response;
     };
