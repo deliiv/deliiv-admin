@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { fetchOrders } from "./store/order-actions";
 import { fetchCustomers } from "./store/customer-actions";
 import { fetchServicemen } from "./store/serviceman-actions";
-import { fetchServices } from "./store/service-actions";
+import { fetchServices, fetchParts } from "./store/service-actions";
 
 const loading = (
   <div className="pt-3 text-center">
@@ -42,6 +42,9 @@ const App = () => {
   }, [dispatch]);
   React.useEffect(() => {
     dispatch(fetchServices());
+  }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(fetchParts());
   }, [dispatch]);
 
   return (

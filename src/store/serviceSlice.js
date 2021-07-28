@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   services: null,
+  parts: null,
   totalServices: 0,
   serviceNameToIdLink: null,
 };
@@ -21,6 +22,9 @@ const serviceSlice = createSlice({
         hth[services[i].title] = services[i]._id;
       }
       state.serviceNameToIdLink = hth;
+    },
+    setParts: (state, action) => {
+      state.parts = action.payload.partsData;
     },
   },
 });

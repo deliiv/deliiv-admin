@@ -25,9 +25,10 @@ button:disabled {
 .loader {
   position: fixed;
   top: 50%;
-  left: 58%;
+  left: 50%;
   height: 5rem;
   width: 5rem;
+  z-index: 500;
 }
 
 .ban-icon {

@@ -176,6 +176,20 @@ class UserService {
     });
   }
 
+  async getParts() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/part/getAllPartCategory", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
   async getAllSubpartCategoryWithId(id) {
     const config = {
       headers: {
@@ -207,6 +221,27 @@ class UserService {
     return new Promise((resolve, reject) => {
       axios
         .post("/part/addSubpartCategory", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async addPartCategory(body) {
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+
+    let data = qs.stringify(body);
+
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/part/addPartCategory", data, config)
         .then((response) => {
           resolve(response);
         })

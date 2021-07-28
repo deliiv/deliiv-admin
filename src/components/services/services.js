@@ -8,6 +8,7 @@ import {
   CRow,
   CButton,
   CModal,
+  CSpinner,
 } from "@coreui/react";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { commaDelimitNumber } from "../../utils/formatPrice";
@@ -20,7 +21,24 @@ const Services = (props) => {
   const { url } = useRouteMatch();
   const services = useSelector((state) => state.services.services);
   const [modalId, setModalId] = useState("");
+  const [loading, setLoading] = useState(false);
   //console.log(services);
+
+  const createPartCategory = (title, service_id) => {
+    setLoading(true);
+    const data = {
+      title: title,
+      service: service_id,
+    };
+    userService
+      .addPartCategory(data)
+      .then(() => {
+        history.push("/parts");
+        setLoading(false);
+        window.location.reload();
+      })
+      .catch((error) => console.log(error));
+  };
 
   const fields = [
     {
@@ -43,8 +61,8 @@ const Services = (props) => {
       _style: { minWidth: "1%" },
     },
     {
-      key: "sub_service",
-      label: "Sub Parts",
+      key: "part_category",
+      label: "Create Part Category",
       _style: { minWidth: "1%" },
     },
     {
@@ -56,6 +74,7 @@ const Services = (props) => {
 
   return (
     <>
+      {loading && <CSpinner className="loader" size="lg" />}
       <div
         style={{
           width: "100%",
@@ -103,17 +122,18 @@ const Services = (props) => {
                         {formatTime(service.date_created)}
                       </td>
                     ),
-                    sub_service: (service) => (
+                    part_category: (part) => (
                       <td>
                         <CButton
                           color="primary"
-                          variant="ghost"
+                          variant="outline"
                           size="sm"
+                          className="mx-1"
                           onClick={() =>
-                            history.push(`${url}/subpart-${service._id}`)
+                            createPartCategory(part.title, part._id)
                           }
                         >
-                          View
+                          Create Part Category
                         </CButton>
                       </td>
                     ),
