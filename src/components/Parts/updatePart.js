@@ -28,6 +28,16 @@ const UpdatePart = (props) => {
     });
   };
 
+  React.useEffect(() => {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        title: props.title,
+        price: props.price,
+      };
+    });
+  }, [props.title, props.price]);
+
   const submitForm = () => {
     setLoading(true);
     const data = { ...state, price: +state.price };

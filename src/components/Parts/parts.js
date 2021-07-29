@@ -8,6 +8,7 @@ import {
   CSpinner,
   CModal,
 } from "@coreui/react";
+import CIcon from "@coreui/icons-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import userService from "src/services/user.service";
@@ -151,22 +152,22 @@ const Parts = (props) => {
                           />
                         </CModal>
                         <CButton
-                          color="warning"
-                          variant="outline"
+                          color="info"
+                          variant="ghost"
                           size="sm"
                           className="mx-1"
                           onClick={() => updatePart(part._id)}
                         >
-                          edit
+                          <CIcon name="cilPencil" />
                         </CButton>
                         <CButton
                           color="danger"
-                          variant="outline"
+                          variant="ghost"
                           size="sm"
                           className="mx-1"
                           onClick={() => deletePart(part.title, part._id)}
                         >
-                          delete
+                          <CIcon name="cilTrash" />
                         </CButton>
                       </td>
                     ),
