@@ -285,6 +285,48 @@ class UserService {
         });
     });
   }
+
+  async updatePart(body, id) {
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+
+    let data = qs.stringify(body);
+
+    return new Promise((resolve, reject) => {
+      axios
+        .put(`/part/updatePart/${id}`, data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async deletePart(body, id) {
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+
+    let data = qs.stringify(body);
+
+    return new Promise((resolve, reject) => {
+      axios
+        .delete(`/part/getOne/${id}`, data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }
 
 export default new UserService();

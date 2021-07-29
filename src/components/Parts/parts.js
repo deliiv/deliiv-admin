@@ -13,10 +13,12 @@ import { useParams } from "react-router";
 import userService from "src/services/user.service";
 import { commaDelimitNumber } from "src/utils/formatPrice";
 import AddPart from "./addPart";
+import UpdatePart from "./updatePart";
 
 const Parts = (props) => {
   const [loading, setLoading] = useState(false);
   const [partModal, setPartModal] = useState(false);
+  const [updatepartModal, setUpdatePartModal] = useState("");
   const [parts, setParts] = useState("");
   const { partsId } = useParams();
 
@@ -30,6 +32,26 @@ const Parts = (props) => {
       })
       .catch((error) => console.log(error));
   }, [partsId]);
+
+  const updatePart = (id) => {
+    setUpdatePartModal(id);
+  };
+
+  const deletePart = (title, id) => {
+    setLoading(true);
+    const data = {
+      title: title,
+    };
+    userService
+      .deletePart(data, id)
+      .then(() => {
+        setLoading(false);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const fields = [
     {
@@ -109,17 +131,31 @@ const Parts = (props) => {
                     price: (part) => (
                       <td>&#x20A6; {commaDelimitNumber(part.price)}</td>
                     ),
-                    view: (service) => (
+                    view: (part) => (
                       <td
                         style={{
                           textAlign: "center",
                         }}
                       >
+                        <CModal
+                          show={updatepartModal === part._id}
+                          backdrop
+                          centered
+                          fade
+                          onClosed={() => setUpdatePartModal(false)}
+                        >
+                          <UpdatePart
+                            id={part._id}
+                            title={part.title}
+                            price={part.price}
+                          />
+                        </CModal>
                         <CButton
                           color="warning"
                           variant="outline"
                           size="sm"
                           className="mx-1"
+                          onClick={() => updatePart(part._id)}
                         >
                           edit
                         </CButton>
@@ -128,6 +164,7 @@ const Parts = (props) => {
                           variant="outline"
                           size="sm"
                           className="mx-1"
+                          onClick={() => deletePart(part.title, part._id)}
                         >
                           delete
                         </CButton>
