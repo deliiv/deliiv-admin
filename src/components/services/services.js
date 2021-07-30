@@ -15,15 +15,15 @@ import { commaDelimitNumber } from "../../utils/formatPrice";
 import { useHistory, useRouteMatch } from "react-router";
 import { useState } from "react";
 import userService from "src/services/user.service";
+import { findArgInArray } from "src/utils/findArgInArray";
 
 const Services = (props) => {
   const history = useHistory();
   const { url } = useRouteMatch();
   const services = useSelector((state) => state.services.services);
+  const parts = useSelector((state) => state.services.parts);
   const [modalId, setModalId] = useState("");
   const [loading, setLoading] = useState(false);
-  //console.log(services);
-
   const createPartCategory = (title, service_id) => {
     setLoading(true);
     const data = {
@@ -91,126 +91,132 @@ const Services = (props) => {
           Add Service+
         </CButton>
       </div>
-      <CRow>
-        <CCol>
-          <CCard>
-            <CCardBody>
-              {services && (
-                <CDataTable
-                  items={services}
-                  fields={fields}
-                  items-per-page-select
-                  items-per-page="5"
-                  hover
-                  pagination
-                  table-filter
-                  cleaner
-                  overTableSlot={
-                    <div className="center-flex">
-                      <h3>Services</h3>
-                    </div>
-                  }
-                  scopedSlots={{
-                    name: (service) => <td>{service.title}</td>,
-                    tag: (service) => <td>{service.tag}</td>,
-                    price: (service) => (
-                      <td>&#x20A6;{commaDelimitNumber(service.price)}</td>
-                    ),
-                    date_created: (service) => (
-                      <td>
-                        {formateDate(service.date_created)}{" "}
-                        {formatTime(service.date_created)}
-                      </td>
-                    ),
-                    part_category: (part) => (
-                      <td>
-                        <CButton
-                          color="primary"
-                          variant="outline"
-                          size="sm"
-                          className="mx-1"
-                          onClick={() =>
-                            createPartCategory(part.title, part._id)
-                          }
-                        >
-                          Create Part Category
-                        </CButton>
-                      </td>
-                    ),
-                    action: (service) => (
-                      <td>
-                        <CButton
-                          color="warning"
-                          variant="outline"
-                          size="sm"
-                          className="mx-1"
-                          onClick={() =>
-                            history.push({
-                              pathname: `${url}/update-${service._id}`,
-                              state: {
-                                title: service.title,
-                                tag: service.tag,
-                              },
-                            })
-                          }
-                        >
-                          edit
-                        </CButton>
-                        <CButton
-                          color="danger"
-                          variant="outline"
-                          size="sm"
-                          className="mx-1"
-                          onClick={() => setModalId(service._id)}
-                        >
-                          <CModal
-                            show={modalId === service._id}
-                            backdrop
-                            centered
-                            fade
-                            onClosed={() => setModalId("")}
+      {services && parts && (
+        <CRow>
+          <CCol>
+            <CCard>
+              <CCardBody>
+                {services && (
+                  <CDataTable
+                    items={services}
+                    fields={fields}
+                    items-per-page-select
+                    items-per-page="5"
+                    hover
+                    pagination
+                    table-filter
+                    cleaner
+                    overTableSlot={
+                      <div className="center-flex">
+                        <h3>Services</h3>
+                      </div>
+                    }
+                    scopedSlots={{
+                      name: (service) => <td>{service.title}</td>,
+                      tag: (service) => <td>{service.tag}</td>,
+                      price: (service) => (
+                        <td>&#x20A6;{commaDelimitNumber(service.price)}</td>
+                      ),
+                      date_created: (service) => (
+                        <td>
+                          {formateDate(service.date_created)}{" "}
+                          {formatTime(service.date_created)}
+                        </td>
+                      ),
+                      part_category: (part) => (
+                        <td>
+                          <CButton
+                            color="primary"
+                            variant="outline"
+                            size="sm"
+                            className="mx-1"
+                            onClick={() =>
+                              createPartCategory(part.title, part._id)
+                            }
+                            disabled={findArgInArray(
+                              parts.map((prt) => prt.title),
+                              part.title
+                            )}
                           >
-                            <CRow>
-                              <CCol>
-                                <div className="p-5">
-                                  Are you sure you want to delete{" "}
-                                  {service.title} service?
-                                  <span
-                                    className="text-primary px-3 hoverline"
-                                    onClick={() => {
-                                      userService
-                                        .deleteService(service._id)
-                                        .then(() => {
-                                          window.location.reload();
-                                        })
-                                        .catch((error) => {
-                                          console.log(error);
-                                        });
-                                    }}
-                                  >
-                                    Yes
-                                  </span>
-                                  {/* <span
+                            Create Part Category
+                          </CButton>
+                        </td>
+                      ),
+                      action: (service) => (
+                        <td>
+                          <CButton
+                            color="warning"
+                            variant="outline"
+                            size="sm"
+                            className="mx-1"
+                            onClick={() =>
+                              history.push({
+                                pathname: `${url}/update-${service._id}`,
+                                state: {
+                                  title: service.title,
+                                  tag: service.tag,
+                                },
+                              })
+                            }
+                          >
+                            edit
+                          </CButton>
+                          <CButton
+                            color="danger"
+                            variant="outline"
+                            size="sm"
+                            className="mx-1"
+                            onClick={() => setModalId(service._id)}
+                          >
+                            <CModal
+                              show={modalId === service._id}
+                              backdrop
+                              centered
+                              fade
+                              onClosed={() => setModalId("")}
+                            >
+                              <CRow>
+                                <CCol>
+                                  <div className="p-5">
+                                    Are you sure you want to delete{" "}
+                                    {service.title} service?
+                                    <span
+                                      className="text-primary px-3 hoverline"
+                                      onClick={() => {
+                                        userService
+                                          .deleteService(service._id)
+                                          .then(() => {
+                                            window.location.reload();
+                                          })
+                                          .catch((error) => {
+                                            console.log(error);
+                                          });
+                                      }}
+                                    >
+                                      Yes
+                                    </span>
+                                    {/* <span
                                     onClick={() => setModalId("jhjjjjj")}
                                     className="text-danger px-3 hoverline"
                                   >
                                     No
                                   </span> */}
-                                </div>
-                              </CCol>
-                            </CRow>
-                          </CModal>
-                          delete
-                        </CButton>
-                      </td>
-                    ),
-                  }}
-                />
-              )}
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
+                                  </div>
+                                </CCol>
+                              </CRow>
+                            </CModal>
+                            delete
+                          </CButton>
+                        </td>
+                      ),
+                    }}
+                  />
+                )}
+              </CCardBody>
+            </CCard>
+          </CCol>
+        </CRow>
+      )}
     </>
   );
 };
