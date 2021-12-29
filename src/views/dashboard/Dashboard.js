@@ -19,7 +19,9 @@ const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown"));
 
 const Dashboard = (props) => {
   const orders = useSelector((state) => state.orders.orders);
-  const totalOrders = useSelector((state) => state.orders.totalOrders);
+  const totalOrders = useSelector((state) => state.dashbord.totalOrders);
+  const totalUsers = useSelector((state) => state.dashbord.totalUsers);
+  const totalProducts = useSelector((state) => state.dashbord.totalProducts);
   const newOrders = useSelector((state) => state.orders.newOrders);
   const totalServicemen = useSelector(
     (state) => state.servicemen.totalServicemen
@@ -61,6 +63,8 @@ const Dashboard = (props) => {
       totalAmount: newOrders ? newOrders.length.toString() : "una",
     },
     { title: "Servicemen", totalAmount: totalServicemen.toString() || "0" },
+    { title: "Users", totalAmount: totalUsers.toString() || "0" },
+    { title: "Products", totalAmount: totalProducts.toString() || "0" },
   ];
 
   return (

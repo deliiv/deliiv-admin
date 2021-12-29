@@ -4,6 +4,12 @@ import orderSlice from "./order-slice";
 import customerSlice from "./customer-slice";
 import servicemanSlice from "./serviceman-slice";
 import serviceSlice from "./serviceSlice";
+import dashboardSlice from './dashboard-slice';
+import sellerSlice from './sellers-slice';
+import userSlice from './users-slice';
+import categorySlice from './category-slice';
+import serviceChargeSlice from './service-charge-slice';
+import regionSlice from './region-slice';
 
 const store = configureStore({
   reducer: {
@@ -12,7 +18,12 @@ const store = configureStore({
     customers: customerSlice.reducer,
     servicemen: servicemanSlice.reducer,
     services: serviceSlice.reducer,
+    dashbord: dashboardSlice.reducer,
+    seller: sellerSlice.reducer,
+    users: userSlice.reducer,
+    category: categorySlice.reducer,
+    servicecharge: serviceChargeSlice.reducer,
+    region: regionSlice.reducer,
   },
 });
-
 export default store;

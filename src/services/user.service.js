@@ -16,6 +16,46 @@ class UserService {
         });
     });
   }
+  async getServiceCharge() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/get-service-charge", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async updateServiceCharge(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-service-charge", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async createServiceCharge(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/create-service-charge", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 
   async getSingleOrder(id) {
     const config = await authHeader();
@@ -35,7 +75,62 @@ class UserService {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get("/users/allUsers", config)
+        .get("/admin/load-dashboard-data", config)
+        // .get("/users/allUsers", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getDashboardData() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/load-dashboard-data", config)
+        // .get("/users/allUsers", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async fetchAvailableRegionData() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/get-all-region", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async fetchAvailableCategories() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/get-available-category", config)
+        .then((response) => {
+          console.log("KKKKKKKKK: ", response)
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async fetchAllUsers() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/all-users", config)
         .then((response) => {
           resolve(response);
         })
@@ -87,6 +182,126 @@ class UserService {
     });
   }
 
+  async getAllSellers() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/get-all-sellers", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async addSeller(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/register-seller", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async addProductByAdmin(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/product-request", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async uploadProductImage(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/upload-product-image", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async uploadCategoryImage(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/upload-category-image", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async updateProduct(data) {
+    const config = await authHeader();
+
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-product", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async deleteProductImage(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`/admin/delete-product-pic/${id}`,null, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async updateSellerInfo(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`/admin/update-seller-info`,data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getSellerProduct(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/get-product/${data}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
   async getServiceman(id) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -103,30 +318,26 @@ class UserService {
 
   async getServices() {
     const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get("/service", config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+    // return new Promise((resolve, reject) => {
+    //   axios
+    //     .get("/service", config)
+    //     .then((response) => {
+    //       resolve(response);
+    //     })
+    //     .catch((error) => {
+    //       reject(error);
+    //     });
+    // });
   }
 
-  async addService(body) {
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    };
+  async addCategory(body) {
+    const config = await authHeader();
 
     let data = qs.stringify(body);
 
     return new Promise((resolve, reject) => {
       axios
-        .post("/service/add", data, config)
+        .post("/admin/create-category", data, config)
         .then((response) => {
           resolve(response);
         })
@@ -178,16 +389,16 @@ class UserService {
 
   async getPartsCategory() {
     const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get("/part/getAllPartCategory", config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+    // return new Promise((resolve, reject) => {
+    //   axios
+    //     .get("/part/getAllPartCategory", config)
+    //     .then((response) => {
+    //       resolve(response);
+    //     })
+    //     .catch((error) => {
+    //       reject(error);
+    //     });
+    // });
   }
 
   async getAllSubpartCategoryWithId(id) {
@@ -327,6 +538,28 @@ class UserService {
         });
     });
   }
-}
 
+  async getSellerDetails(id) {
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    // };
+
+    const config = await authHeader();
+
+
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/get-seller-details/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+}
+//getRegions
 export default new UserService();

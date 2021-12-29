@@ -13,7 +13,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-import Logo from "../assets/images/logo.svg";
+import Logo from "../assets/images/_logo.png";
 
 //AuthService for logout
 import { Logout } from "../services/auth.service";

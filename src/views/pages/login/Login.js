@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../../../assets/images/logo.svg";
+import Logo from "../../../assets/images/_logo.png";
 import AuthService from "../../../services/auth.service";
 import LocalStorage from "../../../utils/localstorage";
 import ExpirySession from "../../../utils/expirysession";
@@ -44,8 +44,7 @@ const Login = (props) => {
   const validateFormHandler = () => {
     let updatedState = { ...state };
     if (
-      updatedState.email.trim().includes("@") &&
-      updatedState.password.trim().length > 6
+      updatedState.email.trim().includes("@") 
     ) {
       setFormIsValid(true);
     } else {
@@ -62,11 +61,12 @@ const Login = (props) => {
 
     AuthService.doLogin({ email, password })
       .then((res) => {
+        console.log("=========*+", res.data.data);
         setLoading(false);
-        ExpirySession.set("access", res.data.token);
-        LocalStorage.set("user_data", res.data.user);
-        props.history.push("/");
-        window.location.reload();
+        ExpirySession.set("access", res.data.data.token);
+        LocalStorage.set("user_data", res.data.data.admin);
+       props.history.push("/");
+       window.location.reload();
       })
       .catch((error) => {
         if (error.response) {
@@ -153,7 +153,7 @@ const Login = (props) => {
               >
                 <CCardBody className="text-center center-flex">
                   <div>
-                    <img src={Logo} alt="fix 234 logo" />
+                    <img src={Logo} alt="sendmeerrand logo"  width={300}/>
                   </div>
                 </CCardBody>
               </CCard>

@@ -8,14 +8,19 @@ import WidgetsDropdown from "src/views/widgets/WidgetsDropdown";
 const Customers = (props) => {
   const { path, url } = useRouteMatch();
 
-  const customers = useSelector((state) => state.customers.customers);
+  const customers = useSelector((state) => state.users.users);
   const totalCustomers = useSelector((state) => state.customers.totalCustomers);
 
   const fields = [
     {
-      key: "customername",
+      key: "firstname",
       _style: { minWidth: "15%" },
-      label: "Name",
+      label: "First Name",
+    },
+    {
+      key: "lastname",
+      _style: { minWidth: "15%" },
+      label: "Last Name",
     },
     {
       key: "customernumber",
@@ -33,7 +38,7 @@ const Customers = (props) => {
       label: "Email",
     },
     {
-      key: "date_created",
+      key: "last_login",
       _style: { minWidth: "1%" },
     },
   ];

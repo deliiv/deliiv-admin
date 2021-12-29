@@ -1,3 +1,5 @@
+import NAVITEM from './_navitem'
+
 const _nav = [
   {
     _tag: "CSidebarNavItem",
@@ -19,14 +21,14 @@ const _nav = [
   },
   {
     _tag: "CSidebarNavItem",
-    name: "Servicemen",
-    to: "/servicemen",
+    name: "Seller",
+    to: "/seller",
     icon: "cil-user",
   },
   {
     _tag: "CSidebarNavItem",
-    name: "Services",
-    to: "/services",
+    name: "Category",
+    to: "/category",
     icon: "cil-settings",
   },
   {
@@ -40,6 +42,27 @@ const _nav = [
     name: "Costing",
     to: "/costing",
     icon: "cil-money",
+  },
+
+  {
+    _tag: 'CSidebarNavDropdown',
+    name: <NAVITEM icon={<i class="fas fa-tasks"></i>
+  } name={"Extras"} />,
+    route: '/orders',
+    _children: [
+      
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Service Charge', 
+        to: '/service-charge',
+      },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Regions', 
+        to: '/regions',
+      },
+      
+    ],
   },
 
   // {

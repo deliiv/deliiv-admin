@@ -4,7 +4,7 @@ export default async function authHeader() {
   const accessToken = await ExpirySession.get("access");
   let config = {
     headers: {
-      Authorization: `${accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   };
   return new Promise((resolve) => {

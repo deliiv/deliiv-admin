@@ -5,21 +5,28 @@ const Orders = React.lazy(() => import("./components/Orders/Orders"));
 const Order = React.lazy(() => import("./components/Orders/Order"));
 const Customers = React.lazy(() => import("./components/Customers/Customers"));
 const Customer = React.lazy(() => import("./components/Customers/Customer"));
-const Servicemen = React.lazy(() =>
-  import("./components/Servicemen/Servicemen")
-);
-const AddServiceman = React.lazy(() => import("./components/Servicemen/add"));
+const Seller = React.lazy(() =>import("./components/Seller/Servicemen"))
+const SellerDetails = React.lazy(() =>import("./components/Seller/Tabs"));
+const AddServiceman = React.lazy(() => import("./components/Seller/add"));
+const AddProduct = React.lazy(() => import("./components/Seller/addProduct"));
+const ViewProduct = React.lazy(() => import("./components/Seller/viewProduct"));
 const Serviceman = React.lazy(() =>
-  import("./components/Servicemen/Serviceman")
+  import("./components/Seller/Serviceman")
 );
-const Services = React.lazy(() => import("./components/services/services"));
-const AddService = React.lazy(() => import("./components/services/addService"));
-const UpdateService = React.lazy(() =>
-  import("./components/services/updateService")
+const Category = React.lazy(() => import("./components/category/services"));
+const AddCategory = React.lazy(() => import("./components/category/addCategory"));
+const UpdateCategory = React.lazy(() =>
+  import("./components/category/updateCategory")
 );
 const SubParts = React.lazy(() => import("./components/Parts/subPartCategory"));
 const PartsCategory = React.lazy(() =>
   import("./components/Parts/partsCategory")
+);
+const ServiceCharge = React.lazy(() =>
+  import("./components/ServiceCharge/ServiceCharge")
+);
+const Region = React.lazy(() =>
+  import("./components/region/Region")
 );
 
 const routes = [
@@ -30,36 +37,46 @@ const routes = [
   { path: "/customers", name: "Customers", component: Customers, exact: true },
   { path: "/customers/customer-:id", name: "Customer", component: Customer },
   {
-    path: "/servicemen",
-    name: "Servicemen",
-    component: Servicemen,
+    path: "/seller",
+    name: "Seller",
+    component: Seller,
     exact: true,
   },
   {
-    path: "/servicemen/serviceman-:id",
-    name: "Serviceman",
-    component: Serviceman,
+    path: "/seller/details/:id",
+    name: "details",
+    component: SellerDetails,
   },
   {
-    path: "/servicemen/add",
-    name: "Add Serviceman",
+    path: "/seller/add",
+    name: "Add Seller",
     component: AddServiceman,
   },
   {
-    path: "/services",
-    name: "Services",
-    component: Services,
+    path: "/seller/products/add",
+    name: "Add Product",
+    component: AddProduct,
+  },
+  {
+    path: "/seller/products/:id",
+    name: "View Product",
+    component: ViewProduct,
+  },
+  {
+    path: "/category",
+    name: "Category",
+    component: Category,
     exact: true,
   },
   {
-    path: "/services/add-service",
-    name: "Add Service",
-    component: AddService,
+    path: "/category/add-category",
+    name: "Add Category",
+    component: AddCategory,
   },
   {
-    path: "/services/update-:id",
+    path: "/category/update/:id",
     name: "Update Service",
-    component: UpdateService,
+    component: UpdateCategory,
   },
   {
     path: "/services/subpart-:id",
@@ -69,6 +86,14 @@ const routes = [
   {
     path: "/parts-category",
     component: PartsCategory,
+  },
+  {
+    path: "/service-charge",
+    component: ServiceCharge,
+  },
+  {
+    path: "/regions",
+    component: Region,
   },
 ];
 

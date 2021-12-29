@@ -5,7 +5,6 @@ export const fetchOrders = () => {
   return async (dispatch) => {
     const fetchData = async () => {
       const response = await UserService.getOrders();
-
       return response;
     };
 

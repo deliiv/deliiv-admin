@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
 import { TheContent, TheSidebar, TheFooter, TheHeader } from "./index";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TheLayout = () => {
   const darkMode = useSelector((state) => state.UI.darkMode);
@@ -16,6 +18,7 @@ const TheLayout = () => {
       {/* <TheAside/> */}
       <div className="c-wrapper">
         <TheHeader />
+        <ToastContainer />
         <div className="c-body">
           <TheContent />
         </div>

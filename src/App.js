@@ -8,6 +8,13 @@ import { fetchOrders } from "./store/order-actions";
 import { fetchCustomers } from "./store/customer-actions";
 import { fetchServicemen } from "./store/serviceman-actions";
 import { fetchServices, fetchParts } from "./store/service-actions";
+import { fetchServiceCharge } from './store/service-charge-actions'
+import { fetchRegion } from './store/region-actions'
+
+import {loadBoard, fetchAvailableRegions, fetchAvailableCategory} from './store/dashboard-actions'
+import { fetchAllCategories} from './store/category-actions'
+import {fetchAllSellers, fetchSellerDetails} from './store/sellers-actions'
+import {fetchAllUsers} from './store/users-actions'
 
 const loading = (
   <div className="pt-3 text-center">
@@ -43,8 +50,34 @@ const App = () => {
   React.useEffect(() => {
     dispatch(fetchServices());
   }, [dispatch]);
+
   React.useEffect(() => {
     dispatch(fetchParts());
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    dispatch(loadBoard());
+  }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(fetchAvailableRegions());
+  }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(fetchAllSellers());
+  }, [dispatch]);
+  // React.useEffect(() => {
+  //   dispatch(fetchSellerDetails(1));
+  // }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(fetchAllUsers());
+  }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(fetchAllCategories());
+  }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(fetchServiceCharge());
+  }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(fetchRegion());
   }, [dispatch]);
 
   return (
