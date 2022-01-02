@@ -4,7 +4,7 @@ const initialUIState = {
   sidebarShow: "responsive",
   asideShow: false,
   darkMode: true,
-  backgroundColor: "#65589C",
+  backgroundColor: "#E96122",
 };
 
 const uiSlice = createSlice({

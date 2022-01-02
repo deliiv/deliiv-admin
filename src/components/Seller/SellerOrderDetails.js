@@ -79,7 +79,7 @@ const SellerOrderDetails = (props) => {
 
   return (
     <>
-      <WidgetsDropdown widgetList={widgetList} />
+      {/* <WidgetsDropdown widgetList={widgetList} /> */}
       <CRow>
         <CCol>
           <CCard>

@@ -9,7 +9,8 @@ const Customers = (props) => {
   const { path, url } = useRouteMatch();
 
   const customers = useSelector((state) => state.users.users);
-  const totalCustomers = useSelector((state) => state.customers.totalCustomers);
+  const totalCustomers = useSelector((state) => state.dashbord.totalUsers);
+
 
   const fields = [
     {

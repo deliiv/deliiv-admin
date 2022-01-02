@@ -15,7 +15,8 @@ import { commaDelimitNumber } from "../../utils/formatPrice";
 import { useHistory, useRouteMatch } from "react-router";
 import { useState } from "react";
 import userService from "src/services/user.service";
-import { findArgInArray } from "src/utils/findArgInArray";
+import Modals from './Modals';
+import { toast } from 'react-toastify';
 
 const Services = (props) => {
   const history = useHistory();
@@ -24,21 +25,12 @@ const Services = (props) => {
   const parts = useSelector((state) => state.services.parts);
   const [modalId, setModalId] = useState("");
   const [loading, setLoading] = useState(false);
-  const createPartCategory = (title, service_id) => {
-    setLoading(true);
-    const data = {
-      title: title,
-      service: service_id,
-    };
-    userService
-      .addPartCategory(data)
-      .then(() => {
-        history.push("/parts-category");
-        setLoading(false);
-        window.location.reload();
-      })
-      .catch((error) => console.log(error));
-  };
+  const [showModals, setShowModals] = useState(false);
+  const [state, setState] = useState({name:'', id:"", image:""});
+  const [id,setId]= useState('')
+  const [name,setName]= useState('')
+  const [image,setImage]= useState('')
+
 
   const fields = [
     {
@@ -59,6 +51,29 @@ const Services = (props) => {
     },
   ];
 
+  const handleOnChangeCatname=(e)=>{
+    console.log('===', e.target.value);
+    setName(e.target.value)
+  }
+
+  const handleSuccess =()=>{
+    let data={
+      id: id,
+      name:name
+    }
+    console.log('???????????: ',data)
+    console.log('???????2????: ',{id: id, name:name})
+  userService.updateCategory(data).then(response =>{
+    toast.success("Category name update")
+  }).catch(err =>{
+    console.log(err)
+  })
+  }
+
+  const handleImageUpload=()=>{
+
+  }
+
   return (
     <>
       {loading && <CSpinner className="loader" size="lg" />}
@@ -77,6 +92,15 @@ const Services = (props) => {
         >
           Add Category+
         </CButton>
+        <Modals show={showModals}
+         catName={name}
+         image_url={image}
+         id={id}
+         handleSuccess={handleSuccess}
+        //  handleImageUpload={handleImageUpload}
+         handleOnChangeCatname={handleOnChangeCatname}
+         
+         editMode={true}/>
       </div>
       {category &&  (
         <CRow>
@@ -119,7 +143,6 @@ const Services = (props) => {
                     //         size="sm"
                     //         className="mx-1"
                     //         onClick={() =>
-                    //           createPartCategory(part.title, part._id)
                     //         }
                     //         disabled={findArgInArray(
                     //           parts.map((prt) => prt.title),
@@ -137,64 +160,19 @@ const Services = (props) => {
                             variant="outline"
                             size="sm"
                             className="mx-1"
-                            onClick={() =>
-                              history.push({
-                                pathname: `${url}/update/${category.id}`,
-                                state: {
-                                  title: category.title,
-                                  tag: category.tag,
-                                },
-                              })
+                            onClick={() =>{
+                              setShowModals(true);
+                              setId(category.id)
+                              setName(category.name)
+                              setImage(category.image_url)
+                               setState({name: category.name, id: category.id, image:category.image_url});
+                              // console.log('MMMMM: ',category)
+                            }
                             }
                           >
                             edit
                           </CButton>
-                          <CButton
-                            color="danger"
-                            variant="outline"
-                            size="sm"
-                            className="mx-1"
-                            onClick={() => setModalId(category.id)}
-                          >
-                            <CModal
-                              show={modalId === category.id}
-                              backdrop
-                              centered
-                              fade
-                              onClosed={() => setModalId("")}
-                            >
-                              <CRow>
-                                <CCol>
-                                  <div className="p-5">
-                                    Are you sure you want to delete{" "}
-                                    {category.title} category?
-                                    <span
-                                      className="text-primary px-3 hoverline"
-                                      onClick={() => {
-                                        userService
-                                          .deleteService(category.id)
-                                          .then(() => {
-                                            window.location.reload();
-                                          })
-                                          .catch((error) => {
-                                            console.log(error);
-                                          });
-                                      }}
-                                    >
-                                      Yes
-                                    </span>
-                                    {/* <span
-                                    onClick={() => setModalId("jhjjjjj")}
-                                    className="text-danger px-3 hoverline"
-                                  >
-                                    No
-                                  </span> */}
-                                  </div>
-                                </CCol>
-                              </CRow>
-                            </CModal>
-                            delete
-                          </CButton>
+                  
                         </td>
                       ),
                     }}

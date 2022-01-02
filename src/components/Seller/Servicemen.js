@@ -17,7 +17,6 @@ const Servicemen = (props) => {
   const { path, url } = useRouteMatch();
   const history = useHistory();
 
-  const servicemen = useSelector((state) => state.servicemen.servicemen);
   const totalActiveSellers = useSelector((state) => state.dashbord.totalActiveSellers);
   const totalInActiveSellers = useSelector((state) => state.dashbord.totalInActiveSellers);
 

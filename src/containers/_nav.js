@@ -31,18 +31,18 @@ const _nav = [
     to: "/category",
     icon: "cil-settings",
   },
-  {
-    _tag: "CSidebarNavItem",
-    name: "Parts Categories",
-    to: "/parts-category",
-    icon: "cil-view-column",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: "Costing",
-    to: "/costing",
-    icon: "cil-money",
-  },
+  // {
+  //   _tag: "CSidebarNavItem",
+  //   name: "Parts Categories",
+  //   to: "/parts-category",
+  //   icon: "cil-view-column",
+  // },
+  // {
+  //   _tag: "CSidebarNavItem",
+  //   name: "Costing",
+  //   to: "/costing",
+  //   icon: "cil-money",
+  // },
 
   {
     _tag: 'CSidebarNavDropdown',

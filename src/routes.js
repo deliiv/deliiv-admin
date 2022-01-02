@@ -75,7 +75,7 @@ const routes = [
   },
   {
     path: "/category/update/:id",
-    name: "Update Service",
+    name: "Update Category",
     component: UpdateCategory,
   },
   {

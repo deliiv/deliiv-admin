@@ -22,6 +22,8 @@ const Dashboard = (props) => {
   const totalOrders = useSelector((state) => state.dashbord.totalOrders);
   const totalUsers = useSelector((state) => state.dashbord.totalUsers);
   const totalProducts = useSelector((state) => state.dashbord.totalProducts);
+  const activeSeller = useSelector((state) => state.dashbord.totalActiveSellers);
+  const inactiveSeller = useSelector((state) => state.dashbord.totalInActiveSellers);
   const newOrders = useSelector((state) => state.orders.newOrders);
   const totalServicemen = useSelector(
     (state) => state.servicemen.totalServicemen
@@ -62,7 +64,7 @@ const Dashboard = (props) => {
       title: "New Orders",
       totalAmount: newOrders ? newOrders.length.toString() : "una",
     },
-    { title: "Servicemen", totalAmount: totalServicemen.toString() || "0" },
+    { title: "Sellers", totalAmount: activeSeller + inactiveSeller || "0" },
     { title: "Users", totalAmount: totalUsers.toString() || "0" },
     { title: "Products", totalAmount: totalProducts.toString() || "0" },
   ];

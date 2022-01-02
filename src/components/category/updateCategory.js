@@ -46,50 +46,57 @@ const UpdateService = (props) => {
     const data = {
       title: state.title,
     };
-    setLoading(true);
-    userService
-      .updateService(data, id)
-      .then(() => {
-        setLoading(false);
-        history.push("/services");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // setLoading(true);
+    // userService
+    //   .updateService(data, id)
+    //   .then(() => {
+    //     setLoading(false);
+    //     history.push("/services");
+    //     window.location.reload();
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
   const changeCategoryImage = () => {
     setLoading(true);
 
-    const form = new FormData();
-    form.append('image', selectedImage)
-    form.append('category', id)
-    setLoading(true);
-    userService
-      .uploadCategoryImage(form)
-      .then(data => {
-        setLoading(false);
-        toast.success("Image Uploaded")
-        setTimeout(() => {
-          history.push("/category");
-        }, 2000);
+    // const form = new FormData();
+    // form.append('image', selectedImage)
+    // form.append('category', id)
+    // setLoading(true);
+    // userService
+    //   .uploadCategoryImage(form)
+    //   .then(data => {
+    //     setLoading(false);
+    //     toast.success("Image Uploaded")
+    //     setTimeout(() => {
+    //       history.push("/category");
+    //     }, 2000);
 
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(true);
-        toast.error("Error uploading image")
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     setLoading(true);
+    //     toast.error("Error uploading image")
 
-      });
+    //   });
   };
 
+
   useEffect(() => {
-    if (!location.state) {
-      setRedirect(true);
-    }
-  }, []);
-  useEffect(() => {
-    console.log('PPPPP**************', location)
+
+    console.log('[][]||||??')
+
+    userService
+    .getCategory(id)
+    .then(data => {
+      console.log('**************', data)
+    })
+    .catch((error) => {
+      console.log(error.response);
+    });
+    
   }, []);
 
   return (
@@ -112,7 +119,7 @@ const UpdateService = (props) => {
                     />
                   </CFormGroup>
                 </CCol>
-                <CCol sm="12">
+                {/* <CCol sm="12">
                   <CFormGroup>
                     <CLabel>Tag</CLabel>
                     <CInput
@@ -124,7 +131,7 @@ const UpdateService = (props) => {
                       onChange={inputChangeHandler}
                     />
                   </CFormGroup>
-                </CCol>
+                </CCol> */}
               </CFormGroup>
               <div style={{ display:"flex", flexDirection:"column" }}>
               {selectedImage && <img alt="src" 
@@ -151,7 +158,7 @@ const UpdateService = (props) => {
                 color="primary"
                 className="mb-4 float-md-right"
                 disabled={checkEmptyProperties(state)}
-                onClick={submitForm}
+                onClick={()=>submitForm}
               >
                 {loading && (
                   <span

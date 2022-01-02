@@ -47,6 +47,8 @@ const Modals = ({
 	const [ regionn, setRegion ] = React.useState('');
 
 	const regions = useSelector((state) => state.dashbord.availableRegions);
+	// const regions = useSelector((state) => state.region.region);
+
 
 	return (
 		<CRow>

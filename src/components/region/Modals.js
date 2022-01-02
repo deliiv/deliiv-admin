@@ -32,8 +32,8 @@ const Modals = ({
 	handleOnChangeRname,
 	handleOnChangeSCharge,
 
-	sCharge,
-	rname,
+	available,
+	regionName,
 	isNew
 }) => {
 	const [ modal, setModal ] = useState(true);
@@ -64,13 +64,13 @@ const Modals = ({
 								<CInput
 									type="text"
 									placeholder="name"
-									value={rname}
+									value={regionName}
 									onChange={handleOnChangeRname}
 									style={{ marginTop: '20px', marginBottom: '20px' }}
 								/>
 							</CFormGroup>
 							<CFormGroup>
-								<CLabel htmlFor="creditReason">Available</CLabel>
+								<CLabel htmlFor="availability">Available</CLabel>
 								<br/>
 							<CSwitch
 											className={'mx-1'}
@@ -78,7 +78,7 @@ const Modals = ({
 											defaultChecked
 											labelOff={'\u2715'}
 											size={'lg'}
-											// checked={active}
+											checked={available}
 											color={'primary'}
 											labelOn={'On'}
 											type={'checkbox'}

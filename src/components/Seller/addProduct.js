@@ -46,6 +46,7 @@ const AddProduct = (props) => {
       setSelectError("Region is required")
       setLoading(false)
     }else{
+		console.log('********',{...state,region:regionn, category_id:category})
       userService
 		  .addProductByAdmin({...state,region:regionn, category_id:category})
 		  .then(() => {
@@ -134,7 +135,7 @@ const AddProduct = (props) => {
                     {regions &&
 											regions.map((item) => {
 												return (
-													<option value={item.id} key={item.id}>
+													<option value={item.name} key={item.id}>
 														{item.name}
 													</option>
 												);
@@ -153,7 +154,6 @@ const AddProduct = (props) => {
 											categories.map((item) => {
 												return (
 													<>
-                          <option> select </option>
                           <option value={item.id} key={item.id}>
 														{item.name}
 													</option>

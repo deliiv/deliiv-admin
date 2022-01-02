@@ -27,8 +27,8 @@ const Region = (props) => {
   const allSellers = useSelector((state) => state.seller.sellers);
 
   const [modalId, setModalId] = useState('')
-  const [sCharge, setScharge] = useState('')
-  const [sShipping, setsShipping] = useState('')
+  const [availability, setAvailability] = useState('')
+  const [regionName, setRegionName] = useState('')
   const [itemId, setItemId] = useState('')
   const [region, setRegion] = useState('')
   const [show, setShow] = useState(false)
@@ -56,8 +56,9 @@ const Region = (props) => {
   ];
 
   const handleEdit = (item) => {
-    setsShipping(item.shipping_cost)
-    setScharge(item.service_charge)
+    console.log('UUU: ', item)
+    setRegionName(item.shipping_cost)
+    setAvailability(item.available ? true :false)
     setItemId(item.id)
     setShow(true)
   }
@@ -66,18 +67,18 @@ const Region = (props) => {
 
     let dataUpdate = {
       id: itemId,
-      service_charge: sCharge,
-      shipping_cost: sShipping
+      name: regionName,
+      available: availability
     }
     let dataCreate = {
-      region: region,
-      service_charge: sCharge,
-      shipping_cost: sShipping
+      name: regionName,
+      available: availability ? availability : false
     }
 
     if (isNew) {
+      console.log('[][]: ', dataCreate)
       userService
-        .createServiceCharge(dataCreate)
+        .createRegion(dataCreate)
         .then(() => {
           setLoading(false);
           window.location.reload();
@@ -88,7 +89,7 @@ const Region = (props) => {
     } else {
 
       userService
-        .updateServiceCharge(dataUpdate)
+        .updateRegion(dataUpdate)
         .then(() => {
           setLoading(false);
           window.location.reload();
@@ -96,8 +97,7 @@ const Region = (props) => {
         .catch((error) => {
           console.log(error);
         });
-
-    }
+   }
   }
   return (
     <>
@@ -110,14 +110,14 @@ const Region = (props) => {
       </CButton>
       <Modals 
         show={show}
-        sCharge={sCharge}
-        sShipping={sShipping}
+        regionName={regionName}
         isNew={isNew}
         handleRegionChange={(e) => setRegion(e.target.value)}
         handleSuccess={updateOrCreateCharge}
         handleCancel={() => { setShow(false); setIsNew(false) }}
-        handleOnChangeSCost={(e) => setsShipping(e.target.value)}
-        handleOnChangeSCharge={(e) => setScharge(e.target.value)}
+        handleOnChangeRname={(e) => setRegionName(e.target.value)}
+        handleOnChangeAvailable={(e) => setAvailability(!availability)}
+        available={availability}
       />
       <CRow>
         <CCol>

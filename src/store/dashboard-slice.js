@@ -24,6 +24,7 @@ const dashboardSlice = createSlice({
       state.totalProducts = action.payload.dashboardData.all_products
       state.totalUsers = action.payload.dashboardData.all_users
       state.totalActiveSellers = action.payload.dashboardData.all_active_sellers
+      state.totalInActiveSellers = action.payload.dashboardData.all_inactive_sellers
       state.availableRegions = action.payload.dashboardData.available_regions
       state.categories = action.payload.dashboardData.available_categories
     },

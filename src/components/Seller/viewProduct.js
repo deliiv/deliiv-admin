@@ -24,6 +24,9 @@ const ViewProduct = (props) => {
 	const [clickedImage, setclickedImage] = useState(null);
 	const [showImageModal, setshowImageModal] = useState(false);
 
+	const [productInstance, setProductInstance] = useState(null);
+	const [p, setP] = useState(null);
+
 
 	const [ state, setState ] = React.useState({
 		name: '',
@@ -32,6 +35,7 @@ const ViewProduct = (props) => {
 		available:0,
 		is_deal:0,
 		region:'',
+		images:[]
 		// seller_id: seller && seller.seller_info.id
 	});
 
@@ -40,7 +44,17 @@ const ViewProduct = (props) => {
 			.getSellerProduct(id)
 			.then((response) => {
 				setLoading(false);
-				console.log('=========', response.data)
+				setProductInstance(response.data.data)
+				setP(response.data)
+				console.log('==============', response.data.data)
+				setState({name: response.data.data.name, 
+					description:  response.data.data.description,
+					price:  response.data.data.price, 
+					is_deal: response.data.data.is_deal,
+					region: response.data.data.region,
+					available: response.data.data.available})
+
+					setRegion(response.data.data.available)
 				
 			})
 			.catch((error) => {
@@ -49,16 +63,16 @@ const ViewProduct = (props) => {
 	}, []);
 
 	useEffect(() =>{
+		console.log('????????????', editMode);
+		console.log('????????????222', p);
 		if(editMode){
+			console.log('>>>>>>>>Edit mode', productPayload);
 			setState({name:productPayload.name, 
 				description: productPayload.description,
 				price: productPayload.price, 
 				is_deal:productPayload.is_deal,
 				available:productPayload.available})
 				setRegion(productPayload.region)
-
-				console.log('+++=: ', productPayload)
-
 		}
 		
 
@@ -81,14 +95,12 @@ const ViewProduct = (props) => {
 			setLoading(false);
 		} else {
 		}
-		console.log('^^^^^^^^^', state);
-		console.log('^^^^^Region^^^^', regionn);
+
 	};
 
 	const handleChangeRegion = (region) => {
 		setState({region:region})
 		setRegion(region);
-		console.log('===', region);
 	};
 const handleImageUpload =()=>{
 
@@ -105,6 +117,7 @@ const handleImageUpload =()=>{
 			.getSellerProduct(id)
 			.then((response) => {
 				setLoading(false);
+				console.log('JJJJJJ%%%%%%%%%%%%%%%', response.data.data);
 				setProductPayload(response.data.data);
 				setSelectedImage(null)
 				
@@ -135,20 +148,25 @@ const handleUpdateProduct =()=>{
 
 
 	let newDataPayload={
-		name: state.name ? state.name : productPayload.name,
-		description: state.description ? state.description : productPayload.description,
-		price: state.price ? state.price : productPayload.price,
-		region: state.region ? state.region : productPayload.region,
-		available: state.available ? state.available : productPayload.available,
-		is_deal: state.is_deal ? state.is_deal : productPayload.is_deal
+		name: state.name ? state.name : p.data.name,
+		description: state.description ? state.description : p.data.description,
+		price: state.price ? state.price : p.data.price,
+		region: state.region ? state.region : p.data.region,
+		available: state.available ? state.available : p.data.available,
+		is_deal: state.is_deal ? state.is_deal : p.data.is_deal
 	}
-	console.log('%%%%%%%%%%%', newDataPayload)
 
+	console.log('*******************JJ:', state)
+	console.log('*******************2:', p)
 	userService
 	.updateProduct({...newDataPayload, id:id})
 	.then((response) => {
 		setLoading(false);
-		toast.success("Image uploaded")
+		toast.success("Product updated")
+		setTimeout(() => {
+			window.location.reload();
+		}, 2000);
+
 	})
 	.catch((error) => {
 		console.log(error);
@@ -206,7 +224,7 @@ const handleViewImage=(item)=>{
 										/>
 									) : (
 										<CLabel>
-											<b>{productPayload.name}</b>
+											<b>{state.name}</b>
 										</CLabel>
 									)}
 								</CFormGroup>
@@ -226,7 +244,7 @@ const handleViewImage=(item)=>{
 										/>
 									) : (
 										<CLabel>
-											<b>{productPayload.description}</b>
+											<b>{state.description}</b>
 										</CLabel>
 									)}
 								</CFormGroup>
@@ -246,7 +264,7 @@ const handleViewImage=(item)=>{
 										/>
 									) : (
 										<CLabel>
-											<b>{productPayload.price}</b>
+											<b>{state.price}</b>
 										</CLabel>
 									)}
 								</CFormGroup>
@@ -267,14 +285,14 @@ const handleViewImage=(item)=>{
 											{regions &&
 												regions.map((item) => {
 													return (
-														<option value={item.id} key={item.id}>
+														<option value={item.name} key={item.id}>
 															{item.name}
 														</option>
 													);
 												})}
 										</CSelect>
 										{selectError && <p style={{ color: 'red' }}>{selectError}</p>}
-										</>) : <CLabel htmlFor="region"><b>{productPayload.region}</b></CLabel>
+										</>) : <CLabel htmlFor="region"><b>{state.region}</b></CLabel>
 
 									}
 									
@@ -306,7 +324,7 @@ const handleViewImage=(item)=>{
 													onChange={()=>handleAvailableToggle('is_deal')}
 												/>
 											</div>
-											):(<p>{productPayload.is_deal ? "Yes" : "No"}</p>)}
+											):(<p>{state.is_deal ? "Yes" : "No"}</p>)}
 							</CFormGroup>
 
 							</CCol>
@@ -333,7 +351,7 @@ const handleViewImage=(item)=>{
 														type={'checkbox'}
 														onChange={()=>handleAvailableToggle('available')}
 													/>
-												</div>) :(<p>{productPayload.available ? "Yes" : "No"}</p>)
+												</div>) :(<p>{state.available ? "Yes" : "No"}</p>)
 											}
 											
 											</CFormGroup>
@@ -349,7 +367,7 @@ const handleViewImage=(item)=>{
 									<br />
 									{
 									<div style={{ display:"flex", flexDirection:"row" }}>
-										{productPayload.images && productPayload.images.length > 0 ?  productPayload.images.map((item, index) =>{
+										{productInstance && productInstance.images && productInstance.images.length > 0 ?  productInstance.images.map((item, index) =>{
 												return(
 													<>
 													<div  style={{display:"flex", flexDirection:"column", marginRight:10 }}>
@@ -363,8 +381,8 @@ const handleViewImage=(item)=>{
 													</div>
 													</>
 												)
-											}) : <p>This product has no image(s)</p>}
-										</div>
+										}) : <p>This product has no image(s)</p>}
+									</div>
 
 									}
 									
@@ -393,13 +411,14 @@ const handleViewImage=(item)=>{
 			onChange={(event) => {
 			  setSelectedImage(event.target.files[0]);
 			}}
-		  /></>
+		  />
+		  </>
 	  }
     </div>
 								</CFormGroup>
 							</CCol>
-						<CButton
-							style={{ position: 'relative' }}
+						{/* <CButton
+							style={{ position: 'relative',marginRight:'20px' }}
 							size="md"
 							color="primary"
 							className="mb-4 float-md-right"
@@ -419,33 +438,38 @@ const handleViewImage=(item)=>{
 								</span>
 							)}
 							<span className={`${loading && 'text-primary'}`}>Add Product</span>
-						</CButton>
-						<CButton
-							style={{ position: 'relative' }}
+						</CButton> */}
+				 <CButton
+								style={{ position: 'relative',marginRight:'20px'  }}
+								size="md"
+								className="mb-4 float-md-right"
+								color="warning"
+								variant="outline"
+								disabled={editMode}
+								onClick={()=>setEditMode(true)}
+							>
+								{loading && (
+									<span
+										style={{
+											position: 'absolute',
+											top: '50%',
+											left: '50%',
+											transform: 'translate(-50%, -50%)'
+										}}
+									>
+										<CSpinner size="sm" />
+									</span>
+								)}
+								<span className={`${loading && 'text-primary'}`}>Edit Product</span>
+							</CButton> 
+						
+						
+						{
+							editMode ? 	<CButton
+							style={{ position: 'relative',marginRight:'20px' }}
 							size="md"
-							color="primary"
-							className="mb-4 float-md-right"
-							disabled={editMode}
-							onClick={()=>setEditMode(true)}
-						>
-							{loading && (
-								<span
-									style={{
-										position: 'absolute',
-										top: '50%',
-										left: '50%',
-										transform: 'translate(-50%, -50%)'
-									}}
-								>
-									<CSpinner size="sm" />
-								</span>
-							)}
-							<span className={`${loading && 'text-primary'}`}>Edit Product</span>
-						</CButton>
-						<CButton
-							style={{ position: 'relative' }}
-							size="md"
-							color="primary"
+							color="success"
+							variant="outline"
 							className="mb-4 float-md-right"
 							// disabled={editMode}
 							onClick={handleUpdateProduct}
@@ -463,7 +487,9 @@ const handleViewImage=(item)=>{
 								</span>
 							)}
 							<span className={`${loading && 'text-primary'}`}>Update Product</span>
-						</CButton>
+						</CButton> : null
+						}
+					
 					</CCardBody>
 				</CCard>
 			</CCol>

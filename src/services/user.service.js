@@ -1,4 +1,5 @@
 import axios from "axios";
+import Axios from "axios";
 import authHeader from "./auth.header";
 import qs from "qs";
 
@@ -35,6 +36,62 @@ class UserService {
     return new Promise((resolve, reject) => {
       axios
         .post("/admin/update-service-charge", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  /****************CATEGORY**************/
+  async updateCategory(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-category", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async updateCategoryImage(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/upload-category-image", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async createRegion(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/add-region", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async updateRegion(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-region", data, config)
         .then((response) => {
           resolve(response);
         })
@@ -345,6 +402,46 @@ class UserService {
           reject(error);
         });
     });
+  }
+
+  async getCategory(id) {
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    // };    return new Promise((resolve, reject) => {
+    //   axios
+    //     .get(`/admin/get-category/${id}`, config)
+    //     .then(response => {
+    //       resolve(response);
+    //     })
+    //     .catch((error) => {
+    //       console.log('ERR: ', error.response)
+    //       reject(error);
+    //     });
+    // });
+
+    var data = JSON.stringify({
+      "name": "master"
+    });
+    
+    var config = {
+      method: 'get',
+      url: 'http://localhost:8000/api/admin/get-category/3',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+    
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
   }
 
   async updateService(body, id) {
