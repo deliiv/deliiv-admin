@@ -61,7 +61,7 @@ const TheHeader = () => {
         onClick={toggleSidebar}
       />
       <CHeaderBrand className="mx-auto d-lg-none" to="/">
-        <img src={Logo} alt="fix234 logo" style={{ height: "35px" }} />
+        <img src={Logo} alt="sendmeerrand logo" style={{ height: "35px" }} />
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
