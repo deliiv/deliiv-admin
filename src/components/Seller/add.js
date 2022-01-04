@@ -10,6 +10,7 @@ import {
   CInput,
   CFormGroup,
   CSelect,
+  CTextarea,
   CButton,
   CSpinner,
 } from "@coreui/react";

@@ -1,12 +1,13 @@
 import React, { useEffect,useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router';
-import { CRow, CCol, CCard, CCardBody, CLabel, CInput, CFormGroup, CSelect, CButton, CSpinner,CSwitch } from '@coreui/react';
+import { CRow, CCol, CCard, CCardBody, CLabel, CInput,CTextarea, CFormGroup, CSelect, CButton, CSpinner,CSwitch } from '@coreui/react';
 import checkEmptyProperties from 'src/utils/checkEmptyProperties';
 import { emailValidation } from 'src/utils/validations';
 import userService from 'src/services/user.service';
 import { toast } from 'react-toastify';
 import ViewProductImageModals from './ViewProductImageModals';
+import Modals from './Modals';
 
 const ViewProduct = (props) => {
 	const regions = useSelector((state) => state.dashbord.availableRegions);
@@ -26,6 +27,9 @@ const ViewProduct = (props) => {
 
 	const [productInstance, setProductInstance] = useState(null);
 	const [p, setP] = useState(null);
+	const [confirmDeleteTitle, setConfirmDeleteTitle] = useState('');
+	const [showD, setShowD]= useState(false)
+	const [imageId, setImageId]= useState('')
 
 
 	const [ state, setState ] = React.useState({
@@ -112,12 +116,14 @@ const handleImageUpload =()=>{
 	.uploadProductImage(form)
 	.then((response) => {
 		setLoading(false);
+		setTimeout(() => {
+			window.location.reload();
+		}, 1000);
 
 		userService
 			.getSellerProduct(id)
 			.then((response) => {
 				setLoading(false);
-				console.log('JJJJJJ%%%%%%%%%%%%%%%', response.data.data);
 				setProductPayload(response.data.data);
 				setSelectedImage(null)
 				
@@ -156,8 +162,6 @@ const handleUpdateProduct =()=>{
 		is_deal: state.is_deal ? state.is_deal : p.data.is_deal
 	}
 
-	console.log('*******************JJ:', state)
-	console.log('*******************2:', p)
 	userService
 	.updateProduct({...newDataPayload, id:id})
 	.then((response) => {
@@ -175,11 +179,27 @@ const handleUpdateProduct =()=>{
 }
 
 const handleImageDelete=(id)=>{
+	setConfirmDeleteTitle("Are you sure you want to delete image ?")
+	setShowD(true)
+	setImageId(id)
+	
+}
+const handleCancelDialog=()=>{
+	setConfirmDeleteTitle("")
+	setShowD(false)	
+}
+
+
+const handleImageDeleteConfirm=()=>{
 	
 	userService
-	.deleteProductImage(id)
+	.deleteProductImage(imageId)
 	.then((response) => {
 		setLoading(false);
+		setShowD(false)
+		setTimeout(() => {
+			window.location.reload();
+		}, 1500);
 		// userService
 		// 	.getSellerProduct(id)
 		// 	.then((response) => {
@@ -235,9 +255,9 @@ const handleViewImage=(item)=>{
 									<br />
 
 									{editMode ? (
-										<CInput
+										<CTextarea
 											type="text"
-											size="md"
+											// size="md"
 											value={state.description}
 											name="description"
 											onChange={inputChangeHandler}
@@ -256,7 +276,7 @@ const handleViewImage=(item)=>{
 
 									{editMode ? (
 										<CInput
-											type="tel"
+											type="number"
 											size="md"
 											value={state.price}
 											name="price"
@@ -377,7 +397,10 @@ const handleViewImage=(item)=>{
 														width={150}
 														onClick={() => handleViewImage(item.image_url)}
 														/>
-														{editMode && (<button onClick={()=>handleImageDelete(item.id)} style={{backgroundColor:"red" }}>Delete</button>)}
+														{editMode && (<CButton
+														color="danger"
+														variant="outline"
+														onClick={()=>handleImageDelete(item.id)} style={{marginTop:10 }}>Delete</CButton>)}
 													</div>
 													</>
 												)
@@ -385,6 +408,13 @@ const handleViewImage=(item)=>{
 									</div>
 
 									}
+
+									<Modals 
+									show={showD} 
+									title={confirmDeleteTitle}
+									handleCancel={handleCancelDialog}
+									handleSuccess={handleImageDeleteConfirm}
+									/>
 									
 									<ViewProductImageModals 
 										show={showImageModal} 
@@ -396,10 +426,21 @@ const handleViewImage=(item)=>{
 		  editMode && <><p>Select image to upload</p>
 		  {selectedImage && (
 			<div>
-			<img alt="not fount" width={"250px"} src={URL.createObjectURL(selectedImage)} />
+			<img alt="not fount" 
+			width={"150px"}
+			height={'150px'}
+			style={{ marginBottom:10, borderRadius:10 }}
+			 src={URL.createObjectURL(selectedImage)} />
 			<br />
-			<button onClick={()=>setSelectedImage(null)}>Remove</button>
-			<button onClick={handleImageUpload}>Upload</button>
+			<CButton
+			color="danger"
+			variant="outline"
+			 onClick={()=>setSelectedImage(null)}>Remove</CButton>
+			<CButton
+			color="success"
+			variant="outline"
+			style={{ marginLeft:10 }}
+			 onClick={handleImageUpload}>Upload</CButton>
 			</div>
 		  )}
 		  <br />

@@ -61,17 +61,14 @@ const Services = (props) => {
       id: id,
       name:name
     }
-    console.log('???????????: ',data)
-    console.log('???????2????: ',{id: id, name:name})
   userService.updateCategory(data).then(response =>{
     toast.success("Category name update")
+    setTimeout(() => {
+			window.location.reload();
+		}, 1000);
   }).catch(err =>{
     console.log(err)
   })
-  }
-
-  const handleImageUpload=()=>{
-
   }
 
   return (

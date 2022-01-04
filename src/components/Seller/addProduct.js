@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { CRow, CCol, CCard, CCardBody, CLabel, CInput, CFormGroup, CSelect, CButton, CSpinner } from '@coreui/react';
+import { CRow, CCol, CCard, CCardBody, CLabel, CInput,CTextarea,
+	CFormGroup, CSelect, CButton, CSpinner } from '@coreui/react';
 import checkEmptyProperties from 'src/utils/checkEmptyProperties';
 import { emailValidation } from 'src/utils/validations';
 import userService from 'src/services/user.service';
@@ -14,9 +15,10 @@ const AddProduct = (props) => {
 	const history = useHistory();
 
 	const [ loading, setLoading ] = React.useState(false);
-	const [ regionn, setRegion ] = React.useState('');
-	const [ category, setCategory ] = React.useState('');
-	const [ selectError, setSelectError ] = React.useState('');
+	const [ regionn, setRegion ] = React.useState(regions && regions.length > 0 ? regions[0].name : '');
+	const [ category, setCategory ] = React.useState(categories && categories.length >  0 ? categories[0].id  :'');
+	const [ selectErrorCategory, setSelectErrorCategory ] = React.useState('');
+	const [ selectErrorRegion, setSelectErrorRegion ] = React.useState('');
 	const [ selectValue, setSelectValue ] = React.useState(false);
 
 	const [ state, setState ] = React.useState({
@@ -39,11 +41,11 @@ const AddProduct = (props) => {
 	const submitForm = () => {
     setLoading(true);
     if(!category){
-      setSelectError("category is required")
+      setSelectErrorCategory("category is required")
       setLoading(false)
     }
     else if(!regionn){
-      setSelectError("Region is required")
+      setSelectErrorRegion("Region is required")
       setLoading(false)
     }else{
 		console.log('********',{...state,region:regionn, category_id:category})
@@ -93,7 +95,8 @@ const AddProduct = (props) => {
 							<CCol sm="6">
 								<CFormGroup>
 									<CLabel>Description</CLabel>
-									<CInput
+									<CTextarea
+
 										type="text"
 										size="md"
 										value={state.description}
@@ -141,7 +144,7 @@ const AddProduct = (props) => {
 												);
 											})}
                     </CSelect>
-                    {selectError && <p style={{ color:"red" }}>{selectError}</p>}
+                    {selectErrorRegion && <p style={{ color:"red" }}>{selectErrorRegion}</p>}
 
                   </CFormGroup>
                 </CCol>
@@ -161,7 +164,7 @@ const AddProduct = (props) => {
 												);
 											})}
                     </CSelect>
-                    {selectError && <p style={{ color:"red" }}>{selectError}</p>}
+                    {selectErrorCategory && <p style={{ color:"red" }}>{selectErrorCategory}</p>}
 
                   </CFormGroup>
                 </CCol>
