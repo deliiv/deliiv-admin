@@ -69,6 +69,8 @@ const Modals = ({
 									style={{ marginTop: '20px', marginBottom: '20px' }}
 								/>
 							</CFormGroup>
+
+							
 							<CFormGroup>
 								<CLabel htmlFor="availability">Available</CLabel>
 								<br/>

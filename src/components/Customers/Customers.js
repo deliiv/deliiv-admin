@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { Link, useRouteMatch } from "react-router-dom";
 import WidgetsDropdown from "src/views/widgets/WidgetsDropdown";
+import OrderDetails from './OrderDetails'
 
 const Customers = (props) => {
   const { path, url } = useRouteMatch();
@@ -75,14 +76,14 @@ const Customers = (props) => {
                     </div>
                   }
                   scopedSlots={{
-                    customername: (customer) => (
+                    firstname: (customer) => (
                       <td>
                         <Link
                           to={{
-                            pathname: `${url}/customer-${customer._id}`,
+                            pathname: `${url}/details/${customer.id}`,
                           }}
                         >
-                          {customer ? customer.fullname : null}
+                          {customer ? customer.firstname : null}
                         </Link>
                       </td>
                     ),

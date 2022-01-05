@@ -5,6 +5,7 @@ const Orders = React.lazy(() => import("./components/Orders/Orders"));
 const Order = React.lazy(() => import("./components/Orders/Order"));
 const Customers = React.lazy(() => import("./components/Customers/Customers"));
 const Customer = React.lazy(() => import("./components/Customers/Customer"));
+const CustomerDetails = React.lazy(() => import("./components/Customers/Tabs"));
 const Seller = React.lazy(() =>import("./components/Seller/Servicemen"))
 const SellerDetails = React.lazy(() =>import("./components/Seller/Tabs"));
 const AddServiceman = React.lazy(() => import("./components/Seller/add"));
@@ -46,6 +47,11 @@ const routes = [
     path: "/seller/details/:id",
     name: "details",
     component: SellerDetails,
+  },
+  {
+    path: "/customers/details/:id",
+    name: "details",
+    component: CustomerDetails,
   },
   {
     path: "/seller/add",

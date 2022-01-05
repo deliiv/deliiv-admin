@@ -17,6 +17,20 @@ class UserService {
         });
     });
   }
+
+  async updateOrderStatus(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-order", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async getServiceCharge() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -345,6 +359,19 @@ class UserService {
         });
     });
   }
+  async updateUserInfo(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`/admin/update-user-info`,data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async getSellerProduct(data) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -649,6 +676,27 @@ class UserService {
     return new Promise((resolve, reject) => {
       axios
         .get(`/admin/get-seller-details/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getUserDetails(id) {
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    // };
+
+    const config = await authHeader();
+
+
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/get-user-details/${id}`, config)
         .then((response) => {
           resolve(response);
         })

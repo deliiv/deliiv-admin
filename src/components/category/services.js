@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useSelector } from "react-redux";
 import {
   CCard,
@@ -13,12 +13,19 @@ import {
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { commaDelimitNumber } from "../../utils/formatPrice";
 import { useHistory, useRouteMatch } from "react-router";
+import { useDispatch } from "react-redux";
+
 import { useState } from "react";
 import userService from "src/services/user.service";
 import Modals from './Modals';
 import { toast } from 'react-toastify';
+import { fetchAllCategories} from '../../store/category-actions'
+
 
 const Services = (props) => {
+
+  const dispatch = useDispatch()
+
   const history = useHistory();
   const { url } = useRouteMatch();
   const category = useSelector((state) => state.category);
@@ -51,6 +58,9 @@ const Services = (props) => {
     },
   ];
 
+  useEffect(() => {
+    dispatch(fetchAllCategories())
+  }, [dispatch])
   const handleOnChangeCatname=(e)=>{
     console.log('===', e.target.value);
     setName(e.target.value)

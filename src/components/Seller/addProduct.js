@@ -96,13 +96,14 @@ const AddProduct = (props) => {
 								<CFormGroup>
 									<CLabel>Description</CLabel>
 									<CTextarea
-
+									maxLength={250}
 										type="text"
 										size="md"
 										value={state.description}
 										name="description"
 										onChange={inputChangeHandler}
 									/>
+									<p><i>Maximum length is 250 characters</i></p>
 								</CFormGroup>
 							</CCol>
 							<CCol sm="6">
