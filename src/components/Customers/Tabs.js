@@ -68,7 +68,7 @@ const Tabs = (props) => {
 					handleCancel={() => setshowDialog(false)}
 				/>
 				<CCard>
-					<CCardHeader>Seller details</CCardHeader>
+					<CCardHeader>User details</CCardHeader>
 					<CCardBody>
 						{user_detail && (
 							<CRow>
