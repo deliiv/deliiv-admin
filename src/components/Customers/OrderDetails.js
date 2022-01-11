@@ -7,10 +7,12 @@ import {
   CCol,
   CDataTable,
   CRow,
-  CButton,
+  CBadge,
   CSelect
 } from "@coreui/react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import { getBadge } from "../../utils/orderStatusColor";
+
 
 import { formateDate, formatTime } from "../../utils/formatDate";
 import userService from "src/services/user.service";
@@ -76,12 +78,6 @@ const OrderDetails = (props) => {
       key: "created_at",
       _style: { minWidth: "1%" },
       label: "Date Created",
-
-    },
-    {
-      key: "updated_at",
-      _style: { minWidth: "1%" },
-      label: "Updated At",
 
     }
   ];
@@ -180,17 +176,15 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                       </td>
                     ),
                     
-                    status: (item) => (
-                      <td className="py-2">
-                    <CSelect 
-                     style={{ border:`1px solid   ${item.status === 'pending' ? 'blue' : item.status === 'delivered' ? 'green' : item.status === 'pickedup' ? 'yellow' : 'red' }` }}
-                    custom value={item.status} name="creditReason" id="creditReason" onChange={e => handleOnChangeUpdateOrder(item.id, e.target.value)}>
-                      <option value="pending">Pending</option>
-                      <option value="pickedup">Picked up</option>
-                      <option value="delivered">Delivered</option>
-                      <option value="cancelled">Cancelled</option>
-                    </CSelect>
-										</td>
+                    status: (order) => (
+                      <td>
+                        <CBadge
+                          color={getBadge(order.status)}
+                          style={{ padding: "8px", minWidth: "60px" }}
+                        >
+                          {order.status}
+                        </CBadge>
+                      </td>
                     ),
              
            

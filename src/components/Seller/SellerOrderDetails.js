@@ -96,12 +96,6 @@ const SellerOrderDetails = (props) => {
 
     },
     {
-      key: "updated_at",
-      _style: { minWidth: "1%" },
-      label: "Updated At",
-
-    },
-    {
       key: "show_details",
       label: "",
       _style: { width: "1%" },

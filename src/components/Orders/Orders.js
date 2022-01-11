@@ -98,12 +98,6 @@ const Orders = (props) => {
 
     },
     {
-      key: "updated_at",
-      _style: { minWidth: "1%" },
-      label: "Updated At",
-
-    },
-    {
       key: "show_details",
       label: "",
       _style: { width: "1%" },
@@ -212,16 +206,14 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                       <td>{order.customer ? order.customer.email : null}</td>
                     ),
                     amount: (order) => <td>{order.service.price}</td>,
-                    status: (item) => (
-                      <td className="py-2">
-                        <CSelect
-                          style={{ border: `1px solid   ${item.status === 'pending' ? 'blue' : item.status === 'delivered' ? 'green' : item.status === 'pickedup' ? 'yellow' : 'red'}` }}
-                          custom value={item.status} name="creditReason" id="creditReason" onChange={e => handleOnChangeUpdateOrder(item.id, e.target.value)}>
-                          <option value="pending">Pending</option>
-                          <option value="pickedup">Picked up</option>
-                          <option value="delivered">Delivered</option>
-                          <option value="cancelled">Cancelled</option>
-                        </CSelect>
+                    status: (order) => (
+                      <td>
+                        <CBadge
+                          color={getBadge(order.status)}
+                          style={{ padding: "8px", minWidth: "60px" }}
+                        >
+                          {order.status}
+                        </CBadge>
                       </td>
                     ),
                     assigned_serviceman: (order) => (
@@ -266,28 +258,68 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                     details: (item) => {
                       return (
                         <CCollapse show={details.includes(item.id)}>
-                          <CCardBody>
-                          <h5>Seller</h5>
                             <CWidgetSimple>
                               <table>
                                 <thead className="thead-light">
                                   <tr>
+                                    <th className="text-center">#</th>
                                     <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Last Login</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th className="text-center">Discount Price</th>
+                                    <th className="text-center">Seller</th>
+                                    <th>Region</th>
+                                    <th>Images</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td>{item.seller.firstName} {item.seller.lastName}</td>
-                                    <td>{item.seller.phone}</td>
-                                    <td>{item.seller.last_login}</td>
-                                  </tr>
-                                  <tr>
+                                {
+                              item.products.map(item =>{
+                                return(
+                                  <>
+                                <tr>
+                                  <td>{item.id}</td>
+                                  <td>{item.name}</td>
+                                  <td>{item.description}</td>
+                                  <td>{item.quantity}</td>
+                                  <td>{item.price}</td>
+                                  <td>{item.discount_price}</td>
+                                  <td><b>{item.seller.firstName} {item.seller.lastName}</b></td>
+                                  <td>{item.region}</td>
+                                  <td>
+                                  {item.images && item.images.map(item =>{
+                                  return(<img src={item.image_url} width={50} height={50}/>)
+                                })}
+                                  </td>
+
                                 </tr>
+                                
+                                </>
+                                )
+                              })
+                            }
+                                  <tr>
+                                    <td></td>
+                                  </tr>
                                 </tbody>
-                              </table>
-                            </CWidgetSimple>
+                                </table>
+                                <div style={{ width:'30%', display:"flex",alignItems:"flex-start", flexDirection:"column" }}>
+                                  <p><b>Change Order Status</b></p>
+                                <CSelect
+                                  style={{ border: `1px solid   ${item.status === 'pending' ? 'blue' : item.status === 'delivered' ? 'green' : item.status === 'pickedup' ? 'yellow' : 'red'}` }}
+                                  custom value={item.status} name="creditReason" id="creditReason" onChange={e => handleOnChangeUpdateOrder(item.id, e.target.value)}>
+                                  <option value="pending">Pending</option>
+                                  <option value="pickedup">Picked up</option>
+                                  <option value="delivered">Delivered</option>
+                                  <option value="cancelled">Cancelled</option>
+                              </CSelect>
+                        </div>
+                                </CWidgetSimple>
+                         
+                            <p className="text-muted">{item.details}</p>
+                           
+                          <CCardBody>                        
                             <p className="text-muted">{item.details}</p>
                           </CCardBody>
                           <CCardBody>
