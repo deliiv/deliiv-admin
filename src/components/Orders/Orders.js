@@ -5,9 +5,9 @@ import {
   CCardBody,
   CCol,
   CDataTable,
-  CRow,
+  CRow,CSelect
 } from "@coreui/react";
-import React, { lazy } from "react";
+import React, {useEffect, lazy } from "react";
 import { useRouteMatch, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
@@ -23,50 +23,81 @@ const Orders = (props) => {
 
   //Orders
   const orders = useSelector((state) => state.orders.orders);
-  const totalOrders = useSelector((state) => state.orders.totalOrders);
-  const completedOrders = useSelector((state) => state.orders.completedOrders);
-  const pendingOrders = useSelector((state) => state.orders.pendingOrders);
+  const totalOrders = useSelector((state) => state.orders.totalOrder);
+  const completedOrders = useSelector((state) => state.orders.totalCompleted);
+  const pendingOrders = useSelector((state) => state.orders.totalPending);
+  const pickedUpOrder = useSelector((state) => state.orders.totalPickedup);
+  const cancelledOrder = useSelector((state) => state.orders.totalCancelled);
 
   const fields = [
-    { key: "order_id", label: "Order Id" },
-    { key: "order_date", label: "Order Date and Time" },
-    { key: "service_details", label: "Service Type" },
     {
-      key: "customername",
+      key: "id",
       _style: { minWidth: "15%" },
-      label: "Customer Name",
+      label: "ID",
     },
     {
-      key: "customernumber",
+      key: "total_price",
       _style: { minWidth: "15%" },
-      label: "Customer Number",
+      label: "Total Price",
     },
     {
-      key: "customeremail",
+      key: "status",
       _style: { minWidth: "15%" },
-      label: "Customer Email",
+      label: "Status",
     },
     {
-      key: "amount",
-      _style: { minWidth: "1%" },
+      key: "service_charge",
+      _style: { minWidth: "15%" },
+      label: "Service Charge",
     },
-    { key: "status", _style: { minWidth: "10%" } },
-    { key: "assigned_serviceman", label: "Assigned Serviceman" },
-    { key: "view", label: "" },
-  ];
+    {
+      key: "shipping_cost",
+      _style: { minWidth: "5%" },
+      label: "Shipping Cost",
 
+    },
+    {
+      key: "created_at",
+      _style: { minWidth: "1%" },
+      label: "Date Created",
+
+    },
+    {
+      key: "updated_at",
+      _style: { minWidth: "1%" },
+      label: "Updated At",
+
+    }
+  ];
   const widgetList = [
     {
       title: "All Orders",
-      totalAmount: totalOrders.toString() || "0",
+       totalAmount: totalOrders.toString() || "0",
     },
     {
-      title: "Completed Orders",
+      title: "Total Completed Orders",
       totalAmount: completedOrders.toString() || "0",
     },
-    { title: "Pending Orders", totalAmount: pendingOrders.toString() || "0" },
+    { title: "Total Pending Orders",
+      totalAmount: pendingOrders.toString() || "0"
+     },
+    { title: "Total Pickedup Orders",
+      totalAmount: pickedUpOrder.toString() || "0"
+     },
+    { title: "Total Cancelled Orders",
+      totalAmount: cancelledOrder.toString() || "0"
+     },
   ];
 
+  const handleOnChangeUpdateOrder =(id, status)=>{
+    // setShow(true)
+    // setOrderId(id)
+    // setOrderStatus(status)
+    
+    // setTimeout(() => {
+    //   console.log(`Status is ${status} and id: ${id}`)
+    // }, 3000);
+  }
   return (
     <>
       <WidgetsDropdown widgetList={widgetList} />
@@ -74,7 +105,7 @@ const Orders = (props) => {
         <CCol>
           <CCard>
             <CCardBody>
-              {orders && (
+             {orders && (
                 <CDataTable
                   items={orders}
                   fields={fields}
@@ -91,6 +122,18 @@ const Orders = (props) => {
                   }
                   cleaner
                   scopedSlots={{
+                    created_at: (date) => (
+                      <td>
+                        {formateDate(date.created_at)}{" "}
+                        {formatTime(date.created_at)}
+                      </td>
+                    ),
+                    updated_at: (date) => (
+                      <td>
+                        {formateDate(date.updated_at)}{" "}
+                        {formatTime(date.updated_at)}
+                      </td>
+                    ),
                     order_id: (order) => <td>{order.order_id}</td>,
                     order_date: (order) => (
                       <td>
@@ -119,15 +162,17 @@ const Orders = (props) => {
                       <td>{order.customer ? order.customer.email : null}</td>
                     ),
                     amount: (order) => <td>{order.service.price}</td>,
-                    status: (order) => (
-                      <td>
-                        <CBadge
-                          color={getBadge(order.status)}
-                          style={{ padding: "8px", minWidth: "60px" }}
-                        >
-                          {order.status}
-                        </CBadge>
-                      </td>
+                    status: (item) => (
+                      <td className="py-2">
+                    <CSelect 
+                     style={{ border:`1px solid   ${item.status === 'pending' ? 'blue' : item.status === 'delivered' ? 'green' : item.status === 'pickedup' ? 'yellow' : 'red' }` }}
+                    custom value={item.status} name="creditReason" id="creditReason" onChange={e => handleOnChangeUpdateOrder(item.id, e.target.value)}>
+                      <option value="pending">Pending</option>
+                      <option value="pickedup">Picked up</option>
+                      <option value="delivered">Delivered</option>
+                      <option value="cancelled">Cancelled</option>
+                    </CSelect>
+										</td>
                     ),
                     assigned_serviceman: (order) => (
                       <td>{order.serviceman.name}</td>
@@ -150,7 +195,7 @@ const Orders = (props) => {
                     ),
                   }}
                 />
-              )}
+              )} 
             </CCardBody>
           </CCard>
         </CCol>

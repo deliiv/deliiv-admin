@@ -8,7 +8,7 @@ class UserService {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get("/order", config)
+        .get("/admin/orders", config)
         .then((response) => {
           resolve(response);
         })

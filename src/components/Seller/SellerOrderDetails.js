@@ -8,12 +8,16 @@ import {
   CDataTable,
   CRow,
   CButton,
+  CBadge,
+
   CSelect,CCollapse,CSpinner,CWidgetSimple
 
 } from "@coreui/react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 
 import { formateDate, formatTime } from "../../utils/formatDate";
+import { getBadge } from "../../utils/orderStatusColor";
+
 
 const SellerOrderDetails = (props) => {
   const { path, url } = useRouteMatch();
@@ -185,26 +189,25 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                         {formatTime(date.updated_at)}
                       </td>
                     ),
-                    
-                    status: (item) => (
-                      <td className="py-2">
-                    <CSelect 
-                     style={{ border:`1px solid   ${item.status === 'pending' ? 'blue' : item.status === 'delivered' ? 'green' : item.status === 'pickedup' ? 'yellow' : 'red' }` }}
-                    custom value={item.status} name="creditReason" id="creditReason" onChange={e => handleOnChangeUpdateOrder(item.id, e.target.value)}>
-                      <option value="pending">Pending</option>
-                      <option value="pickedup">Picked up</option>
-                      <option value="delivered">Delivered</option>
-                      <option value="cancelled">Cancelled</option>
-                    </CSelect>
-										</td>
+                    status: (order) => (
+                      <td>
+                        <CBadge
+                          color={getBadge(order.status)}
+                          style={{ padding: "8px", minWidth: "60px" }}
+                        >
+                          {order.status}
+                        </CBadge>
+                      </td>
                     ),
+                    
+                 
                     show_details: (item) => {
                       return (
                         <td className="py-2">
                           <CButton
-                            color="primary"
-                            variant="outline"
-                            shape="square"
+                            color="info"
+                             variant="outline"
+                            // shape="square"
                             size="sm"
                             onClick={() => {
                               toggleDetails(item.id);
@@ -270,7 +273,7 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                                 </CWidgetSimple>
                          
                             <p className="text-muted">{item.details}</p>
-                            <CButton
+                            {/* <CButton
                               size="sm"
                               color="primary"
                               className="ml-1"
@@ -364,8 +367,8 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                                   className="ml-2"
                                 />
                               ) : null} */}
-                            </CButton>
-                          </CCardBody>
+                            {/* </CButton> */}
+                          </CCardBody> 
                         </CCollapse>
                       );
                     },

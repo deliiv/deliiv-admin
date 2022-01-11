@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   orders: null,
-  totalOrders: 0,
-  completedOrders: 0,
-  pendingOrders: 0,
-  newOrders: null,
+  totalPending: 0,
+  totalCompleted: 0,
+  totalPickedup: 0,
+  totalCancelled: 0,
+  totalOrder:0
 };
 
 const orderSlice = createSlice({
@@ -13,14 +14,13 @@ const orderSlice = createSlice({
   initialState: initialState,
   reducers: {
     setOrders: (state, action) => {
-      state.orders = action.payload.ordersData;
-      state.totalOrders = action.payload.ordersData.length;
-      state.completedOrders = action.payload.ordersData.filter((order) => {
-        return order.status === "complete";
-      }).length;
-      state.pendingOrders = action.payload.ordersData.filter((order) => {
-        return order.status === "pending";
-      }).length;
+      state.totalCancelled = action.payload.ordersData.total_cancelled_order
+      state.totalPickedup = action.payload.ordersData.total_pickedup_order
+      state.totalCompleted = action.payload.ordersData.total_delivered_order
+      state.totalPending = action.payload.ordersData.total_pending_order
+      state.orders = action.payload.ordersData.orders.data
+      state.totalOrder = action.payload.ordersData.total_order
+    
     },
     setNewOrders: (state, action) => {
       const start = new Date();

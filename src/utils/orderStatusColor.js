@@ -1,14 +1,14 @@
 export const getBadge = (status) => {
   switch (status) {
-    case "success":
+    case "delivered":
       return "success";
-    case "complete":
+    case "pickedup":
       return "info";
     case "pending":
       return "warning";
-    case "error":
+    case "cancelled":
       return "danger";
-    case "picked":
+    case "pickedup":
       return "secondary";
     default:
       return;

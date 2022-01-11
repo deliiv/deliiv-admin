@@ -60,10 +60,10 @@ const Dashboard = (props) => {
       title: "All Orders",
       totalAmount: totalOrders.toString() || "0",
     },
-    {
-      title: "New Orders",
-      totalAmount: newOrders ? newOrders.length.toString() : "una",
-    },
+    // {
+    //   title: "New Orders",
+    //   totalAmount: newOrders ? newOrders.length.toString() : "una",
+    // },
     { title: "Sellers", totalAmount: activeSeller + inactiveSeller || "0" },
     { title: "Users", totalAmount: totalUsers.toString() || "0" },
     { title: "Products", totalAmount: totalProducts.toString() || "0" },
