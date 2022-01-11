@@ -5,13 +5,16 @@ import {
   CCardBody,
   CCol,
   CDataTable,
-  CRow,CSelect
+  CRow, CSelect, CCollapse, CWidgetSimple
 } from "@coreui/react";
-import React, {useEffect, lazy } from "react";
+import React, { useState, lazy } from "react";
 import { useRouteMatch, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { getBadge } from "../../utils/orderStatusColor";
+import userService from "src/services/user.service";
+import Modals from './Modals';
+import { toast } from 'react-toastify';
 
 const WidgetsDropdown = lazy(() =>
   import("../../views/widgets/WidgetsDropdown")
@@ -28,6 +31,38 @@ const Orders = (props) => {
   const pendingOrders = useSelector((state) => state.orders.totalPending);
   const pickedUpOrder = useSelector((state) => state.orders.totalPickedup);
   const cancelledOrder = useSelector((state) => state.orders.totalCancelled);
+
+  const [details, setDetails] = useState([])
+
+  const [orderId, setOrderId] = useState("")
+  const [orderStatus, setOrderStatus] = useState("")
+  const [show, setShow] = useState(false)
+
+  const toggleDetails = (index) => {
+    const position = details.indexOf(index);
+    let newDetails = details.slice();
+    if (position !== -1) {
+      newDetails.splice(position, 1);
+    } else {
+      newDetails = [...details, index];
+    }
+    setDetails(newDetails);
+  };
+
+  const handleUpdateOrder =()=>{
+    let data={
+      order_id: orderId,
+      status:orderStatus
+    }
+  userService.updateOrderStatus(data).then(response =>{
+    toast.success(`Order status updated to ${orderStatus}`)
+    setTimeout(() => {
+			window.location.reload();
+		}, 1000);
+  }).catch(err =>{
+    console.log(err)
+  })
+  }
 
   const fields = [
     {
@@ -67,45 +102,60 @@ const Orders = (props) => {
       _style: { minWidth: "1%" },
       label: "Updated At",
 
-    }
+    },
+    {
+      key: "show_details",
+      label: "",
+      _style: { width: "1%" },
+      filter: false,
+    },
   ];
   const widgetList = [
     {
       title: "All Orders",
-       totalAmount: totalOrders.toString() || "0",
+      totalAmount: totalOrders.toString() || "0",
     },
     {
       title: "Total Completed Orders",
       totalAmount: completedOrders.toString() || "0",
     },
-    { title: "Total Pending Orders",
+    {
+      title: "Total Pending Orders",
       totalAmount: pendingOrders.toString() || "0"
-     },
-    { title: "Total Pickedup Orders",
+    },
+    {
+      title: "Total Pickedup Orders",
       totalAmount: pickedUpOrder.toString() || "0"
-     },
-    { title: "Total Cancelled Orders",
+    },
+    {
+      title: "Total Cancelled Orders",
       totalAmount: cancelledOrder.toString() || "0"
-     },
+    },
   ];
 
-  const handleOnChangeUpdateOrder =(id, status)=>{
-    // setShow(true)
-    // setOrderId(id)
-    // setOrderStatus(status)
-    
-    // setTimeout(() => {
-    //   console.log(`Status is ${status} and id: ${id}`)
-    // }, 3000);
+  const handleOnChangeUpdateOrder = (id, status) => {
+    setShow(true)
+    setOrderId(id)
+    setOrderStatus(status)
+
+    setTimeout(() => {
+      console.log(`Status is ${status} and id: ${id}`)
+    }, 3000);
   }
   return (
     <>
       <WidgetsDropdown widgetList={widgetList} />
+      <Modals
+title={"Change order status"}
+message={`Are you sure you want to change order to ${orderStatus} `}
+ show={show}
+ handleSuccess={handleUpdateOrder}
+ handleCancel={()=>setShow(false)}/>
       <CRow>
         <CCol>
           <CCard>
             <CCardBody>
-             {orders && (
+              {orders && (
                 <CDataTable
                   items={orders}
                   fields={fields}
@@ -164,15 +214,15 @@ const Orders = (props) => {
                     amount: (order) => <td>{order.service.price}</td>,
                     status: (item) => (
                       <td className="py-2">
-                    <CSelect 
-                     style={{ border:`1px solid   ${item.status === 'pending' ? 'blue' : item.status === 'delivered' ? 'green' : item.status === 'pickedup' ? 'yellow' : 'red' }` }}
-                    custom value={item.status} name="creditReason" id="creditReason" onChange={e => handleOnChangeUpdateOrder(item.id, e.target.value)}>
-                      <option value="pending">Pending</option>
-                      <option value="pickedup">Picked up</option>
-                      <option value="delivered">Delivered</option>
-                      <option value="cancelled">Cancelled</option>
-                    </CSelect>
-										</td>
+                        <CSelect
+                          style={{ border: `1px solid   ${item.status === 'pending' ? 'blue' : item.status === 'delivered' ? 'green' : item.status === 'pickedup' ? 'yellow' : 'red'}` }}
+                          custom value={item.status} name="creditReason" id="creditReason" onChange={e => handleOnChangeUpdateOrder(item.id, e.target.value)}>
+                          <option value="pending">Pending</option>
+                          <option value="pickedup">Picked up</option>
+                          <option value="delivered">Delivered</option>
+                          <option value="cancelled">Cancelled</option>
+                        </CSelect>
+                      </td>
                     ),
                     assigned_serviceman: (order) => (
                       <td>{order.serviceman.name}</td>
@@ -193,9 +243,83 @@ const Orders = (props) => {
                         </CButton>
                       </td>
                     ),
+                    show_details: (item) => {
+                      return (
+                        <td className="py-2">
+                          <CButton
+                            color="info"
+                            variant="outline"
+                            // shape="square"
+                            size="sm"
+                            onClick={() => {
+                              toggleDetails(item.id);
+                              //console.log(products[item.id]);
+                              // setSelectedProduct(seller_details.seller_details.order.filter(it => it.id === item.id));
+
+                            }}
+                          >
+                            {details.includes(item.id) ? "Hide" : "Overview"}
+                          </CButton>
+                        </td>
+                      );
+                    },
+                    details: (item) => {
+                      return (
+                        <CCollapse show={details.includes(item.id)}>
+                          <CCardBody>
+                          <h5>Seller</h5>
+                            <CWidgetSimple>
+                              <table>
+                                <thead className="thead-light">
+                                  <tr>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Last Login</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>{item.seller.firstName} {item.seller.lastName}</td>
+                                    <td>{item.seller.phone}</td>
+                                    <td>{item.seller.last_login}</td>
+                                  </tr>
+                                  <tr>
+                                </tr>
+                                </tbody>
+                              </table>
+                            </CWidgetSimple>
+                            <p className="text-muted">{item.details}</p>
+                          </CCardBody>
+                          <CCardBody>
+                          <h5>Buyer</h5>
+                            <CWidgetSimple>
+                              <table>
+                                <thead className="thead-light">
+                                  <tr>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Last Login</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>{item.buyer.firstname} {item.buyer.lastname}</td>
+                                    <td>{item.buyer.phone}</td>
+                                    <td>{item.buyer.last_login}</td>
+                                  </tr>
+                                  <tr>
+                                </tr>
+                                </tbody>
+                              </table>
+                            </CWidgetSimple>
+                            <p className="text-muted">{item.details}</p>
+                          </CCardBody>
+                        </CCollapse>
+                      );
+                    },
                   }}
                 />
-              )} 
+              )}
             </CCardBody>
           </CCard>
         </CCol>
