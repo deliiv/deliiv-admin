@@ -94,8 +94,6 @@ const ServiceCharge = (props) => {
         })
         .catch((error) => {
           toast.error(error.response.data.message);
-
-         console.log('++++++++++++++',error.response.data.message);
         });
     } else {
 
@@ -113,13 +111,13 @@ const ServiceCharge = (props) => {
   }
   return (
     <>
-      <CButton
+      {/* <CButton
         size="md"
         color="primary"
         className="mb-4 float-md-right"
         onClick={() => { setShow(true); setIsNew(true) }}>
         Add +
-      </CButton>
+      </CButton> */}
       <Modals 
         show={show}
         sCharge={sCharge}

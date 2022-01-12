@@ -7,7 +7,7 @@ import {
   CDataTable,
   CRow, CSelect, CCollapse, CWidgetSimple
 } from "@coreui/react";
-import React, { useState, lazy } from "react";
+import React, { useState,useEffect, lazy } from "react";
 import { useRouteMatch, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
@@ -64,11 +64,13 @@ const Orders = (props) => {
   })
   }
 
+ 
+
   const fields = [
     {
       key: "id",
       _style: { minWidth: "15%" },
-      label: "ID",
+      label: "Order Id",
     },
     {
       key: "total_price",
@@ -262,7 +264,7 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                               <table>
                                 <thead className="thead-light">
                                   <tr>
-                                    <th className="text-center">#</th>
+                                    <th className="text-center">Order id</th>
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Quantity</th>

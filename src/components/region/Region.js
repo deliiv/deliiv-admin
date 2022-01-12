@@ -35,6 +35,9 @@ const Region = (props) => {
   const [isNew, setIsNew] = useState(false)
   const [loading, setLoading] = useState(false);
 
+  const [sCharge, setScharge] = useState('')
+  const [sShipping, setsShipping] = useState('')
+
 
   const fields = [
     {
@@ -72,11 +75,12 @@ const Region = (props) => {
     }
     let dataCreate = {
       name: regionName,
-      available: availability ? availability : false
+      available: availability ? availability : false,
+      service_charge:sCharge,
+      shipping_cost: sShipping
     }
 
     if (isNew) {
-      console.log('[][]: ', dataCreate)
       userService
         .createRegion(dataCreate)
         .then(() => {
@@ -118,6 +122,8 @@ const Region = (props) => {
         handleOnChangeRname={(e) => setRegionName(e.target.value)}
         handleOnChangeAvailable={(e) => setAvailability(!availability)}
         available={availability}
+        handleOnChangeSCost={(e) => setsShipping(e.target.value)}
+        handleOnChangeSCharge={(e) => setScharge(e.target.value)}
       />
       <CRow>
         <CCol>

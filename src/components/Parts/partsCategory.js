@@ -6,19 +6,16 @@ import {
   CCol,
   CDataTable,
   CRow,
-  CButton,
-  CModal,
 } from "@coreui/react";
-import { useHistory, useRouteMatch, Route } from "react-router";
+import { useRouteMatch, Route } from "react-router";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import SubPartCategories from "./subPartCategory";
 
-const Parts = (props) => {
-  const history = useHistory();
+const Parts = () => {
   const { url, path } = useRouteMatch();
   const parts = useSelector((state) => state.services.parts);
-  const [modalId, setModalId] = useState("");
+  const [] = useState("");
   const backgroundColor = useSelector((state) => state.UI.backgroundColor);
   //console.log(parts);
 

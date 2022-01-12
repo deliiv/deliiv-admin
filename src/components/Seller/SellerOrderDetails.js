@@ -1,6 +1,5 @@
-import React,{useState, useEffect} from "react";
+import React,{useState} from "react";
 import { useSelector } from "react-redux";
-import WidgetsDropdown from "src/views/widgets/WidgetsDropdown";
 import {
   CCard,
   CCardBody,
@@ -10,20 +9,15 @@ import {
   CButton,
   CBadge,
 
-  CSelect,CCollapse,CSpinner,CWidgetSimple
+  CCollapse,CWidgetSimple
 
 } from "@coreui/react";
-import { Link, useRouteMatch, useHistory } from "react-router-dom";
-
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { getBadge } from "../../utils/orderStatusColor";
 
 
 const SellerOrderDetails = (props) => {
-  const { path, url } = useRouteMatch();
-  const history = useHistory();
 
-  const servicemen = useSelector((state) => state.servicemen.servicemen);
   const totalActiveSellers = useSelector((state) => state.dashbord.totalActiveSellers);
   const totalInActiveSellers = useSelector((state) => state.dashbord.totalInActiveSellers);
 
@@ -49,9 +43,6 @@ const SellerOrderDetails = (props) => {
     },
   ];
 
-  useEffect(() =>{
-// console.log('++++++++++', seller_details.seller_details);
-  },[])
   const handleOnChangeUpdateOrder =(id, status)=>{
     setShow(true)
     setOrderId(id)
@@ -66,7 +57,7 @@ const SellerOrderDetails = (props) => {
     {
       key: "id",
       _style: { minWidth: "15%" },
-      label: "ID",
+      label: "Order Idf",
     },
     {
       key: "total_price",

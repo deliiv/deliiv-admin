@@ -32,6 +32,10 @@ const Modals = ({
 	handleOnChangeRname,
 	handleOnChangeSCharge,
 
+	handleOnChangeSCost,
+	sCharge,
+	sShipping,
+
 	available,
 	regionName,
 	isNew
@@ -86,6 +90,27 @@ const Modals = ({
 											type={'checkbox'}
 											onChange={handleOnChangeAvailable}
 										/>
+							</CFormGroup>
+
+							<CFormGroup>
+								<CLabel htmlFor="creditReason">Shipping Cost</CLabel>
+								<CInput
+									type="number"
+									placeholder="0.0"
+									value={sShipping}
+									onChange={handleOnChangeSCost}
+									style={{ marginTop: '20px', marginBottom: '20px' }}
+								/>
+							</CFormGroup>
+							<CFormGroup>
+								<CLabel htmlFor="creditReason">Service Charge</CLabel>
+								<CInput
+									type="number"
+									placeholder="0.0"
+									onChange={handleOnChangeSCharge}
+									value={sCharge}
+									style={{ marginTop: '20px', marginBottom: '20px' }}
+								/>
 							</CFormGroup>
 						</CModalBody>
 						<CModalFooter>

@@ -1,13 +1,14 @@
-import { CCard, CCardBody, CCol, CDataTable, CRow } from "@coreui/react";
+import { CCard, CCardBody,CButton, CCol, CDataTable, CRow } from "@coreui/react";
 import React from "react";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import WidgetsDropdown from "src/views/widgets/WidgetsDropdown";
 import OrderDetails from './OrderDetails'
 
 const Customers = (props) => {
   const { path, url } = useRouteMatch();
+  const history = useHistory();
 
   const customers = useSelector((state) => state.users.users);
   const totalCustomers = useSelector((state) => state.dashbord.totalUsers);
@@ -42,6 +43,12 @@ const Customers = (props) => {
     {
       key: "last_login",
       _style: { minWidth: "1%" },
+    },
+    {
+      key: "view",
+      _style: { minWidth: "1%" },
+      label: "Action",
+
     },
   ];
 
@@ -78,13 +85,7 @@ const Customers = (props) => {
                   scopedSlots={{
                     firstname: (customer) => (
                       <td>
-                        <Link
-                          to={{
-                            pathname: `${url}/details/${customer.id}`,
-                          }}
-                        >
                           {customer ? customer.firstname : null}
-                        </Link>
                       </td>
                     ),
                     customernumber: (customer) => (
@@ -104,6 +105,20 @@ const Customers = (props) => {
                         {formatTime(customer.date_created)}
                       </td>
                     ),
+                    view: (customer) => {
+                      return (
+                        <td className="py-2">
+                          <CButton
+                            color="info"
+                            variant="outline"
+                            // shape="square"
+                            size="sm"
+                            onClick={() => history.push(`${url}/details/${customer.id}`)}>
+                             View
+                          </CButton>
+                        </td>
+                      );
+                    },
                   }}
                 />
               )}

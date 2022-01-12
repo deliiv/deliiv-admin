@@ -22,6 +22,7 @@ const Order = (props) => {
     setLoading(true);
     UserService.getSingleOrder(id)
       .then((res) => {
+        console.log('++++++++++', res.data.order[0])
         setOrder(res.data.order[0]);
         setLoading(false);
         //console.log(res.data.data);

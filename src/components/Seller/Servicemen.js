@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import WidgetsDropdown from "src/views/widgets/WidgetsDropdown";
 import {
@@ -21,6 +21,9 @@ const Servicemen = (props) => {
   const totalInActiveSellers = useSelector((state) => state.dashbord.totalInActiveSellers);
 
   const allSellers = useSelector((state) => state.seller.sellers);
+
+  const [details, setDetails] = useState([])
+
 
   //console.log(servicemen);
 
@@ -61,7 +64,24 @@ const Servicemen = (props) => {
       key: "last_login",
       _style: { minWidth: "1%" },
     },
+    {
+      key: "view",
+      _style: { minWidth: "1%" },
+      label: "Action",
+
+    },
   ];
+
+  const toggleDetails = (index) => {
+    const position = details.indexOf(index);
+    let newDetails = details.slice();
+    if (position !== -1) {
+      newDetails.splice(position, 1);
+    } else {
+      newDetails = [...details, index];
+    }
+    setDetails(newDetails);
+  };
 
   return (
     <>
@@ -96,13 +116,7 @@ const Servicemen = (props) => {
                   scopedSlots={{
                     firstName: (seller) => (
                       <td>
-                        <Link
-                          to={{
-                            pathname: `${url}/details/${seller.id}`,
-                          }}
-                        >
                           {seller ? seller.firstName : null}
-                        </Link>
                       </td>
                     ),
                     number: (serviceman) => (
@@ -126,6 +140,20 @@ const Servicemen = (props) => {
                         {formatTime(serviceman.date_created)}
                       </td>
                     ),
+                    view: (item) => {
+                      return (
+                        <td className="py-2">
+                          <CButton
+                            color="info"
+                            variant="outline"
+                            // shape="square"
+                            size="sm"
+                            onClick={() => history.push(`${url}/details/${item.id}`)}>
+                             View
+                          </CButton>
+                        </td>
+                      );
+                    },
                   }}
                 />
               )}
