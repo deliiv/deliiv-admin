@@ -57,7 +57,7 @@ const SellerOrderDetails = (props) => {
     {
       key: "id",
       _style: { minWidth: "15%" },
-      label: "Order Idf",
+      label: "Order Id",
     },
     {
       key: "total_price",

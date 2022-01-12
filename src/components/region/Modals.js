@@ -92,6 +92,7 @@ const Modals = ({
 										/>
 							</CFormGroup>
 
+{!isNew && <>
 							<CFormGroup>
 								<CLabel htmlFor="creditReason">Shipping Cost</CLabel>
 								<CInput
@@ -111,7 +112,7 @@ const Modals = ({
 									value={sCharge}
 									style={{ marginTop: '20px', marginBottom: '20px' }}
 								/>
-							</CFormGroup>
+							</CFormGroup></>}
 						</CModalBody>
 						<CModalFooter>
 							<CButton color="success" onClick={handleSuccess}>

@@ -32,6 +32,7 @@ const Region = (props) => {
   const [itemId, setItemId] = useState('')
   const [region, setRegion] = useState('')
   const [show, setShow] = useState(false)
+  const [showEdit, setShowEdit] = useState(false)
   const [isNew, setIsNew] = useState(false)
   const [loading, setLoading] = useState(false);
 
@@ -59,11 +60,12 @@ const Region = (props) => {
   ];
 
   const handleEdit = (item) => {
-    console.log('UUU: ', item)
-    setRegionName(item.shipping_cost)
+    setRegionName(item.name)
     setAvailability(item.available ? true :false)
     setItemId(item.id)
     setShow(true)
+    setShowEdit(true)
+
   }
 
   const updateOrCreateCharge = () => {
@@ -109,13 +111,13 @@ const Region = (props) => {
         size="md"
         color="primary"
         className="mb-4 float-md-right"
-        onClick={() => { setShow(true); setIsNew(true) }}>
+        onClick={() => { setShow(true); setShowEdit(false) }}>
         Add +
       </CButton>
       <Modals 
         show={show}
         regionName={regionName}
-        isNew={isNew}
+        isNew={showEdit}
         handleRegionChange={(e) => setRegion(e.target.value)}
         handleSuccess={updateOrCreateCharge}
         handleCancel={() => { setShow(false); setIsNew(false) }}
@@ -157,7 +159,8 @@ const Region = (props) => {
                           variant="outline"
                           size="sm"
                           className="mx-1"
-                          onClick={() => handleEdit(item)}
+                          onClick={() => {handleEdit(item)
+                          }}
                         >
                           Edit
                         </CButton>
