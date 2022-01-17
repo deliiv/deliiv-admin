@@ -111,7 +111,10 @@ const Region = (props) => {
         size="md"
         color="primary"
         className="mb-4 float-md-right"
-        onClick={() => { setShow(true); setShowEdit(false) }}>
+        onClick={() => { 
+          setShow(true); 
+          setIsNew(true);
+          setShowEdit(false) }}>
         Add +
       </CButton>
       <Modals 

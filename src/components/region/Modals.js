@@ -103,16 +103,7 @@ const Modals = ({
 									style={{ marginTop: '20px', marginBottom: '20px' }}
 								/>
 							</CFormGroup>
-							<CFormGroup>
-								<CLabel htmlFor="creditReason">Service Charge</CLabel>
-								<CInput
-									type="number"
-									placeholder="0.0"
-									onChange={handleOnChangeSCharge}
-									value={sCharge}
-									style={{ marginTop: '20px', marginBottom: '20px' }}
-								/>
-							</CFormGroup></>}
+							</>}
 						</CModalBody>
 						<CModalFooter>
 							<CButton color="success" onClick={handleSuccess}>

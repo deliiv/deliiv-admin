@@ -59,6 +59,66 @@ class UserService {
     });
   }
 
+  //*************STORE PRODUCT */
+
+  async createStoreProduct(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/create-store-product", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+
+  async updateStoreProductImage(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/upload-store-product-image", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async deleteStoreProductImage(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`/admin/delete-store-product-pic/${id}`,null, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+
+  async updateStoreProduct(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-store-product", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
   /****************CATEGORY**************/
   async updateCategory(data) {
     const config = await authHeader();
@@ -87,6 +147,7 @@ class UserService {
         });
     });
   }
+  
 
   async createRegion(data) {
     const config = await authHeader();
@@ -127,6 +188,33 @@ class UserService {
         });
     });
   }
+  async createServiceChargePrice(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/create-service-charge-price", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async updateServiceChargePriceRange(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-service-charge-price", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 
   async getSingleOrder(id) {
     const config = await authHeader();
@@ -148,6 +236,19 @@ class UserService {
       axios
         .get("/admin/load-dashboard-data", config)
         // .get("/users/allUsers", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getAllStoreProducts() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/all-store-product", config)
         .then((response) => {
           resolve(response);
         })

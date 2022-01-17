@@ -27,6 +27,12 @@ const _nav = [
   },
   {
     _tag: "CSidebarNavItem",
+    name: "Store",
+    to: "/store",
+    icon: "cil-basket",
+  },
+  {
+    _tag: "CSidebarNavItem",
     name: "Category",
     to: "/category",
     icon: "cil-settings",

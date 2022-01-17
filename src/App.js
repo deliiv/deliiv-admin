@@ -10,6 +10,7 @@ import { fetchServicemen } from "./store/serviceman-actions";
 import { fetchServices, fetchParts } from "./store/service-actions";
 import { fetchServiceCharge } from './store/service-charge-actions'
 import { fetchRegion } from './store/region-actions'
+import { fetchStore } from './store/store-actions'
 
 import {loadBoard, fetchAvailableRegions, fetchAvailableCategory} from './store/dashboard-actions'
 import { fetchAllCategories} from './store/category-actions'
@@ -78,6 +79,9 @@ const App = () => {
   }, [dispatch]);
   React.useEffect(() => {
     dispatch(fetchRegion());
+  }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(fetchStore());
   }, [dispatch]);
 
   return (

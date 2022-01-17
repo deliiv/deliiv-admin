@@ -10,6 +10,7 @@ import userSlice from './users-slice';
 import categorySlice from './category-slice';
 import serviceChargeSlice from './service-charge-slice';
 import regionSlice from './region-slice';
+import storeSlice from './store-slice';
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     category: categorySlice.reducer,
     servicecharge: serviceChargeSlice.reducer,
     region: regionSlice.reducer,
+    store: storeSlice.reducer
   },
 });
 export default store;

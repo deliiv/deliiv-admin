@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 
 import { DocsLink } from 'src/reusable';
 
-const Modals = ({
+const AddModal = ({
 	show,
 	title,
 	message,
@@ -53,45 +53,9 @@ const Modals = ({
 						<CModalHeader closeButton>
 							<CModalTitle>{title}</CModalTitle>
 						</CModalHeader>
-						<CModalBody>
-							{message}
-							{isNew && <CFormGroup>
-								<CLabel htmlFor="region">Select Region</CLabel>
-								<CSelect
-									custom
-									value={regionn}
-									name="region"
-									id="creditReason"
-									onChange={handleRegionChange}
-								>
-									{regions &&
-										regions.map((item) => {
-											return (
-												<option value={item.name} key={item.id}>
-													{item.name}
-												</option>
-											);
-										})}
-								</CSelect>
-								{/* {selectError && <p style={{ color:"red" }}>{selectError}</p>} */}
-							</CFormGroup>}
+						<CModalBody>					
 
-
-							{
-								!sChargeEdit && (<CFormGroup>
-									<CLabel htmlFor="creditReason">Shipping Cost</CLabel>
-									<CInput
-										type="number"
-										placeholder="0.0"
-										value={sShipping}
-										onChange={handleOnChangeSCost}
-										style={{ marginTop: '20px', marginBottom: '20px' }}
-									/>
-								</CFormGroup>)
-							}
-
-							{
-								sChargeEdit && (<CFormGroup>
+						<CFormGroup>
 									<>
 										<CLabel htmlFor="creditReason">Percentage</CLabel>
 										<CInput
@@ -117,15 +81,10 @@ const Modals = ({
 											value={to_amount}
 											style={{ marginTop: '20px', marginBottom: '20px' }}
 										/>
-										<hr />
-										<hr />
-										<hr />
 									</>
 
 
 								</CFormGroup>
-								)
-							}
 
 						</CModalBody>
 						<CModalFooter>
@@ -143,4 +102,4 @@ const Modals = ({
 	);
 };
 
-export default Modals;
+export default AddModal;

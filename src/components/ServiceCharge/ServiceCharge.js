@@ -14,6 +14,7 @@ import { Link, useRouteMatch, useHistory } from "react-router-dom";
 
 import { formateDate, formatTime } from "../../utils/formatDate";
 import Modals from "./Modals";
+import AddModal from "./AddModal";
 import userService from "src/services/user.service";
 import { toast } from 'react-toastify';
 
@@ -32,10 +33,19 @@ const ServiceCharge = (props) => {
   const [sCharge, setScharge] = useState('')
   const [sShipping, setsShipping] = useState('')
   const [itemId, setItemId] = useState('')
+  const [sChargeId, setSChargeId] = useState('')
   const [region, setRegion] = useState('')
   const [show, setShow] = useState(false)
   const [isNew, setIsNew] = useState(false)
   const [loading, setLoading] = useState(false);
+  const [percentage, setPercentage] = useState('');
+  const [fromAmount, setFromAmount] = useState('');
+  const [toAmount, setToAmount] = useState('');
+  const [sChargeEdit, setSchargeEdit] = useState(false);
+  const [showAddSCharge, setshowAddSCharge] = useState(false);
+  const [selectedRegionName, setselectedRegionName] = useState('');
+  const [selectedRegionId, setselectedRegionId] = useState('');
+
 
 
   const fields = [
@@ -69,7 +79,25 @@ const ServiceCharge = (props) => {
     setsShipping(item.shipping_cost)
     setScharge(item.service_charge)
     setItemId(item.id)
+
     setShow(true)
+  }
+  const handleUpdate = (item) => {
+    setsShipping(item.shipping_cost)
+    //setScharge(item.service_charge)
+    // setItemId(item.id)
+    setSChargeId(item.id)
+    setFromAmount(item.from_amount)
+    setToAmount(item.to_amount)
+    setPercentage(item.percentage)
+    setSchargeEdit(true)
+    setShow(true)
+  }
+
+  const handleAdd =(item)=>{
+    setselectedRegionName(item.region.name)
+    setselectedRegionId(item.region.id)
+    setshowAddSCharge(true)
   }
 
   const updateOrCreateCharge = () => {
@@ -96,8 +124,30 @@ const ServiceCharge = (props) => {
           toast.error(error.response.data.message);
         });
     } else {
+      if(sChargeEdit){
+        let dUpdate={
+          percentage:percentage,
+          from_amount:fromAmount,
+          to_amount: toAmount,
+          id:sChargeId
+        }
 
-      userService
+        userService
+        .updateServiceChargePriceRange(dUpdate)
+        .then(() => {
+          setLoading(false);
+          toast.success("service charge updated");
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        
+      }else{
+        userService
         .updateServiceCharge(dataUpdate)
         .then(() => {
           setLoading(false);
@@ -106,28 +156,88 @@ const ServiceCharge = (props) => {
         .catch((error) => {
           console.log(error);
         });
-
+      }
     }
+  }
+
+  const updateOrCreateChargePrice=()=>{
+
+    let data={
+      percentage:percentage,
+      from_amount:fromAmount,
+      to_amount: toAmount,
+      region_id:selectedRegionId
+    }
+
+    userService
+    .createServiceChargePrice(data)
+    .then(() => {
+      setLoading(false);
+      toast.success("Service charge created");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  }
+  const handleOnChangeSCharge = (value, index) => {
+
+    if (index === 'percentage') {
+      setPercentage(value)
+    }
+    if (index === 'from_amount') {
+      setFromAmount(value)
+    }
+    if (index === 'to_amount') {
+      setToAmount(value)
+    }
+
   }
   return (
     <>
-      {/* <CButton
-        size="md"
-        color="primary"
-        className="mb-4 float-md-right"
-        onClick={() => { setShow(true); setIsNew(true) }}>
-        Add +
-      </CButton> */}
-      <Modals 
+
+      <Modals
         show={show}
         sCharge={sCharge}
         sShipping={sShipping}
         isNew={isNew}
         handleRegionChange={(e) => setRegion(e.target.value)}
         handleSuccess={updateOrCreateCharge}
-        handleCancel={() => { setShow(false); setIsNew(false) }}
+        handleCancel={() => {
+          setShow(false);
+          setIsNew(false);
+          setSchargeEdit(false)
+        }}
         handleOnChangeSCost={(e) => setsShipping(e.target.value)}
-        handleOnChangeSCharge={(e) => setScharge(e.target.value)}
+        handleOnChangeSCharge={handleOnChangeSCharge}
+
+        sChargeEdit={sChargeEdit}
+        percentage={percentage}
+        from_amount={fromAmount}
+        to_amount={toAmount}
+      />
+      <AddModal
+      title={`Add service charge for ${selectedRegionName} region`}
+        show={showAddSCharge}
+        sCharge={sCharge}
+        sShipping={sShipping}
+        isNew={isNew}
+        handleRegionChange={(e) => setRegion(e.target.value)}
+        handleSuccess={updateOrCreateChargePrice}
+        handleCancel={() => {
+         setshowAddSCharge(false)
+        }}
+        handleOnChangeSCost={(e) => setsShipping(e.target.value)}
+        handleOnChangeSCharge={handleOnChangeSCharge}
+
+        sChargeEdit={sChargeEdit}
+        percentage={percentage}
+        from_amount={fromAmount}
+        to_amount={toAmount}
       />
       <CRow>
         <CCol>
@@ -159,6 +269,54 @@ const ServiceCharge = (props) => {
                           onClick={() => handleEdit(item)}
                         >
                           Edit
+                        </CButton>
+                      </td>
+                    ),
+                    region: (item) => (
+                      <td>
+
+                        {item.region.name.charAt(0).toUpperCase() + item.region.name.slice(1)}
+                      </td>
+                    ),
+                    service_charge: (item) => (
+                      <td>
+
+                        {item.service_charge.map((item, index) => {
+                          return (
+                            <div>
+                              <p>Percentage <b>{item.percentage}</b></p>
+                              <div style={{ display: "flex", flexDirection: "row" }}>
+                                <div style={{ display: "flex", flexDirection: "column" }}>
+                                  <p><b>From</b> </p>
+                                  <p>{item.from_amount}</p>
+                                </div>
+                                  ----------
+                                <div style={{ display: "flex", flexDirection: "column" }}>
+                                  <p><b>To</b></p>
+                                  <p>{item.to_amount}</p>
+                                </div>
+                              </div>
+                              <CButton
+                                color="warning"
+                                variant="outline"
+                                size="sm"
+                                className="mx-1"
+                                onClick={() => handleUpdate(item)}
+                              >
+                                Update
+                        </CButton>
+                              <hr />
+                            </div>
+                          )
+                        })}
+                        <CButton
+                          color="success"
+                          variant="outline"
+                          size="sm"
+                          className="mx-1"
+                          onClick={() => handleAdd(item)}
+                        >
+                          Add Service Charge
                         </CButton>
                       </td>
                     )
