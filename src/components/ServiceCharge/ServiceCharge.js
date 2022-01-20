@@ -275,7 +275,7 @@ const ServiceCharge = (props) => {
                     region: (item) => (
                       <td>
 
-                        {item.region.name.charAt(0).toUpperCase() + item.region.name.slice(1)}
+                        {item && item.region && item.region.name.charAt(0).toUpperCase() + item.region.name.slice(1)}
                       </td>
                     ),
                     service_charge: (item) => (
