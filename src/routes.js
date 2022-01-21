@@ -4,6 +4,7 @@ const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 const Orders = React.lazy(() => import("./components/Orders/Orders"));
 const Order = React.lazy(() => import("./components/Orders/Order"));
 const Customers = React.lazy(() => import("./components/Customers/Customers"));
+const Admins = React.lazy(() => import("./components/Admins/Admins"));
 const Customer = React.lazy(() => import("./components/Customers/Customer"));
 const Stores = React.lazy(() => import("./components/Stores/Store"));
 const CustomerDetails = React.lazy(() => import("./components/Customers/Tabs"));
@@ -16,6 +17,7 @@ const Serviceman = React.lazy(() =>
   import("./components/Seller/Serviceman")
 );
 const Category = React.lazy(() => import("./components/category/services"));
+const Banner = React.lazy(() => import("./components/Banner/banner"));
 const AddCategory = React.lazy(() => import("./components/category/addCategory"));
 const UpdateCategory = React.lazy(() =>
   import("./components/category/updateCategory")
@@ -39,6 +41,8 @@ const routes = [
   { path: "/customers", name: "Customers", component: Customers, exact: true },
   { path: "/store", name: "Ctore", component: Stores, exact: true },
   { path: "/customers/customer-:id", name: "Customer", component: Customer },
+  { path: "/banners", name: "Banner", component: Banner },
+  { path: "/admin", name: "Admin", component: Admins },
   {
     path: "/seller",
     name: "Seller",

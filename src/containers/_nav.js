@@ -37,6 +37,12 @@ const _nav = [
     to: "/category",
     icon: "cil-settings",
   },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Banner",
+    to: "/banners",
+    icon: "cil-settings",
+  },
   // {
   //   _tag: "CSidebarNavItem",
   //   name: "Parts Categories",
@@ -66,9 +72,16 @@ const _nav = [
         _tag: 'CSidebarNavItem',
         name: 'Regions', 
         to: '/regions',
-      },
+      }
       
     ],
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: <NAVITEM icon={<i class="fa fa-users"></i>
+  } name={"Admins"} />,
+    to: '/admin',
+
   },
 
   // {

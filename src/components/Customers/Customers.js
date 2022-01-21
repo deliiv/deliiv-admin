@@ -31,11 +31,6 @@ const Customers = (props) => {
       label: "Number",
     },
     {
-      key: "customeaddress",
-      _style: { minWidth: "15%" },
-      label: "Address",
-    },
-    {
       key: "customeremail",
       _style: { minWidth: "15%" },
       label: "Email",

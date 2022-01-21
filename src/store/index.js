@@ -11,6 +11,8 @@ import categorySlice from './category-slice';
 import serviceChargeSlice from './service-charge-slice';
 import regionSlice from './region-slice';
 import storeSlice from './store-slice';
+import bannerSlice from './banner-slice';
+import adminSlice from './admin-slice';
 
 const store = configureStore({
   reducer: {
@@ -25,7 +27,9 @@ const store = configureStore({
     category: categorySlice.reducer,
     servicecharge: serviceChargeSlice.reducer,
     region: regionSlice.reducer,
-    store: storeSlice.reducer
+    store: storeSlice.reducer,
+    banner: bannerSlice.reducer,
+    admin: adminSlice.reducer,
   },
 });
 export default store;

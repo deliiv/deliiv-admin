@@ -103,6 +103,7 @@ const Services = (props) => {
          catName={name}
          image_url={image}
          id={id}
+         handleCancel={() => setShowModals(false)}
          handleSuccess={handleSuccess}
         //  handleImageUpload={handleImageUpload}
          handleOnChangeCatname={handleOnChangeCatname}

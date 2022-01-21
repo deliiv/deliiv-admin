@@ -66,6 +66,11 @@ const OrderDetails = (props) => {
       label: "Status",
     },
     {
+      key: "region",
+      _style: { minWidth: "15%" },
+      label: "Region",
+    },
+    {
       key: "service_charge",
       _style: { minWidth: "15%" },
       label: "Service Charge",
@@ -160,32 +165,14 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                     </div>
                   }
                   scopedSlots={{
-                  //   firstName: (serviceman) => (
-                  //     <td>
-                  //       <Link
-                  //         to={{
-                  //           pathname: `${url}/serviceman-${serviceman._id}`,
-                  //         }}
-                  //       >
-                  //         {serviceman ? serviceman.firstName : null}
-                  //       </Link>
-                  //     </td>
-                  //   ),
-                  //   number: (serviceman) => (
-                  //     <td>{serviceman ? serviceman.phone : null}</td>
-                  //   ),
-                  //   no_of_jobs: (serviceman) => (
-                  //     <td>
-                  //       {serviceman ? serviceman.numberOfJobs : "Not Available"}
-                  //     </td>
-                  //   ),
-                  //   active_status: (serviceman) => (
-                  //     <td>
-                  //       {serviceman.active_status === true
-                  //         ? "active"
-                  //         : "inactive"}
-                  //     </td>
-                  //   ),
+            
+                    region: (data) => {
+                     return (
+                      <td>
+                        {data && data.address && data.address.region ? data.address.region : "-not-available"}
+                      </td>
+                    )
+                      },
                     created_at: (date) => (
                       <td>
                         {formateDate(date.created_at)}{" "}
@@ -220,7 +207,6 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                             onClick={() => {
                               toggleDetails(item.id);
                               //console.log(products[item.id]);
-                              console.log('>>>>>>>', item)
                              // setSelectedProduct(item.seller_details.order.filter(it => it.id === item.id));
                               
                             }}
