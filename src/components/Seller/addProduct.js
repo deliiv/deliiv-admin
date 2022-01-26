@@ -48,12 +48,11 @@ const AddProduct = (props) => {
       setSelectErrorRegion("Region is required")
       setLoading(false)
     }else{
-		console.log('********',{...state,region:regionn, category_id:category})
       userService
 		  .addProductByAdmin({...state,region:regionn, category_id:category})
 		  .then(() => {
 		    setLoading(false);
-		    history.push("/seller");
+		    history.push(`/seller/details/${seller.seller_info.id}`);
         window.location.reload();
         toast.success("product added")
 
