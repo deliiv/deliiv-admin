@@ -28,26 +28,37 @@ const Tabs = (props) => {
 	const dispatch = useDispatch();
 	const seller_details = useSelector((state) => state.seller.seller_details);
 
-	const [ active, setActive ] = useState(-1);
+	const [ active, setActive ] = useState(false);
 	const [ showDialog, setshowDialog ] = useState(false);
 
-	useEffect(() => {
-      dispatch(fetchSellerDetails(props.match.params.id));
-      seller_details && setActive(seller_details.seller_details.seller_info.active)
-	},[ dispatch ]);
+	useEffect(
+		() => {
+			dispatch(fetchSellerDetails(props.match.params.id));
+		},
+		[ dispatch ]
+	);
+
+	useEffect(
+		() => {
+			if (seller_details && seller_details.seller_details && seller_details.seller_details.seller_info) {
+				setActive(seller_details.seller_details.seller_info.active);
+			}
+		},
+		[ seller_details ]
+	);
 
 	const handleModalSuccess = () => {
-		const { id, active } = seller_details.seller_details.seller_info;
+		const { id } = seller_details.seller_details.seller_info;
+
+		let data = { seller: id, status: active };
 
 		userService
-			.updateSellerInfo({ seller: id, status: !active })
+			.updateSellerInfo(data)
 			.then((response) => {
-        toast.success(`Seller status set to ${!active}`);
-        setActive(!active)
-		setshowDialog(false)
-	//	window.location.reload();
-	
-		})
+				toast.success(`Seller status set to ${!active}`);
+				setshowDialog(false);
+				window.location.reload();
+			})
 			.catch((error) => {
 				console.log('ERR: ', error);
 			});
@@ -155,7 +166,10 @@ const Tabs = (props) => {
 											color={'primary'}
 											labelOn={'On'}
 											type={'checkbox'}
-											onChange={() => setshowDialog(true)}
+											onChange={() => {
+												setshowDialog(true);
+												setActive(!active);
+											}}
 										/>
 									</div>
 								</CCol>

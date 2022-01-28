@@ -13,6 +13,7 @@ const SellerDetails = React.lazy(() =>import("./components/Seller/Tabs"));
 const AddServiceman = React.lazy(() => import("./components/Seller/add"));
 const AddProduct = React.lazy(() => import("./components/Seller/addProduct"));
 const ViewProduct = React.lazy(() => import("./components/Seller/viewProduct"));
+const Products = React.lazy(() => import("./components/Products/Products"));
 const Serviceman = React.lazy(() =>
   import("./components/Seller/Serviceman")
 );
@@ -42,6 +43,7 @@ const routes = [
   { path: "/store", name: "Ctore", component: Stores, exact: true },
   { path: "/customers/customer-:id", name: "Customer", component: Customer },
   { path: "/banners", name: "Banner", component: Banner },
+  { path: "/products", name: "Products", component: Products },
   { path: "/admin", name: "Admin", component: Admins },
   {
     path: "/seller",

@@ -38,6 +38,7 @@ const ViewProduct = (props) => {
 	const [isD, setIsD] = useState(false)
 	const [stateCategory, setstateCategory] = useState('')
 	const [imageId, setImageId] = useState('')
+	const [ju, setJu] = useState('')
 
 
 	const [state, setState] = React.useState({
@@ -130,21 +131,24 @@ const ViewProduct = (props) => {
 			.uploadProductImage(form)
 			.then((response) => {
 				setLoading(false);
-				setTimeout(() => {
-					window.location.reload();
-				}, 1000);
+				console.log('=======',response.data.data.image_url)
+				setJu(response.data.data.image_url)
+				setSelectedImage(null)
+				// setTimeout(() => {
+				// 	window.location.reload();
+				// }, 1000);
 
-				userService
-					.getSellerProduct(id)
-					.then((response) => {
-						setLoading(false);
-						setProductPayload(response.data.data);
-						setSelectedImage(null)
+				// userService
+				// 	.getSellerProduct(id)
+				// 	.then((response) => {
+				// 		setLoading(false);
+				// 		setProductPayload(response.data.data);
+				// 		setSelectedImage(null)
 
-					})
-					.catch((error) => {
-						console.log(error);
-					});
+				// 	})
+				// 	.catch((error) => {
+				// 		console.log(error);
+				// 	});
 
 				toast.success("Image uploaded")
 			})
@@ -422,6 +426,7 @@ const ViewProduct = (props) => {
 															width={150}
 															onClick={() => handleViewImage(item.image_url)}
 														/>
+														
 														{editMode && (<CButton
 															color="danger"
 															variant="outline"
@@ -430,6 +435,10 @@ const ViewProduct = (props) => {
 												</>
 											)
 										}) : <p>This product has no image(s)</p>}
+										{ju && <img
+															src={ju}
+															width={150}
+														/>}
 									</div>
 
 								}

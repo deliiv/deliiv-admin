@@ -13,6 +13,7 @@ import { fetchRegion } from './store/region-actions'
 import { fetchStore } from './store/store-actions'
 import { fetchAllBanners } from './store/banner-actions'
 import { fetchAllAdmins } from './store/admin-actions'
+import { fetchAllProducts } from './store/all-product-actions'
 
 import {loadBoard, fetchAvailableRegions, fetchAvailableCategory} from './store/dashboard-actions'
 import { fetchAllCategories} from './store/category-actions'
@@ -90,6 +91,9 @@ const App = () => {
   }, [dispatch]);
   React.useEffect(() => {
     dispatch(fetchAllAdmins());
+  }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(fetchAllProducts());
   }, [dispatch]);
 
   return (

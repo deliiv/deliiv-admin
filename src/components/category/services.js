@@ -37,6 +37,7 @@ const Services = (props) => {
   const [id,setId]= useState('')
   const [name,setName]= useState('')
   const [image,setImage]= useState('')
+  const [available,setAvailable]= useState(false)
 
 
   const fields = [
@@ -49,6 +50,11 @@ const Services = (props) => {
       key: "name",
       _style: { minWidth: "15%" },
       label: "Service Type",
+    },
+    {
+      key: "available",
+      _style: { minWidth: "15%" },
+      label: "Available",
     },
 
     {
@@ -69,16 +75,21 @@ const Services = (props) => {
   const handleSuccess =()=>{
     let data={
       id: id,
-      name:name
+      name:name,
+      available:available
     }
   userService.updateCategory(data).then(response =>{
-    toast.success("Category name update")
+    toast.success("Category updated")
     setTimeout(() => {
 			window.location.reload();
 		}, 1000);
   }).catch(err =>{
     console.log(err)
   })
+  }
+
+  const handleChangeAvailable=()=>{
+    setAvailable(!available)
   }
 
   return (
@@ -102,6 +113,8 @@ const Services = (props) => {
         <Modals show={showModals}
          catName={name}
          image_url={image}
+         available={available}
+         handleChangeAvailable={handleChangeAvailable}
          id={id}
          handleCancel={() => setShowModals(false)}
          handleSuccess={handleSuccess}
@@ -133,34 +146,9 @@ const Services = (props) => {
                     scopedSlots={{
                       image: (service) => <td><img  style={{ objectFit: 'cover',width: '50%'
                       }}src={service.image_url} width ={'50px'} height={'100px'}/></td>,
-                    //   tag: (service) => <td>{service.tag}</td>,
-                    //   // price: (service) => (
-                    //   //   // <td>&#x20A6;{commaDelimitNumber(service.price)}</td>
-                    //   // ),
-                    //   date_created: (service) => (
-                    //     <td>
-                    //       {formateDate(service.date_created)}{" "}
-                    //       {formatTime(service.date_created)}
-                    //     </td>
-                    //   ),
-                    //   part_category: (part) => (
-                    //     <td>
-                    //       <CButton
-                    //         color="primary"
-                    //         variant="outline"
-                    //         size="sm"
-                    //         className="mx-1"
-                    //         onClick={() =>
-                    //         }
-                    //         disabled={findArgInArray(
-                    //           parts.map((prt) => prt.title),
-                    //           part.title
-                    //         )}
-                    //       >
-                    //         Create Part Category
-                    //       </CButton>
-                    //     </td>
-                    //   ),
+                      available:(item)=>(
+                      <td>{item.available ? (<p>Available</p>) :( <p>Unavailable</p>)}</td>
+                      ),
                       action: (category) => (
                         <td>
                           <CButton
@@ -172,13 +160,14 @@ const Services = (props) => {
                               setShowModals(true);
                               setId(category.id)
                               setName(category.name)
+                              setAvailable(category.available)
                               setImage(category.image_url)
                                setState({name: category.name, id: category.id, image:category.image_url});
                               // console.log('MMMMM: ',category)
                             }
                             }
                           >
-                            edit
+                            Edit
                           </CButton>
                   
                         </td>

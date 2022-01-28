@@ -430,6 +430,19 @@ class UserService {
         });
     });
   }
+  async allProducts() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/all-products", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 
   async addServicemen(data) {
     const config = await authHeader();

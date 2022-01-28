@@ -48,6 +48,11 @@ const SellerProductDetails = (props) => {
       label: "ID",
     },
     {
+      key: "image",
+      _style: { minWidth: "15%" },
+      label: "Image",
+    },
+    {
       key: "name",
       _style: { minWidth: "15%" },
       label: "name",
@@ -61,6 +66,11 @@ const SellerProductDetails = (props) => {
       key: "price",
       _style: { minWidth: "15%" },
       label: "Price",
+    },
+    {
+      key: "category",
+      _style: { minWidth: "20%" },
+      label: "Category",
     },
     {
       key: "discount_price",
@@ -86,8 +96,7 @@ const SellerProductDetails = (props) => {
 
   return (
     <>
-
-     <CButton
+<CButton
         size="md"
         color="primary"
         className="mb-4 float-md-right"
@@ -97,9 +106,8 @@ const SellerProductDetails = (props) => {
       </CButton>
       
       <ViewProductModals show={showModals}/>
-
-      {/* <WidgetsDropdown widgetList={widgetList} /> */}
       <CRow>
+        
         <CCol>
           <CCard>
             <CCardBody>
@@ -119,6 +127,12 @@ const SellerProductDetails = (props) => {
                     </div>
                   }
                   scopedSlots={{
+                    image: (serviceman) => (
+                      <td>
+                        
+                        <img src={serviceman.images[0].image_url} width={100} height={100}/>
+                      </td>
+                    ),
                     firstName: (serviceman) => (
                       <td>
                         <Link
@@ -143,6 +157,11 @@ const SellerProductDetails = (props) => {
                         {serviceman.active_status === true
                           ? "active"
                           : "inactive"}
+                      </td>
+                    ),
+                    category: (item) => (
+                      <td>
+                        {item && item.category ?( <p>{item.category.name}</p>): "Not Available"}
                       </td>
                     ),
                     date_created: (serviceman) => (

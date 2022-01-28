@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { CRow, CCol, CCard, CCardBody, CLabel, CInput,CTextarea,
-	CFormGroup, CSelect, CButton, CSpinner } from '@coreui/react';
+import {
+	CRow, CCol, CCard, CCardBody, CLabel, CInput, CTextarea,
+	CFormGroup, CSelect, CButton, CSpinner
+} from '@coreui/react';
 import checkEmptyProperties from 'src/utils/checkEmptyProperties';
 import { emailValidation } from 'src/utils/validations';
 import userService from 'src/services/user.service';
@@ -14,18 +16,18 @@ const AddProduct = (props) => {
 	const seller = useSelector((state) => state.seller.seller_details.seller_details);
 	const history = useHistory();
 
-	const [ loading, setLoading ] = React.useState(false);
-	const [ regionn, setRegion ] = React.useState(regions && regions.length > 0 ? regions[0].name : '');
-	const [ category, setCategory ] = React.useState(categories && categories.length >  0 ? categories[0].id  :'');
-	const [ selectErrorCategory, setSelectErrorCategory ] = React.useState('');
-	const [ selectErrorRegion, setSelectErrorRegion ] = React.useState('');
-	const [ selectValue, setSelectValue ] = React.useState(false);
+	const [loading, setLoading] = React.useState(false);
+	const [regionn, setRegion] = React.useState(regions && regions.length > 0 ? regions[0].name : '');
+	const [category, setCategory] = React.useState(categories && categories.length > 0 ? categories[0].id : '');
+	const [selectErrorCategory, setSelectErrorCategory] = React.useState('');
+	const [selectErrorRegion, setSelectErrorRegion] = React.useState('');
+	const [selectValue, setSelectValue] = React.useState(false);
 
-	const [ state, setState ] = React.useState({
+	const [state, setState] = React.useState({
 		name: '',
 		description: '',
-    price: '',
-    seller_id:seller && seller.seller_info.id,
+		price: '',
+		seller_id: seller && seller.seller_info.id,
 	});
 
 	const inputChangeHandler = (event) => {
@@ -39,31 +41,33 @@ const AddProduct = (props) => {
 	};
 
 	const submitForm = () => {
-    setLoading(true);
-    if(!category){
-      setSelectErrorCategory("category is required")
-      setLoading(false)
-    }
-    else if(!regionn){
-      setSelectErrorRegion("Region is required")
-      setLoading(false)
-    }else{
-      userService
-		  .addProductByAdmin({...state,region:regionn, category_id:category})
-		  .then(product => {
-			setLoading(false);
+		setLoading(true);
+		if (!category) {
+			setSelectErrorCategory("category is required")
+			setLoading(false)
+		}
+		else if (!regionn) {
+			setSelectErrorRegion("Region is required")
+			setLoading(false)
+		} else {
+			userService
+				.addProductByAdmin({ ...state, region: regionn, category_id: category })
+				.then(product => {
+					setLoading(false);
 
-		toast.success("product added")
-		setTimeout(() => {
-			history.push(`/seller/products/${product.id}`)
-		}, 1500);
+					console.log('*************', product.data.data.product)
 
-		})
-		  .catch((error) => {
-			setLoading(false);
-        toast.error(error.response.data.message)
-		  });
-    }
+					toast.success("product added")
+					setTimeout(() => {
+						history.push(`/seller/products/${product.data.data.product.id}`)
+					}, 1500);
+
+				})
+				.catch((error) => {
+					setLoading(false);
+					toast.error(error.response.data.message)
+				});
+		}
 
 	};
 
@@ -99,7 +103,7 @@ const AddProduct = (props) => {
 								<CFormGroup>
 									<CLabel>Description</CLabel>
 									<CTextarea
-									maxLength={250}
+										maxLength={250}
 										type="text"
 										size="md"
 										value={state.description}
@@ -134,12 +138,12 @@ const AddProduct = (props) => {
                   </CFormGroup> */}
 							{/* </CCol> */}
 
-              <CCol xs="4">
-                  <CFormGroup>
-                    <CLabel htmlFor="region">Select Region</CLabel>
-                    <CSelect custom value={regionn} name="region" id="creditReason" 
-                    onChange={(e) => handleChangeRegion(e.target.value)}>
-                    {regions &&
+							<CCol xs="4">
+								<CFormGroup>
+									<CLabel htmlFor="region">Select Region</CLabel>
+									<CSelect custom value={regionn} name="region" id="creditReason"
+										onChange={(e) => handleChangeRegion(e.target.value)}>
+										{regions &&
 											regions.map((item) => {
 												return (
 													<option value={item.name} key={item.id}>
@@ -147,31 +151,31 @@ const AddProduct = (props) => {
 													</option>
 												);
 											})}
-                    </CSelect>
-                    {selectErrorRegion && <p style={{ color:"red" }}>{selectErrorRegion}</p>}
+									</CSelect>
+									{selectErrorRegion && <p style={{ color: "red" }}>{selectErrorRegion}</p>}
 
-                  </CFormGroup>
-                </CCol>
-              <CCol xs="4">
-                  <CFormGroup>
-                    <CLabel htmlFor="region">Select Category</CLabel>
-                    <CSelect custom value={category} name="category" id="category" 
-                    onChange={(e) => handleChangeCategory(e.target.value)}>
-                    {categories &&
+								</CFormGroup>
+							</CCol>
+							<CCol xs="4">
+								<CFormGroup>
+									<CLabel htmlFor="region">Select Category</CLabel>
+									<CSelect custom value={category} name="category" id="category"
+										onChange={(e) => handleChangeCategory(e.target.value)}>
+										{categories &&
 											categories.map((item) => {
 												return (
 													<>
-                          <option value={item.id} key={item.id}>
-														{item.name}
-													</option>
-                          </>
+														<option value={item.id} key={item.id}>
+															{item.name}
+														</option>
+													</>
 												);
 											})}
-                    </CSelect>
-                    {selectErrorCategory && <p style={{ color:"red" }}>{selectErrorCategory}</p>}
+									</CSelect>
+									{selectErrorCategory && <p style={{ color: "red" }}>{selectErrorCategory}</p>}
 
-                  </CFormGroup>
-                </CCol>
+								</CFormGroup>
+							</CCol>
 						</CFormGroup>
 						<CButton
 							style={{ position: 'relative' }}

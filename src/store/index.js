@@ -13,6 +13,7 @@ import regionSlice from './region-slice';
 import storeSlice from './store-slice';
 import bannerSlice from './banner-slice';
 import adminSlice from './admin-slice';
+import allProductSlice from './all-product-slice';
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     store: storeSlice.reducer,
     banner: bannerSlice.reducer,
     admin: adminSlice.reducer,
+    allProducts:allProductSlice.reducer
   },
 });
 export default store;

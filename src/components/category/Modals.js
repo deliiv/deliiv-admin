@@ -30,7 +30,7 @@ const Modals = ({
 	handleOnChangeAvailable,
 	reasonValue,
 	handleOnChangeCatname,
-	handleOnChangeSCharge,
+	handleChangeAvailable,
 
 	available,
 	catName,
@@ -45,6 +45,7 @@ const Modals = ({
 	const [ success, setSuccess ] = useState(false);
 	const [ warning, setWarning ] = useState(false);
 	const [ danger, setDanger ] = useState(false);
+	const [ active, setActive ] = useState(false);
 
 	const [ categoryName, setCategoryName ] = useState('');
 	const [ selectedImage, setSelectedImage ] = React.useState('');
@@ -103,6 +104,21 @@ const Modals = ({
 									onChange={handleOnChangeCatname}
 									style={{ marginTop: '20px', marginBottom: '20px' }}
 								/>
+							</CFormGroup>
+							<CFormGroup>
+							<p>Availability</p>
+										<CSwitch
+											className={'mx-1'}
+											variant={'3d'}
+											defaultChecked
+											labelOff={'\u2715'}
+											size={'lg'}
+											checked={available}
+											color={'primary'}
+											labelOn={'On'}
+											type={'checkbox'}
+											onChange={handleChangeAvailable}
+										/>
 							</CFormGroup>
 							<CFormGroup>
 								<CLabel htmlFor="region">Category Images</CLabel>
