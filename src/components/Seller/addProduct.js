@@ -50,14 +50,17 @@ const AddProduct = (props) => {
     }else{
       userService
 		  .addProductByAdmin({...state,region:regionn, category_id:category})
-		  .then(() => {
-		    setLoading(false);
-		    history.push(`/seller/details/${seller.seller_info.id}`);
-        window.location.reload();
-        toast.success("product added")
+		  .then(product => {
+			setLoading(false);
 
-		  })
+		toast.success("product added")
+		setTimeout(() => {
+			history.push(`/seller/products/${product.id}`)
+		}, 1500);
+
+		})
 		  .catch((error) => {
+			setLoading(false);
         toast.error(error.response.data.message)
 		  });
     }
@@ -89,6 +92,7 @@ const AddProduct = (props) => {
 										name="name"
 										onChange={inputChangeHandler}
 									/>
+									<p><i>Minimum length is 5 characters</i></p>
 								</CFormGroup>
 							</CCol>
 							<CCol sm="6">
@@ -109,7 +113,7 @@ const AddProduct = (props) => {
 								<CFormGroup>
 									<CLabel>Price</CLabel>
 									<CInput
-										type="tel"
+										type="number"
 										size="md"
 										value={state.price}
 										name="price"

@@ -1,7 +1,7 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router';
-import { CRow, CCol, CCard, CCardBody, CLabel, CInput,CTextarea, CFormGroup, CSelect, CButton, CSpinner,CSwitch } from '@coreui/react';
+import { CRow, CCol, CCard, CCardBody, CLabel, CInput, CTextarea, CFormGroup, CSelect, CButton, CSpinner, CSwitch } from '@coreui/react';
 import checkEmptyProperties from 'src/utils/checkEmptyProperties';
 import { emailValidation } from 'src/utils/validations';
 import userService from 'src/services/user.service';
@@ -11,16 +11,21 @@ import Modals from './Modals';
 
 const ViewProduct = (props) => {
 	const regions = useSelector((state) => state.dashbord.availableRegions);
+	const categories = useSelector((state) => state.dashbord.categories);
+
 	// const seller = useSelector((state) => state.seller &&  state.seller.seller_details.seller_details);
 	const history = useHistory();
 	const { id } = useParams();
 
-	const [ loading, setLoading ] = React.useState(false);
-	const [ regionn, setRegion ] = React.useState('');
-	const [ selectError, setSelectError ] = React.useState('');
-	const [ selectValue, setSelectValue ] = React.useState(false);
-	const [ productPayload, setProductPayload ] = React.useState({});
-	const [ editMode, setEditMode ] = React.useState(false);
+	const [loading, setLoading] = React.useState(false);
+	const [category, setCategory] = React.useState(categories && categories.length > 0 ? categories[0].id : '');
+	const [selectErrorCategory, setSelectErrorCategory] = React.useState('');
+
+	const [regionn, setRegion] = React.useState('');
+	const [selectError, setSelectError] = React.useState('');
+	const [selectValue, setSelectValue] = React.useState(false);
+	const [productPayload, setProductPayload] = React.useState({});
+	const [editMode, setEditMode] = React.useState(false);
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [clickedImage, setclickedImage] = useState(null);
 	const [showImageModal, setshowImageModal] = useState(false);
@@ -28,18 +33,21 @@ const ViewProduct = (props) => {
 	const [productInstance, setProductInstance] = useState(null);
 	const [p, setP] = useState(null);
 	const [confirmDeleteTitle, setConfirmDeleteTitle] = useState('');
-	const [showD, setShowD]= useState(false)
-	const [imageId, setImageId]= useState('')
+	const [showD, setShowD] = useState(false)
+	const [aState, setAState] = useState(false)
+	const [isD, setIsD] = useState(false)
+	const [stateCategory, setstateCategory] = useState('')
+	const [imageId, setImageId] = useState('')
 
 
-	const [ state, setState ] = React.useState({
+	const [state, setState] = React.useState({
 		name: '',
 		description: '',
 		price: '',
-		available:0,
-		is_deal:0,
-		region:'',
-		images:[]
+		// available:aState,
+		is_deal: 0,
+		region: '',
+		images: []
 		// seller_id: seller && seller.seller_info.id
 	});
 
@@ -50,37 +58,43 @@ const ViewProduct = (props) => {
 				setLoading(false);
 				setProductInstance(response.data.data)
 				setP(response.data)
-				console.log('==============', response.data.data)
-				setState({name: response.data.data.name, 
-					description:  response.data.data.description,
-					price:  response.data.data.price, 
+				setAState(response.data.available)
+				setIsD(response.data.is_deal)
+				setstateCategory(response.data.data.category.name)
+
+				setState({
+					name: response.data.data.name,
+					description: response.data.data.description,
+					price: response.data.data.price,
 					is_deal: response.data.data.is_deal,
 					region: response.data.data.region,
-					available: response.data.data.available})
+					available: response.data.data.available
+				})
+				setRegion(response.data.data.available)
 
-					setRegion(response.data.data.available)
-				
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	}, []);
 
-	useEffect(() =>{
-		console.log('????????????', editMode);
-		console.log('????????????222', p);
-		if(editMode){
-			console.log('>>>>>>>>Edit mode', productPayload);
-			setState({name:productPayload.name, 
+	useEffect(() => {
+		if (editMode) {
+			setAState(p.data.available)
+			setIsD(p.data.is_deal)
+			setCategory(p.data.category.id)
+			setState({
+				name: productPayload.name,
 				description: productPayload.description,
-				price: productPayload.price, 
-				is_deal:productPayload.is_deal,
-				available:productPayload.available})
-				setRegion(productPayload.region)
+				price: productPayload.price,
+				is_deal: p.data.is_deal,
+				// available:productPayload.available
+			})
+			setRegion(productPayload.region)
 		}
-		
 
-	},[editMode])
+
+	}, [editMode])
 
 	const inputChangeHandler = (event) => {
 		const { name, value } = event.target;
@@ -103,126 +117,120 @@ const ViewProduct = (props) => {
 	};
 
 	const handleChangeRegion = (region) => {
-		setState({region:region})
+		setState({ region: region })
 		setRegion(region);
 	};
-const handleImageUpload =()=>{
+	const handleImageUpload = () => {
 
-	let form = new FormData();
-	form.append('image', selectedImage)
-	form.append('product_id', id)
-
-	userService
-	.uploadProductImage(form)
-	.then((response) => {
-		setLoading(false);
-		setTimeout(() => {
-			window.location.reload();
-		}, 1000);
+		let form = new FormData();
+		form.append('image', selectedImage)
+		form.append('product_id', id)
 
 		userService
-			.getSellerProduct(id)
+			.uploadProductImage(form)
 			.then((response) => {
 				setLoading(false);
-				setProductPayload(response.data.data);
-				setSelectedImage(null)
-				
+				setTimeout(() => {
+					window.location.reload();
+				}, 1000);
+
+				userService
+					.getSellerProduct(id)
+					.then((response) => {
+						setLoading(false);
+						setProductPayload(response.data.data);
+						setSelectedImage(null)
+
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+
+				toast.success("Image uploaded")
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 
-		toast.success("Image uploaded")
-	})
-	.catch((error) => {
-		console.log(error);
-	});
-	
-}
-
-const handleAvailableToggle=(name)=>{
-
-	if(name === 'available'){
-		setState({available:!state.available})
-	}
-	if(name === 'is_deal'){
-		setState({is_deal:!state.is_deal})
-	}
-}
-
-const handleUpdateProduct =()=>{
-
-
-	let newDataPayload={
-		name: state.name ? state.name : p.data.name,
-		description: state.description ? state.description : p.data.description,
-		price: state.price ? state.price : p.data.price,
-		region: state.region ? state.region : p.data.region,
-		available: state.available ? state.available : p.data.available,
-		is_deal: state.is_deal ? state.is_deal : p.data.is_deal
 	}
 
-	userService
-	.updateProduct({...newDataPayload, id:id})
-	.then((response) => {
-		setLoading(false);
-		toast.success("Product updated")
-		setTimeout(() => {
-			window.location.reload();
-		}, 2000);
+	const handleIsDealToggle = () => {
+		setIsD(!isD)
+	}
+	const handleAvailableToggleAvailable = () => {
+		console.log(aState)
+		setAState(!aState)
+	}
 
-	})
-	.catch((error) => {
-		console.log(error);
-	});
-
-}
-
-const handleImageDelete=(id)=>{
-	setConfirmDeleteTitle("Are you sure you want to delete image ?")
-	setShowD(true)
-	setImageId(id)
-	
-}
-const handleCancelDialog=()=>{
-	setConfirmDeleteTitle("")
-	setShowD(false)	
-}
+	const handleUpdateProduct = () => {
 
 
-const handleImageDeleteConfirm=()=>{
-	
-	userService
-	.deleteProductImage(imageId)
-	.then((response) => {
-		setLoading(false);
+		let newDataPayload = {
+			name: state.name ? state.name : p.data.name,
+			description: state.description ? state.description : p.data.description,
+			price: state.price ? state.price : p.data.price,
+			region: state.region ? state.region : p.data.region,
+			available: aState,
+			is_deal: isD,
+			category_id:category
+		}
+
+		userService
+			.updateProduct({ ...newDataPayload, id: id })
+			.then((response) => {
+				setLoading(false);
+				toast.success("Product updated")
+				setTimeout(() => {
+					window.location.reload();
+				}, 2000);
+
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+
+	}
+
+	const handleImageDelete = (id) => {
+		setConfirmDeleteTitle("Are you sure you want to delete image ?")
+		setShowD(true)
+		setImageId(id)
+
+	}
+	const handleCancelDialog = () => {
+		setConfirmDeleteTitle("")
 		setShowD(false)
-		setTimeout(() => {
-			window.location.reload();
-		}, 1500);
-		// userService
-		// 	.getSellerProduct(id)
-		// 	.then((response) => {
-		// 		setLoading(false);
-		// 		setProductPayload(response.data.data);
-		// 		setSelectedImage(null)
-				
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log(error);
-		// 	});
+	}
 
-		toast.success("Image Deleted")
-	})
-	.catch((error) => {
-		console.log('ERR: ', error);
-	});
-}
 
-const handleViewImage=(item)=>{
-	setclickedImage(item)
-	setshowImageModal(true)
-}
+	const handleImageDeleteConfirm = () => {
+
+		userService
+			.deleteProductImage(imageId)
+			.then((response) => {
+				setLoading(false);
+				setShowD(false)
+				setTimeout(() => {
+					window.location.reload();
+				}, 1500);
+			
+
+				toast.success("Image Deleted")
+			})
+			.catch((error) => {
+				console.log('ERR: ', error);
+			});
+	}
+
+	const handleChangeCategory = (region) => {
+		console.log(region)
+		setCategory(region);
+	};
+
+	const handleViewImage = (item) => {
+		setclickedImage(item)
+		setshowImageModal(true)
+	}
 	return (
 		<CRow>
 			<CCol>
@@ -243,10 +251,10 @@ const handleViewImage=(item)=>{
 											onChange={inputChangeHandler}
 										/>
 									) : (
-										<CLabel>
-											<b>{state.name}</b>
-										</CLabel>
-									)}
+											<CLabel>
+												<b>{state.name}</b>
+											</CLabel>
+										)}
 								</CFormGroup>
 							</CCol>
 							<CCol sm="6">
@@ -263,10 +271,10 @@ const handleViewImage=(item)=>{
 											onChange={inputChangeHandler}
 										/>
 									) : (
-										<CLabel>
-											<b>{state.description}</b>
-										</CLabel>
-									)}
+											<CLabel>
+												<b>{state.description}</b>
+											</CLabel>
+										)}
 								</CFormGroup>
 							</CCol>
 							<CCol sm="6">
@@ -283,10 +291,10 @@ const handleViewImage=(item)=>{
 											onChange={inputChangeHandler}
 										/>
 									) : (
-										<CLabel>
-											<b>{state.price}</b>
-										</CLabel>
-									)}
+											<CLabel>
+												<b>{state.price}</b>
+											</CLabel>
+										)}
 								</CFormGroup>
 							</CCol>
 
@@ -296,168 +304,185 @@ const handleViewImage=(item)=>{
 									<br />
 									{
 										editMode ? (<>
-										<CSelect
-											custom
-											value={regionn}
-											name="region"
-											id="creditReason"
-											onChange={(e) => handleChangeRegion(e.target.value)}>
-											{regions &&
-												regions.map((item) => {
-													return (
-														<option value={item.name} key={item.id}>
-															{item.name}
-														</option>
-													);
-												})}
-										</CSelect>
-										{selectError && <p style={{ color: 'red' }}>{selectError}</p>}
+											<CSelect
+												custom
+												value={regionn}
+												name="region"
+												id="creditReason"
+												onChange={(e) => handleChangeRegion(e.target.value)}>
+												{regions &&
+													regions.map((item) => {
+														return (
+															<option value={item.name} key={item.id}>
+																{item.name}
+															</option>
+														);
+													})}
+											</CSelect>
+											{selectError && <p style={{ color: 'red' }}>{selectError}</p>}
 										</>) : <CLabel htmlFor="region"><b>{state.region}</b></CLabel>
 
 									}
-									
+
 								</CFormGroup>
 							</CCol>
 
 							<CCol xs="4">
-							<CFormGroup>
+								<CFormGroup>
 
-											<CLabel htmlFor="isdeal">Is Deal</CLabel>
-											{/* {systemMessage && systemMessage.spatch &&  <td>{systemMessage.spatch}</td>} */}
-											{ editMode ? (
-												<div>
+									<CLabel htmlFor="isdeal">Is Deal</CLabel>
+									{/* {systemMessage && systemMessage.spatch &&  <td>{systemMessage.spatch}</td>} */}
+									{editMode ? (
+										<div>
 
-												<CSwitch
-													className={'mx-1'}
-													variant={'3d'}
-													defaultChecked
-													labelOff={'\u2715'}
-													size={'lg'}
-
-													checked={productPayload.is_deal}
-													// onChange={() => handleAvailableToggle('spatch', spatch)}
-
-													color={'primary'}
-													labelOn={'On'}
-													 checked={state.is_deal}
-													type={'checkbox'}
-													onChange={()=>handleAvailableToggle('is_deal')}
-												/>
-											</div>
-											):(<p>{state.is_deal ? "Yes" : "No"}</p>)}
-							</CFormGroup>
+											<CSwitch
+												className={'mx-1'}
+												variant={'3d'}
+												labelOff={'\u2715'}
+												size={'lg'}
+												color={'primary'}
+												labelOn={'On'}
+												checked={isD}
+												type={'checkbox'}
+												onChange={handleIsDealToggle}
+											/>
+										</div>
+									) : (<p>{state.is_deal ? "Yes" : "No"}</p>)}
+								</CFormGroup>
 
 							</CCol>
 							<CCol xs="4">
-							<CFormGroup>
+								<CFormGroup>
 
-											<CLabel htmlFor="available">Available</CLabel>
-											{
-												editMode ? (<div>
+									<CLabel htmlFor="available">Available</CLabel>
+									{
+										editMode ? (<div>
 
-													<CSwitch
-														className={'mx-1'}
-														variant={'3d'}
-														defaultChecked
-														labelOff={'\u2715'}
-														size={'lg'}
-	
-														checked={productPayload.available}
-														// onChange={() => handleAvailableToggle('spatch', spatch)}
-	
-														color={'primary'}
-														labelOn={'On'}
-														checked={state.available}
-														type={'checkbox'}
-														onChange={()=>handleAvailableToggle('available')}
-													/>
-												</div>) :(<p>{state.available ? "Yes" : "No"}</p>)
-											}
-											
-											</CFormGroup>
+											<CSwitch
+												className={'mx-1'}
+												variant={'3d'}
+												defaultChecked
+												labelOff={'\u2715'}
+												size={'lg'}
+												checked={aState}
+												color={'primary'}
+												labelOn={'On'}
+												type={'checkbox'}
+												onChange={handleAvailableToggleAvailable}
+											/>
+										</div>) : (<p>{state.available ? "Yes" : "No"}</p>)
+									}
+
+								</CFormGroup>
 
 							</CCol>
-							
+
+							<CCol xs="4">
+								<CFormGroup>
+									<CLabel htmlFor="region">Select Category</CLabel>
+									{
+										editMode ? (<>
+											<CSelect custom value={category} name="category" id="category"
+												onChange={(e) => handleChangeCategory(e.target.value)}>
+												{categories &&
+													categories.map((item) => {
+														return (
+															<>
+																<option value={item.id} key={item.id}>
+																	{item.name}
+																</option>
+															</>
+														);
+													})}
+											</CSelect>
+												</>) :(<p>{stateCategory}</p>)
+}
+                 
+                    {/* // {selectErrorCategory && <p style={{ color: "red" }}>{selectErrorCategory}</p>} */}
+
+								</CFormGroup>
+							</CCol>
+
 						</CFormGroup>
-						
+
 
 						<CCol xs="4">
-								<CFormGroup>
-									<CLabel htmlFor="region">Product Images</CLabel>
-									<br />
-									{
-									<div style={{ display:"flex", flexDirection:"row" }}>
-										{productInstance && productInstance.images && productInstance.images.length > 0 ?  productInstance.images.map((item, index) =>{
-												return(
-													<>
-													<div  style={{display:"flex", flexDirection:"column", marginRight:10 }}>
-														<img 
-														key={item.id}
-														src={item.image_url} 
-														width={150}
-														onClick={() => handleViewImage(item.image_url)}
+							<CFormGroup>
+								<CLabel htmlFor="region">Product Images</CLabel>
+								<br />
+								{
+									<div style={{ display: "flex", flexDirection: "row" }}>
+										{productInstance && productInstance.images && productInstance.images.length > 0 ? productInstance.images.map((item, index) => {
+											return (
+												<>
+													<div style={{ display: "flex", flexDirection: "column", marginRight: 10 }}>
+														<img
+															key={item.id}
+															src={item.image_url}
+															width={150}
+															onClick={() => handleViewImage(item.image_url)}
 														/>
 														{editMode && (<CButton
-														color="danger"
-														variant="outline"
-														onClick={()=>handleImageDelete(item.id)} style={{marginTop:10 }}>Delete</CButton>)}
+															color="danger"
+															variant="outline"
+															onClick={() => handleImageDelete(item.id)} style={{ marginTop: 10 }}>Delete</CButton>)}
 													</div>
-													</>
-												)
+												</>
+											)
 										}) : <p>This product has no image(s)</p>}
 									</div>
 
-									}
+								}
 
-									<Modals 
-									show={showD} 
+								<Modals
+									show={showD}
 									title={confirmDeleteTitle}
 									handleCancel={handleCancelDialog}
 									handleSuccess={handleImageDeleteConfirm}
-									/>
-									
-									<ViewProductImageModals 
-										show={showImageModal} 
-										img={clickedImage}
-										handleCancel={()=>setshowImageModal(false)}
-									/>
-									<div>
-      {
-		  editMode && <><p>Select image to upload</p>
-		  {selectedImage && (
-			<div>
-			<img alt="not fount" 
-			width={"150px"}
-			height={'150px'}
-			style={{ marginBottom:10, borderRadius:10 }}
-			 src={URL.createObjectURL(selectedImage)} />
-			<br />
-			<CButton
-			color="danger"
-			variant="outline"
-			 onClick={()=>setSelectedImage(null)}>Remove</CButton>
-			<CButton
-			color="success"
-			variant="outline"
-			style={{ marginLeft:10 }}
-			 onClick={handleImageUpload}>Upload</CButton>
-			</div>
-		  )}
-		  <br />
-		 
-		  <br /> 
-		  <input
-			type="file"
-			name="myImage"
-			onChange={(event) => {
-			  setSelectedImage(event.target.files[0]);
-			}}
-		  />
-		  </>
-	  }
-    </div>
-								</CFormGroup>
-							</CCol>
+								/>
+
+								<ViewProductImageModals
+									show={showImageModal}
+									img={clickedImage}
+									handleCancel={() => setshowImageModal(false)}
+								/>
+								<div>
+									{
+										editMode && <><p>Select image to upload</p>
+											{selectedImage && (
+												<div>
+													<img alt="not fount"
+														width={"150px"}
+														height={'150px'}
+														style={{ marginBottom: 10, borderRadius: 10 }}
+														src={URL.createObjectURL(selectedImage)} />
+													<br />
+													<CButton
+														color="danger"
+														variant="outline"
+														onClick={() => setSelectedImage(null)}>Remove</CButton>
+													<CButton
+														color="success"
+														variant="outline"
+														style={{ marginLeft: 10 }}
+														onClick={handleImageUpload}>Upload</CButton>
+												</div>
+											)}
+											<br />
+
+											<br />
+											<input
+												type="file"
+												name="myImage"
+												onChange={(event) => {
+													setSelectedImage(event.target.files[0]);
+												}}
+											/>
+										</>
+									}
+								</div>
+							</CFormGroup>
+						</CCol>
 						{/* <CButton
 							style={{ position: 'relative',marginRight:'20px' }}
 							size="md"
@@ -480,40 +505,14 @@ const handleViewImage=(item)=>{
 							)}
 							<span className={`${loading && 'text-primary'}`}>Add Product</span>
 						</CButton> */}
-				 <CButton
-								style={{ position: 'relative',marginRight:'20px'  }}
-								size="md"
-								className="mb-4 float-md-right"
-								color="warning"
-								variant="outline"
-								disabled={editMode}
-								onClick={()=>setEditMode(true)}
-							>
-								{loading && (
-									<span
-										style={{
-											position: 'absolute',
-											top: '50%',
-											left: '50%',
-											transform: 'translate(-50%, -50%)'
-										}}
-									>
-										<CSpinner size="sm" />
-									</span>
-								)}
-								<span className={`${loading && 'text-primary'}`}>Edit Product</span>
-							</CButton> 
-						
-						
-						{
-							editMode ? 	<CButton
-							style={{ position: 'relative',marginRight:'20px' }}
+						<CButton
+							style={{ position: 'relative', marginRight: '20px' }}
 							size="md"
-							color="success"
-							variant="outline"
 							className="mb-4 float-md-right"
-							// disabled={editMode}
-							onClick={handleUpdateProduct}
+							color="warning"
+							variant="outline"
+							disabled={editMode}
+							onClick={() => setEditMode(true)}
 						>
 							{loading && (
 								<span
@@ -527,10 +526,36 @@ const handleViewImage=(item)=>{
 									<CSpinner size="sm" />
 								</span>
 							)}
-							<span className={`${loading && 'text-primary'}`}>Update Product</span>
-						</CButton> : null
+							<span className={`${loading && 'text-primary'}`}>Edit Product</span>
+						</CButton>
+
+
+						{
+							editMode ? <CButton
+								style={{ position: 'relative', marginRight: '20px' }}
+								size="md"
+								color="success"
+								variant="outline"
+								className="mb-4 float-md-right"
+								// disabled={editMode}
+								onClick={handleUpdateProduct}
+							>
+								{loading && (
+									<span
+										style={{
+											position: 'absolute',
+											top: '50%',
+											left: '50%',
+											transform: 'translate(-50%, -50%)'
+										}}
+									>
+										<CSpinner size="sm" />
+									</span>
+								)}
+								<span className={`${loading && 'text-primary'}`}>Update Product</span>
+							</CButton> : null
 						}
-					
+
 					</CCardBody>
 				</CCard>
 			</CCol>
