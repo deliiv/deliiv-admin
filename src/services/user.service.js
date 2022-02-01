@@ -257,6 +257,19 @@ class UserService {
         });
     });
   }
+  async getAllTransaction() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/fetch-transactions", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async getDashboardData() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {

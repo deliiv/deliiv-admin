@@ -1,19 +1,16 @@
-import { servicemanAction } from "./serviceman-slice";
+import { transactionActions } from "./transaction-slice";
 import UserService from "../services/user.service";
 
-export const fetchServicemen = () => {
+export const fetchTransactions = () => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const response = await UserService.getServicemen();
-
+      const response = await UserService.getAllTransaction();
       return response;
     };
 
     try {
       const res = await fetchData();
-      dispatch(
-        servicemanAction.setServiceman({ servicemenData: res.data.serviceMan })
-      );
+      dispatch(transactionActions.setTransaction({ transactions: res.data }));
     } catch (error) {
       console.log(error);
     }

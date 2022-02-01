@@ -92,31 +92,7 @@ const Services = (props) => {
       })
       
     }
-    // userService.updateCategory(data).then(response => {
-    //   toast.success("Banner name update")
-    //   setTimeout(() => {
-    //     window.location.reload();
-    //   }, 1000);
-    // }).catch(err => {
-    //   console.log(err)
-    // })
-    // const handleImageUpload = () => {
-    //   let form = new FormData();
-    //   form.append('id', id);
-
-    //   userService
-    //     .uploadBannerImage(form)
-    //     .then((response) => {
-    //       toast.success('Image uploaded');
-
-    //       setTimeout(() => {
-    //         window.location.reload();
-    //       }, 1500);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // };
+  
   }
 
   return (

@@ -11,8 +11,6 @@ const storeSlice = createSlice({
   initialState: initialState,
   reducers: {
     setStore: (state, action) => {
-      console.log('?????: ', action.payload.allProducts)
-
       state.allStoreProducts = action.payload.allProducts.store_product;
       state.totalStoreItem = action.payload.allProducts.store_product_count;
     },

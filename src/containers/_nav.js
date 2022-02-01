@@ -49,6 +49,13 @@ const _nav = [
     to: "/banners",
     icon: "cil-settings",
   },
+  {
+    _tag: 'CSidebarNavItem',
+    name: <NAVITEM icon={<i class="fas fa-calculator"></i>
+  } name={"Account"} />,
+    to: '/account',
+
+  },
   // {
   //   _tag: "CSidebarNavItem",
   //   name: "Parts Categories",

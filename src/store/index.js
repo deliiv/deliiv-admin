@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import uiSlice from "./ui-slice";
 import orderSlice from "./order-slice";
 import customerSlice from "./customer-slice";
-import servicemanSlice from "./serviceman-slice";
 import serviceSlice from "./serviceSlice";
 import dashboardSlice from './dashboard-slice';
 import sellerSlice from './sellers-slice';
@@ -14,13 +13,13 @@ import storeSlice from './store-slice';
 import bannerSlice from './banner-slice';
 import adminSlice from './admin-slice';
 import allProductSlice from './all-product-slice';
+import transactionSlice from './transaction-slice';
 
 const store = configureStore({
   reducer: {
     UI: uiSlice.reducer,
     orders: orderSlice.reducer,
     customers: customerSlice.reducer,
-    servicemen: servicemanSlice.reducer,
     services: serviceSlice.reducer,
     dashbord: dashboardSlice.reducer,
     seller: sellerSlice.reducer,
@@ -31,7 +30,8 @@ const store = configureStore({
     store: storeSlice.reducer,
     banner: bannerSlice.reducer,
     admin: adminSlice.reducer,
-    allProducts:allProductSlice.reducer
+    allProducts:allProductSlice.reducer,
+    transactions:transactionSlice.reducer
   },
 });
 export default store;

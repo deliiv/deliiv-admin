@@ -33,6 +33,9 @@ const ServiceCharge = React.lazy(() =>
 const Region = React.lazy(() =>
   import("./components/region/Region")
 );
+const Account = React.lazy(() =>
+  import("./components/Account/Tabs")
+);
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -45,6 +48,7 @@ const routes = [
   { path: "/banners", name: "Banner", component: Banner },
   { path: "/products", name: "Products", component: Products },
   { path: "/admin", name: "Admin", component: Admins },
+  { path: "/account", name: "Account", component: Account },
   {
     path: "/seller",
     name: "Seller",

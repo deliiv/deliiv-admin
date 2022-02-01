@@ -69,11 +69,6 @@ const Products = (props) => {
       label: "name",
     },
     {
-      key: "description",
-      _style: { minWidth: "15%" },
-      label: "Description",
-    },
-    {
       key: "price",
       _style: { minWidth: "15%" },
       label: "Price",
