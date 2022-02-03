@@ -25,9 +25,7 @@ const Dashboard = (props) => {
   const activeSeller = useSelector((state) => state.dashbord.totalActiveSellers);
   const inactiveSeller = useSelector((state) => state.dashbord.totalInActiveSellers);
   const newOrders = useSelector((state) => state.orders.newOrders);
-  const totalServicemen = useSelector(
-    (state) => state.servicemen.totalServicemen
-  );
+
 
   const fields = [
     { key: "order_id", label: "Order Id" },

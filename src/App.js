@@ -77,6 +77,9 @@ const App = () => {
   React.useEffect(() => {
     dispatch(fetchTransactions());
   }, [dispatch]);
+  React.useEffect(() => {
+    dispatch(fetchOrders());
+  }, [dispatch]);
 
   return (
     <HashRouter>
