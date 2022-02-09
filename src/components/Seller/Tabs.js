@@ -81,7 +81,7 @@ const Tabs = (props) => {
 					<CCardBody>
 						{seller_details && (
 							<CRow>
-								<CCol xs="12" sm="6" md="6">
+								<CCol xs="8" sm="4" md="4">
 									<div>
 										{
 											<div>
@@ -115,7 +115,7 @@ const Tabs = (props) => {
 										</p>
 									</div>
 								</CCol>
-								<CCol xs="12" sm="6" md="6">
+								<CCol xs="8" sm="4" md="4">
 									<b>
 										<p>Basic Details</p>
 									</b>
@@ -171,6 +171,32 @@ const Tabs = (props) => {
 												setActive(!active);
 											}}
 										/>
+									</div>
+								</CCol>
+								<CCol xs="8" sm="4" md="4">
+									<b>
+										<p>Addresses</p>
+									</b>
+
+									<div>
+										{seller_details.seller_details.seller_address.length > 0 ? (
+											<div
+												style={{
+													display: 'flex',
+													flexDirection: 'row',
+													textAlign: 'center',
+													alignItems: 'center'
+												}}
+											>
+												<ul>
+													{seller_details.seller_details.seller_address.map((item) => {
+														return <li>{item.address}</li>;
+													})}
+												</ul>
+											</div>
+										) : (
+											<p>No Address</p>
+										)}
 									</div>
 								</CCol>
 							</CRow>

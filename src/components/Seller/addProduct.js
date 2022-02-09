@@ -73,7 +73,6 @@ const AddProduct = (props) => {
 
 	const handleChangeRegion = (region) => {
 		setRegion(region);
-		console.log('===', region);
 	};
 	const handleChangeCategory = (region) => {
 		setCategory(region);

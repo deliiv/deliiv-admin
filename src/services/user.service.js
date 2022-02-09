@@ -498,6 +498,19 @@ class UserService {
         });
     });
   }
+  async addSellerAddress(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/create-seller-address", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async addProductByAdmin(data) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {

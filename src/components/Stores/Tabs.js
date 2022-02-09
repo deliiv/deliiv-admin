@@ -31,12 +31,13 @@ const Tabs = (props) => {
 	const [ active, setActive ] = useState(-1);
 	const [ showDialog, setshowDialog ] = useState(false);
 
-	useEffect(() => {
-      dispatch(fetchUserDetails(props.match.params.id));
-	user_detail && setActive(user_detail.user_detail.user_info.active)
-	  
-	//  console.log(']]]]]]]]]]]]]]:', user_detail.user_detail.user_info.active)
-	},[ dispatch ]);
+	useEffect(
+		() => {
+			dispatch(fetchUserDetails(props.match.params.id));
+			user_detail && setActive(user_detail.user_detail.user_info.active);
+		},
+		[ dispatch ]
+	);
 
 	const handleModalSuccess = () => {
 		const { id, active } = user_detail.user_detail.user_info;
@@ -44,12 +45,10 @@ const Tabs = (props) => {
 		userService
 			.updateUserInfo({ user: id, status: !active })
 			.then((response) => {
-        toast.success(`User status set to ${!active}`);
-        setActive(!active)
-		setshowDialog(false)
-	//	window.location.reload();
-	
-		})
+				toast.success(`User status set to ${!active}`);
+				setActive(!active);
+				setshowDialog(false);
+			})
 			.catch((error) => {
 				console.log('ERR: ', error);
 			});
@@ -60,8 +59,7 @@ const Tabs = (props) => {
 				<Modals
 					show={showDialog}
 					title={'Change User Status'}
-					message={`Are you sure you want to ${user_detail &&
-					user_detail.user_detail.user_info.active
+					message={`Are you sure you want to ${user_detail && user_detail.user_detail.user_info.active
 						? 'Deactivate'
 						: 'Activate'} User`}
 					handleSuccess={handleModalSuccess}
@@ -72,7 +70,7 @@ const Tabs = (props) => {
 					<CCardBody>
 						{user_detail && (
 							<CRow>
-									<CCol xs="12" sm="6" md="6">
+								<CCol xs="12" sm="6" md="6">
 									<b>
 										<p>Basic Details</p>
 									</b>
@@ -161,7 +159,6 @@ const Tabs = (props) => {
 										</p>
 									</div>
 								</CCol>
-							
 							</CRow>
 						)}
 						<CTabs>
@@ -176,7 +173,7 @@ const Tabs = (props) => {
 
 							<CTabContent>
 								<CTabPane>
-									<OrderDetails  order={user_detail}/>
+									<OrderDetails order={user_detail} />
 								</CTabPane>
 							</CTabContent>
 						</CTabs>

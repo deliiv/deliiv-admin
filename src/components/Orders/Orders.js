@@ -333,6 +333,7 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                                     <th>Name</th>
                                     <th>Phone</th>
                                     <th>Last Login</th>
+                                    {/* <th>Address</th> */}
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -340,6 +341,7 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                                     <td>{item.buyer.firstname} {item.buyer.lastname}</td>
                                     <td>{item.buyer.phone}</td>
                                     <td>{item.buyer.last_login}</td>
+                                    {/* <td>{item.buyer.address}</td> */}
                                   </tr>
                                   <tr>
                                 </tr>

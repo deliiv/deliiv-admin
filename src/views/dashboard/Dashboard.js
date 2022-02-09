@@ -9,8 +9,19 @@ import {
   CDataTable,
   CRow,
   CSpinner,
+  CCardGroup,
+  CCardHeader
+
 } from "@coreui/react";
-import React, { lazy } from "react";
+import {
+  CChartBar,
+  CChartLine,
+  CChartDoughnut,
+  CChartRadar,
+  CChartPie,
+  CChartPolarArea
+} from '@coreui/react-chartjs'
+import React, {useEffect, lazy } from "react";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { getBadge } from "../../utils/orderStatusColor";
@@ -20,12 +31,46 @@ const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown"));
 const Dashboard = (props) => {
   const orders = useSelector((state) => state.orders.orders);
   const totalOrders = useSelector((state) => state.dashbord.totalOrders);
+  const chart = useSelector((state) => state.dashbord.chart);
+  const pie = useSelector((state) => state.dashbord.pie);
   const totalUsers = useSelector((state) => state.dashbord.totalUsers);
   const totalProducts = useSelector((state) => state.dashbord.totalProducts);
   const activeSeller = useSelector((state) => state.dashbord.totalActiveSellers);
   const inactiveSeller = useSelector((state) => state.dashbord.totalInActiveSellers);
-  const newOrders = useSelector((state) => state.orders.newOrders);
 
+  const[d, setD] = React.useState([])
+  const[e, setE] = React.useState([])
+  const[f, setF] = React.useState([])
+  const[g, setG] = React.useState([])
+
+  useEffect(() =>{
+    let k =[]
+    let q =[]
+    if(chart){
+      
+      for(let i=0; i<chart.length; i++){
+        k.push(chart[i]["year(created_at)"])
+        q.push(chart[i]["SUM(total_price)"])
+        console.log(chart[i]["year(created_at)"])
+      }
+      setD(k)
+      setE(q)
+    }
+  },[chart])
+  useEffect(() =>{
+    let k =[]
+    let q =[]
+    if(pie){
+      
+      for(let i=0; i<pie.length; i++){
+        k.push(pie[i].region)
+        q.push(pie[i]["SUM(price)"])
+       // console.log(chart[i]["year(created_at)"])
+      }
+      setF(k)
+      setG(q)
+    }
+  },[pie])
 
   const fields = [
     { key: "order_id", label: "Order Id" },
@@ -70,87 +115,63 @@ const Dashboard = (props) => {
   return (
     <>
       <WidgetsDropdown widgetList={widgetList} />
-      <CRow>
-        <CCol>
+      <CCardGroup columns className="cols-2" >
+
+        <CCard>
+        <CCardHeader>
+          Doughnut Chart
+        </CCardHeader>
+        <CCardBody>
+          <CChartDoughnut
+            datasets={[
+              {
+                backgroundColor: [
+                  '#41B883',
+                  '#E46651',
+                  '#00D8FF',
+                  '#DD1B16'
+                ],
+                data: [...g]
+              }
+            ]}
+            labels={[...f]}
+            options={{
+              tooltips: {
+                enabled: true
+              }
+            }}
+          />
+        </CCardBody>
+      </CCard>
+
           <CCard>
+            <CCardHeader>
+              Line Chart
+        </CCardHeader>
             <CCardBody>
-              {orders && (
-                <CDataTable
-                  items={newOrders}
-                  fields={fields}
-                  items-per-page-select
-                  items-per-page="5"
-                  columnFilter
-                  loadingSlot={<CSpinner size="lg" />}
-                  noItemsViewSlot={
-                    <div className="center-flex">
-                      <h1 className="text-center ">No New Orders</h1>
-                      <CIcon
-                        name="cil-ban"
-                        customClasses="ban-icon text-danger ml-2"
-                      />
-                    </div>
+              <CChartLine
+                datasets={[
+                  // {
+                  //   label: 'Data One',
+                  //   backgroundColor: 'rgb(228,102,81,0.9)',
+                  //   data: [...d] 
+                  // },
+                  {
+                    label: 'Sum total of product price per month',
+                    backgroundColor: 'rgb(0,216,255,0.9)',
+                    data: [...e]
                   }
-                  overTableSlot={
-                    <div className="center-flex">
-                      <h3>New Orders</h3>
-                    </div>
+                ]}
+                options={{
+                  tooltips: {
+                    enabled: true
                   }
-                  hover
-                  pagination
-                  table-filter
-                  //cleaner
-                  scopedSlots={{
-                    order_id: (order) => <td>{order.order_id}</td>,
-                    order_date: (order) => (
-                      <td>
-                        {formateDate(order.date_created)}{" "}
-                        {formatTime(order.date_created)}
-                      </td>
-                    ),
-                    customername: (order) => (
-                      <td>{order.customer ? order.customer.fullname : null}</td>
-                    ),
-                    customernumber: (order) => (
-                      <td>{order.customer ? order.customer.phone : null}</td>
-                    ),
-                    customeremail: (order) => (
-                      <td>{order.customer ? order.customer.email : null}</td>
-                    ),
-                    amount: (order) => <td>{order.service.price}</td>,
-                    status: (order) => (
-                      <td>
-                        <CBadge
-                          color={getBadge(order.status)}
-                          style={{ padding: "8px", minWidth: "60px" }}
-                        >
-                          {order.status}
-                        </CBadge>
-                      </td>
-                    ),
-                    view: (order) => (
-                      <td>
-                        <CButton
-                          size="sm"
-                          color="info"
-                          className="ml-3"
-                          onClick={() =>
-                            props.history.push({
-                              pathname: `/jobs/job-${order._id}`,
-                            })
-                          }
-                        >
-                          View
-                        </CButton>
-                      </td>
-                    ),
-                  }}
-                />
-              )}
+                }}
+                labels="months"
+              />
             </CCardBody>
           </CCard>
-        </CCol>
-      </CRow>
+      </CCardGroup>
     </>
   );
 };

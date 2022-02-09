@@ -254,9 +254,15 @@ const ServiceCharge = (props) => {
                   table-filter
                   cleaner
                   overTableSlot={
+                    <>
                     <div className="center-flex">
                       <h3>Service Charge / Shipping Cost</h3>
                     </div>
+                    <div><p>What is service charge ?</p>
+                    <p></p>
+                    </div>
+
+                    </>
                   }
                   scopedSlots={{
                     action: (item) => (
