@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import {
@@ -20,7 +20,7 @@ import userService from 'src/services/user.service';
 import { toast } from 'react-toastify';
 
 const AddSeller = (props) => {
-  const regions = useSelector((state) => state.dashbord.availableRegions);
+  const regions = useSelector((state) => state.region.region);
   const [regionn, setRegion] = React.useState(1);
   const [selectErrorRegion, setSelectErrorRegion] = React.useState('');
 
@@ -36,6 +36,13 @@ const AddSeller = (props) => {
     confirmpassword: '',
     address: ''
   });
+
+  useEffect(()=>{
+if(regions){
+  console.log('~~~~~~~~~~~~', regions)
+
+}
+  },[regions])
 
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -72,7 +79,6 @@ const AddSeller = (props) => {
           window.location.reload();
         })
         .catch((error) => {
-          console.log('^^^^^^^^', error.response.data.errors)
           toast.error(error.response.data.message)
           error.response.data && error.response.data.errors && error.response.data.errors.firstName[0] && toast.error(error.response.data.errors.firstName[0])
           console.log(error);

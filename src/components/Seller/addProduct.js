@@ -11,8 +11,8 @@ import userService from 'src/services/user.service';
 import { toast } from 'react-toastify';
 
 const AddProduct = (props) => {
-	const regions = useSelector((state) => state.dashbord.availableRegions);
-	const categories = useSelector((state) => state.dashbord.categories);
+  const regions = useSelector((state) => state.region.region);
+	const categories = useSelector((state) => state.category.categories);
 	const seller = useSelector((state) => state.seller.seller_details.seller_details);
 	const history = useHistory();
 

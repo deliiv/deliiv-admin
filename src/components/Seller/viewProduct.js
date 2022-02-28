@@ -10,8 +10,8 @@ import ViewProductImageModals from './ViewProductImageModals';
 import Modals from './Modals';
 
 const ViewProduct = (props) => {
-	const regions = useSelector((state) => state.dashbord.availableRegions);
-	const categories = useSelector((state) => state.dashbord.categories);
+	const regions = useSelector((state) => state.region.region);
+	const categories = useSelector((state) => state.category.categories);
 
 	// const seller = useSelector((state) => state.seller &&  state.seller.seller_details.seller_details);
 	const history = useHistory();
@@ -217,7 +217,7 @@ const ViewProduct = (props) => {
 				setTimeout(() => {
 					window.location.reload();
 				}, 1500);
-			
+
 
 				toast.success("Image Deleted")
 			})
@@ -401,7 +401,7 @@ const ViewProduct = (props) => {
 											</CSelect>
 												</>) :(<p>{stateCategory}</p>)
 }
-                 
+
                     {/* // {selectErrorCategory && <p style={{ color: "red" }}>{selectErrorCategory}</p>} */}
 
 								</CFormGroup>
@@ -426,7 +426,7 @@ const ViewProduct = (props) => {
 															width={150}
 															onClick={() => handleViewImage(item.image_url)}
 														/>
-														
+
 														{editMode && (<CButton
 															color="danger"
 															variant="outline"

@@ -20,7 +20,7 @@ const dashboardSlice = createSlice({
   initialState: initialState,
   reducers: {
     setDashboardData: (state, action) => {
-      console.log('===========', action.payload.dashboardData)
+      // console.log('XXXXXXXXXXX: ', action.payload.availableRegion.regions)
       // state.customers = action.payload.usersData;
       // state.totalCustomers = action.payload.usersData.length;
       state.totalOrders = action.payload.dashboardData && action.payload.dashboardData.all_orders && action.payload.dashboardData.all_orders
@@ -28,7 +28,7 @@ const dashboardSlice = createSlice({
       state.totalUsers =  action.payload.dashboardData && action.payload.dashboardData.all_users
       state.totalActiveSellers = action.payload.dashboardData && action.payload.dashboardData.all_active_sellers
       state.totalInActiveSellers =  action.payload.dashboardData && action.payload.dashboardData.all_inactive_sellers
-      state.availableRegions =  action.payload.dashboardData && action.payload.dashboardData.available_regions
+      state.availableRegions =  action.payload.availableRegion && action.payload.availableRegion.regions
       state.categories =  action.payload.dashboardData && action.payload.dashboardData.available_categories
       state.pie = action.payload.dashboardData.group2
       state.chart = action.payload.dashboardData.group
