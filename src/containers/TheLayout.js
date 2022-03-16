@@ -9,7 +9,7 @@ const TheLayout = () => {
   const darkMode = useSelector((state) => state.UI.darkMode);
   const classes = classNames(
     "c-app c-default-layout",
-    darkMode && "c-dark-theme"
+    // darkMode && "c-dark-theme"
   );
 
   return (

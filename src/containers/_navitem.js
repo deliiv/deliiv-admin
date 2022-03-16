@@ -10,8 +10,8 @@ export default function _navitem({icon, name}) {
         // textAlign: "left",
         flexDirection: "row"
     }}>
-        {icon}
-        <p style={{ padding: 0, margin: 0 , paddingLeft:20, textAlign:"left"}}>{name}</p>
+        <img src={icon} alt="" width={30} height={30}/>
+        <p style={{ padding: 0, margin: 0 , paddingLeft:20,marginTop:5,color:"#3E3E3E", textAlign:"left"}}>{name}</p>
     </div>
     )
 

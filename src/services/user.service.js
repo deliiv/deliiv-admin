@@ -8,7 +8,7 @@ class UserService {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get("/admin/orders", config)
+        .get("/admin/all-orders", config)
         .then((response) => {
           resolve(response);
         })
@@ -134,11 +134,11 @@ class UserService {
     });
   }
 
-  async updateCategoryImage(data) {
+  async uploadDocument(data) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .post("/admin/upload-category-image", data, config)
+        .post("/rider/upload/admin-upload", data, config)
         .then((response) => {
           resolve(response);
         })
@@ -147,7 +147,98 @@ class UserService {
         });
     });
   }
-  
+  async createAdmin(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/create-admin", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async updateAdmin(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-admin", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async updateSystemConfig(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-system-config", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async allAdmin() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/all-admin",config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async searchRider(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/search-rider", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async searchRiderDocs(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/search-rider-docs", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async verifyRider(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/verify-rider", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
 
   async createRegion(data) {
     const config = await authHeader();
@@ -162,6 +253,21 @@ class UserService {
         });
     });
   }
+  async deleteDoc(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/delete-doc", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+
   async updateRegion(data) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -375,12 +481,38 @@ class UserService {
         });
     });
   }
+  async fetchAllRiders() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/get-riders", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 
   async getSingleCustomer(id) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get(`/users/userdetails/${id}`, config)
+        .get(`/admin/get-user-details/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getSingleRider(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/get-rider-details/${id}`, config)
         .then((response) => {
           resolve(response);
         })
@@ -416,19 +548,7 @@ class UserService {
         });
     });
   }
-  async updateAdmin(data) {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .post("/admin/update-admins", data, config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
+
 
   async getServicemen() {
     const config = await authHeader();
@@ -682,16 +802,16 @@ class UserService {
     var data = JSON.stringify({
       "name": "master"
     });
-    
+
     var config = {
       method: 'get',
       url: 'http://localhost:8000/api/admin/get-category/3',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json'
       },
       data : data
     };
-    
+
     axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
@@ -699,7 +819,7 @@ class UserService {
     .catch(function (error) {
       console.log(error);
     });
-    
+
   }
 
   async updateService(body, id) {

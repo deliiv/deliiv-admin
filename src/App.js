@@ -17,7 +17,7 @@ import { fetchAllProducts } from './store/all-product-actions'
 import {loadBoard, fetchAvailableRegions, fetchAvailableCategory} from './store/dashboard-actions'
 import { fetchAllCategories} from './store/category-actions'
 import {fetchAllSellers, fetchSellerDetails} from './store/sellers-actions'
-import {fetchAllUsers} from './store/users-actions'
+import {fetchAllUsers, fetchAllRiders} from './store/users-actions'
 import {fetchTransactions} from './store/transaction-actions'
 
 const loading = (
@@ -52,6 +52,10 @@ const App = () => {
 
   React.useEffect(() => {
     dispatch(fetchAllUsers());
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    dispatch(fetchAllRiders());
   }, [dispatch]);
   React.useEffect(() => {
     dispatch(fetchAllCategories());

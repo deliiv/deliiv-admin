@@ -4,9 +4,9 @@ import Navigation from "./navigation.service";
 
 class AuthService {
   async doLogin(data) {
-    return new Promise((resolve, reject) => { 
+    return new Promise((resolve, reject) => {
       axios
-        .post("/admin/login", data)
+        .post("/auth/login", data)
         .then((response) => {
           resolve(response);
         })

@@ -13,7 +13,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-import Logo from "../assets/images/_logo.png";
+import Logo from "../assets/images/deliiv.svg";
 
 //AuthService for logout
 import { Logout } from "../services/auth.service";
@@ -61,7 +61,7 @@ const TheHeader = () => {
         onClick={toggleSidebar}
       />
       <CHeaderBrand className="mx-auto d-lg-none" to="/">
-        <img src={Logo} alt="sendmeerrand logo" style={{ height: "35px" }} />
+        <img src={Logo} alt="Deliiv logo" style={{ height: "35px" }} />
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">

@@ -1,118 +1,46 @@
 import React from "react";
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
-const Orders = React.lazy(() => import("./components/Orders/Orders"));
+const Orders = React.lazy(() => import("./components/Orders/Tabs"));
 const Order = React.lazy(() => import("./components/Orders/Order"));
 const Customers = React.lazy(() => import("./components/Customers/Customers"));
-const Admins = React.lazy(() => import("./components/Admins/Admins"));
-const Customer = React.lazy(() => import("./components/Customers/Customer"));
-const Stores = React.lazy(() => import("./components/Stores/Store"));
-const CustomerDetails = React.lazy(() => import("./components/Customers/Tabs"));
-const Seller = React.lazy(() =>import("./components/Seller/Servicemen"))
-const SellerDetails = React.lazy(() =>import("./components/Seller/Tabs"));
-const AddServiceman = React.lazy(() => import("./components/Seller/add"));
-const AddProduct = React.lazy(() => import("./components/Seller/addProduct"));
-const ViewProduct = React.lazy(() => import("./components/Seller/viewProduct"));
-const Products = React.lazy(() => import("./components/Products/Products"));
-const Serviceman = React.lazy(() =>
-  import("./components/Seller/Serviceman")
-);
-const Category = React.lazy(() => import("./components/category/services"));
-const Banner = React.lazy(() => import("./components/Banner/banner"));
-const AddCategory = React.lazy(() => import("./components/category/addCategory"));
-const UpdateCategory = React.lazy(() =>
-  import("./components/category/updateCategory")
-);
-const SubParts = React.lazy(() => import("./components/Parts/subPartCategory"));
-const PartsCategory = React.lazy(() =>
-  import("./components/Parts/partsCategory")
-);
-const ServiceCharge = React.lazy(() =>
-  import("./components/ServiceCharge/ServiceCharge")
-);
-const Region = React.lazy(() =>
-  import("./components/region/Region")
-);
-const Account = React.lazy(() =>
-  import("./components/Account/Tabs")
+const Riders = React.lazy(() => import("./components/Riders/Riders"));
+const Riders2 = React.lazy(() => import("./components/Riders/Riders2"));
+const RidersDetails = React.lazy(() => import("./components/Riders/RiderDetails"));
+const Verification = React.lazy(() => import("./components/Verification/Verification"));
+const Notification = React.lazy(() => import("./components/Notification/Notification"));
+const Payment = React.lazy(() => import("./components/Payment/Payment"));
+const CustomerDetails = React.lazy(() => import("./components/Customers/CustomerTabs"));
+
+const Settings = React.lazy(() =>
+  import("./components/Settings/Settings")
 );
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
   { path: "/orders", name: "Orders", component: Orders, exact: true },
-  { path: "/orders/order-:id", name: "order", component: Order },
+  { path: "/orders/order/:id", name: "order", component: Order },
   { path: "/customers", name: "Customers", component: Customers, exact: true },
-  { path: "/store", name: "Ctore", component: Stores, exact: true },
-  { path: "/customers/customer-:id", name: "Customer", component: Customer },
-  { path: "/banners", name: "Banner", component: Banner },
-  { path: "/products", name: "Products", component: Products },
-  { path: "/admin", name: "Admin", component: Admins },
-  { path: "/account", name: "Account", component: Account },
-  {
-    path: "/seller",
-    name: "Seller",
-    component: Seller,
-    exact: true,
-  },
-  {
-    path: "/seller/details/:id",
-    name: "details",
-    component: SellerDetails,
-  },
+  { path: "/riders", name: "Riders", component: Riders, exact: true },
+  { path: "/riders-solo", name: "Riders", component: Riders2, exact: true },
+  { path: "/riders/details/:id", name: "Riders", component: RidersDetails, exact: true },
+  { path: "/riders-solo/details/:id", name: "Riders", component: RidersDetails, exact: true },
+  { path: "/verification", name: "Riders", component: Verification, exact: true },
+  { path: "/notifications", name: "Notification", component: Notification, exact: true },
+  { path: "/payment", name: "Payments", component: Payment, exact: true },
+  { path: "/settings", name: "Settings", component: Settings },
+
   {
     path: "/customers/details/:id",
     name: "details",
     component: CustomerDetails,
   },
   {
-    path: "/seller/add",
-    name: "Add Seller",
-    component: AddServiceman,
-  },
-  {
-    path: "/seller/products/add",
-    name: "Add Product",
-    component: AddProduct,
-  },
-  {
-    path: "/seller/products/:id",
-    name: "View Product",
-    component: ViewProduct,
-  },
-  {
-    path: "/category",
-    name: "Category",
-    component: Category,
-    exact: true,
-  },
-  {
-    path: "/category/add-category",
-    name: "Add Category",
-    component: AddCategory,
-  },
-  {
-    path: "/category/update/:id",
-    name: "Update Category",
-    component: UpdateCategory,
-  },
-  {
-    path: "/services/subpart-:id",
-    name: "Sub-Part Categories",
-    component: SubParts,
-  },
-  {
-    path: "/parts-category",
-    component: PartsCategory,
-  },
-  {
     path: "/service-charge",
-    component: ServiceCharge,
+    component: Settings,
   },
-  {
-    path: "/regions",
-    component: Region,
-  },
+
 ];
 
 export default routes;

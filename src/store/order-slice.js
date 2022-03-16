@@ -18,9 +18,9 @@ const orderSlice = createSlice({
       state.totalPickedup = action.payload.ordersData.total_pickedup_order
       state.totalCompleted = action.payload.ordersData.total_delivered_order
       state.totalPending = action.payload.ordersData.total_pending_order
-      state.orders = action.payload.ordersData.orders
+      state.orders = action.payload.ordersData
       state.totalOrder = action.payload.ordersData.total_order
-    
+
     },
     setNewOrders: (state, action) => {
       const start = new Date();
