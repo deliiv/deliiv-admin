@@ -21,8 +21,15 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import DemoTable from "./DemoTable";
+import { useSelector } from "react-redux";
+import CompletedTable from "./tables/CompletedTable";
+import Pending from "./tables/PendingTable";
+import Cancelled from "./tables/CancelledTable";
 
 const PaymentTabs = ({ paystack, adminTopups, topusers }) => {
+
+  const witdrawal = useSelector((state) => state.transactions.witdrawalRequest);
+
   const [active, setActive] = useState(1);
   const lorem =
     "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.";
@@ -40,7 +47,7 @@ const PaymentTabs = ({ paystack, adminTopups, topusers }) => {
                 <CNavItem>
                   <CNavLink>
                     <CCallout
-                      color="warning"
+                      color="success"
                       style={{
                         height: "50px",
                         width: "250px",
@@ -56,7 +63,7 @@ const PaymentTabs = ({ paystack, adminTopups, topusers }) => {
                 <CNavItem>
                   <CNavLink>
                     <CCallout
-                      color="danger"
+                      color="warning"
                       style={{
                         height: "50px",
                         width: "250px",
@@ -67,16 +74,30 @@ const PaymentTabs = ({ paystack, adminTopups, topusers }) => {
                     </CCallout>
                   </CNavLink>
                 </CNavItem>
+                <CNavItem>
+                  <CNavLink>
+                    <CCallout
+                      color="danger"
+                      style={{
+                        height: "50px",
+                        width: "250px",
+                        paddingTop: "20px",
+                      }}
+                    >
+                      Cancelled Payments
+                    </CCallout>
+                  </CNavLink>
+                </CNavItem>
               </CNav>
               <CTabContent>
                 <CTabPane>
-                  <DemoTable />
-                  {/* <DemoTable /> */}
+                  <CompletedTable completed={witdrawal.completedWitdraw}/>
                 </CTabPane>
                 <CTabPane>
-                  <DemoTable />
-
-                  {/* <AdminTopup adminTopups={adminTopups} /> */}
+                  <Pending pending={witdrawal.withdraw}/>
+                </CTabPane>
+                <CTabPane>
+                  <Cancelled cancelled={witdrawal.cancelledWitdraw}/>
                 </CTabPane>
                 <CTabPane>
                   <DemoTable />

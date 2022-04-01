@@ -10,20 +10,17 @@ import {
   CCard,
   CCardBody,
   CTabs,
-  CCardHeader,
-  CTextarea,
   CInput,
   CCallout,
   CFormGroup,
-  CLabel,
-  CValidFeedback,
   CButton,
+  CSelect,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
-import DemoTable from "./DemoTable";
 import PendingTable from "./tables/PendingTable";
 import { useSelector } from "react-redux";
 import Pickedup from "./tables/PickedupTable";
+import Cancelled from "./tables/CancelledTable";
+import Delivered from "./tables/DeliveredTable";
 
 
 const Tabs = () => {
@@ -31,37 +28,42 @@ const Tabs = () => {
 
   const [svalue, setsValue] = useState('')
   const [pendingOrder, setPendingOrder] = useState(null)
+  const [pickedupOrder, setPickedupOrder] = useState(null)
+  const [deliveredOrder, setDeliveredOrder] = useState(null)
+  const [cancelledOrder, setCancelledOrder] = useState(null)
 
   useEffect(() => {
 
     if (orders) {
       setPendingOrder(orders.pending)
+      setPickedupOrder(orders.pickedup)
+      setDeliveredOrder(orders.delivered)
+      setCancelledOrder(orders.cancelled)
     }
 
   }, [orders])
 
 
-  useEffect(() =>{
+  useEffect(() => {
 
-    if(svalue && pendingOrder.length === 0){
-      console.log('~~~~~~~~~~~~~~', svalue)
+    if (svalue && pendingOrder.length === 0) {
       setPendingOrder(orders.pending)
     }
-    if(svalue.length === 0){
+    if (svalue && svalue.length === 0) {
       setPendingOrder(orders.pending)
     }
-  },[svalue])
-  const onKeyDown = (e) =>{
+  }, [svalue])
+  const onKeyDown = (e) => {
     if (e.keyCode === 8) {
-        console.log('delete: ', svalue);
-        Search(svalue)
+      Search(svalue)
     }
-}
+  }
 
 
-  const Search = async (searchTerm) => {
 
-    const search = Object.values(pendingOrder).filter( user =>
+  const SearchHandler = async (searchTerm, trans) => {
+
+   return Object.values(trans).filter(user =>
       user.user.firstName.toLowerCase().indexOf(searchTerm) > -1 ||
       user.user.lastName.toLowerCase().indexOf(searchTerm) > -1 ||
       user.sender.full_name.toLowerCase().indexOf(searchTerm) > -1
@@ -74,16 +76,36 @@ const Tabs = () => {
       || user.job_id && user.job_id.toLowerCase().indexOf(searchTerm) > -1
 
     );
-    setPendingOrder(search)
-    console.log(search);
+  }
+  const Search = async (searchTerm) => {
+    if(searchTerm.length === 0){
+      setPendingOrder(orders.pending)
+      setPickedupOrder(orders.pickedup)
+      setCancelledOrder(orders.cancelled)
+      setDeliveredOrder(orders.delivered)
+    }else{
+
+    let cancelHandler = await (SearchHandler(searchTerm, cancelledOrder))
+    let pendingHandler = await (SearchHandler(searchTerm, pendingOrder))
+    let pickedupHandler = await (SearchHandler(searchTerm, pickedupOrder))
+    let deliveredHandler = await (SearchHandler(searchTerm, deliveredOrder))
+
+
+    setPendingOrder(pendingHandler)
+    setCancelledOrder(cancelHandler)
+    setDeliveredOrder(deliveredHandler)
+    setPickedupOrder(pickedupHandler)
+    }
   }
 
-  const inputChangeHandler = (event) => {
+  const inputChangeHandler = async (event) => {
     const { name, value } = event.target;
     setsValue(value.toLowerCase())
-    Search(value.toLowerCase())
-    console.log(value)
+    await Search(value.toLowerCase())
   };
+  const handleSortType = (item) => {
+
+  }
   return (
     <CRow>
       <CCol xs="12" md="12" className="mb-4">
@@ -91,10 +113,21 @@ const Tabs = () => {
           <CFormGroup>
             <div style={{ width: "40%", display: "flex", flexDirection: 'row', padding: "30px" }}>
               <CInput placeholder="search" style={{ padding: 20 }} value={svalue} onChange={inputChangeHandler}
-                                  onKeyDown={onKeyDown}
-                                  />
+                onKeyDown={onKeyDown}
+              />
 
               <CButton color="primary" style={{ marginLeft: 20, paddingLeft: 20, paddingRight: 20 }}>Search</CButton>
+            </div>
+
+            <div style={{ width:'150px',margin:'30px' }}>
+              <CSelect
+                custom value={null} name="creditReason"
+                id="creditReason"
+                onChange={e => handleSortType(e.target.value)}>
+                <option value="customers">Sort By</option>
+                <option value="oldest">Date: Oldest to Newest</option>
+                <option value="newest">Date: Newest to Oldest</option>
+              </CSelect>
             </div>
           </CFormGroup>
 
@@ -165,13 +198,13 @@ const Tabs = () => {
                   <PendingTable pending={pendingOrder} />
                 </CTabPane>
                 <CTabPane>
-                  <Pickedup pickedup={orders.pickedup} />
+                  <Pickedup pickedup={pickedupOrder} />
                 </CTabPane>
                 <CTabPane>
-                  <DemoTable />
+                  <Delivered delivered={deliveredOrder} />
                 </CTabPane>
                 <CTabPane>
-                  <DemoTable />
+                  <Cancelled cancelled={cancelledOrder} />
                 </CTabPane>
               </CTabContent>
             </CTabs>

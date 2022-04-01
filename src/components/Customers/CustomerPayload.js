@@ -39,18 +39,19 @@ const CustomerPayload = () => {
 
   React.useEffect(() => {
     setLoading(true);
+
     UserService.getSingleCustomer(id)
       .then((res) => {
 
         setCustomer(res.data.user_details);
         setJobs(res.data.jobs);
         setTransactions(res.data.transactions);
-        console.log('????????--?????????', res.data);
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
+   
   }, []);
 
 

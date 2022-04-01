@@ -15,7 +15,6 @@ import {
 } from '@coreui/react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-
 import userService from 'src/services/user.service';
 
 const Modals2 = ({

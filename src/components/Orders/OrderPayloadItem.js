@@ -1,15 +1,12 @@
 import React from 'react'
 import {
   CCardBody,
-  CCard,
-  CCardHeader,
   CCol,
   CRow
 } from '@coreui/react'
 import Person from './person.svg'
 import Mail from './mail.svg'
 import Phone from './phone.svg'
-import Location from './location.svg'
 const OrderPayloadItem = ({ payload, index }) => {
 
   console.log('******************', payload)

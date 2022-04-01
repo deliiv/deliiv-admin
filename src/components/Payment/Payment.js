@@ -10,71 +10,9 @@ import { toast } from 'react-toastify';
 import PaymentDetails from "./PaymentDetails";
 import Tabs from './PaymentTabs'
 
-const Store = (props) => {
-  const { path, url } = useRouteMatch();
-  const history = useHistory();
+const Payment = (props) => {
 
-  const customers = useSelector((state) => state.store.allStoreProducts);
-  const totalProductInStore = useSelector((state) => state.store.totalStoreItem);
-  const [details, setDetails] = useState([])
-  const [img, setImg] = useState([])
-  const [orderStatus, setOrderStatus] = useState("")
-  const [show, setShow] = useState(false)
-  const [eMode, setEmode] = useState(false)
-  const [productName, setproductName] = useState('')
-  const [productPrice, setproductPrice] = useState('')
-  const [productQuantity, setProductQuantity] = useState('')
-  const [note, setNote] = useState('')
-  const [pId, setPid] = useState('')
-  const [showConfirm, setShowConfirm] = useState(false)
-  const [imageId, setImageId] = useState('')
-
-
-  const toggleDetails = (index) => {
-    const position = details.indexOf(index);
-    let newDetails = details.slice();
-    if (position !== -1) {
-      newDetails.splice(position, 1);
-    } else {
-      newDetails = [...details, index];
-    }
-    setDetails(newDetails);
-  };
-
-  const fields = [
-    {
-      key: "name",
-      _style: { minWidth: "15%" },
-      label: "Name",
-    },
-    {
-      key: "price",
-      _style: { minWidth: "15%" },
-      label: "Price",
-    },
-    {
-      key: "quantity",
-      _style: { minWidth: "15%" },
-      label: "Quantity",
-    },
-    {
-      key: "note",
-      _style: { minWidth: "15%" },
-      label: "Note",
-    },
-
-    {
-      key: "created_at",
-      _style: { minWidth: "1%" },
-      label: "Date created"
-    },
-    {
-      key: "view",
-      _style: { minWidth: "1%" },
-      label: "Action",
-
-    },
-  ];
+  const witdrawal = useSelector((state) => state.transactions.witdrawalRequest);
 
 
 
@@ -101,9 +39,14 @@ const Store = (props) => {
               </CCol>
               <CCol xs="12" md="3">
                 <CCard style={{ padding: 10 }}>
-                  Current balance
+                  Total Cancelled
                   <CCardBody>
-                    Lorem ipsum
+
+                    <h3>
+                      <strong>
+                        {witdrawal && witdrawal.total && witdrawal.total.totalCancelled[0].sum}
+                      </strong>
+                    </h3>
                   </CCardBody>
                 </CCard>
 
@@ -113,7 +56,7 @@ const Store = (props) => {
 
           </CCard>
 
-          <Tabs/>
+          <Tabs />
 
 
         </CCol>
@@ -123,4 +66,4 @@ const Store = (props) => {
   );
 };
 
-export default Store;
+export default Payment;

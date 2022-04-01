@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  localTransaction: null,
   payStack: null,
+  witdrawalRequest: null,
   totalStoreItem: 0,
 };
 
@@ -11,8 +11,8 @@ const transactionSlice = createSlice({
   initialState: initialState,
   reducers: {
     setTransaction: (state, action) => {
-      state.payStack = action.payload.transactions.paystack;
-      state.localTransaction = action.payload.transactions.local_transaction;
+      state.witdrawalRequest = action.payload.allWitdrawalRequest.data;
+      // state.payStack = action.payload.transactions.paystack;
     },
   },
 });

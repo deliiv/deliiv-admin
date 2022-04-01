@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   CButton,
   CCard,
-  CCardBody,
-  CCardHeader,
   CCol,
   CModal,
   CModalBody,
@@ -12,7 +10,6 @@ import {
   CModalTitle,
   CRow
 } from '@coreui/react'
-import { DocsLink } from 'src/reusable'
 
 const Modals = ({show, title, message, handleCancel, handleSuccess}) => {
 
@@ -22,8 +19,8 @@ const Modals = ({show, title, message, handleCancel, handleSuccess}) => {
         <CCard>
 
 
-        <CModal 
-              show={show} 
+        <CModal
+              show={show}
               onClose={handleCancel}
               color="primary"
             >

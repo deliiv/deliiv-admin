@@ -225,6 +225,19 @@ class UserService {
         });
     });
   }
+  async updateWithdrawalRequest(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("admin/update-withdrawal-request", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async verifyRider(data) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -376,6 +389,19 @@ class UserService {
         });
     });
   }
+  async getAllPayment() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/get-all-withdrawal-request", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async getDashboardData() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -390,19 +416,7 @@ class UserService {
         });
     });
   }
-  async fetchAvailableRegionData() {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get("/admin/get-all-region", config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
+
   async fetchAvailableCategories() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -508,6 +522,19 @@ class UserService {
         });
     });
   }
+  async getSingleOrderDetails(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/order/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async getSingleRider(id) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -522,19 +549,7 @@ class UserService {
     });
   }
 
-  async fetchAllAdmins() {
-    const config = await authHeader();
-    return new Promise((resolve, reject) => {
-      axios
-        .get("/admin/get-all-admins", config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
+
   async registerAdmin(data) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {

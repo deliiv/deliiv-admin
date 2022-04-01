@@ -5,18 +5,9 @@ import "./scss/style.scss";
 
 import { useDispatch } from "react-redux";
 import { fetchOrders } from "./store/order-actions";
-import { fetchCustomers } from "./store/customer-actions";
-import { fetchServices, fetchParts } from "./store/service-actions";
-import { fetchServiceCharge } from './store/service-charge-actions'
-import { fetchRegion } from './store/region-actions'
-import { fetchStore } from './store/store-actions'
-import { fetchAllBanners } from './store/banner-actions'
 import { fetchAllAdmins } from './store/admin-actions'
-import { fetchAllProducts } from './store/all-product-actions'
 
-import {loadBoard, fetchAvailableRegions, fetchAvailableCategory} from './store/dashboard-actions'
-import { fetchAllCategories} from './store/category-actions'
-import {fetchAllSellers, fetchSellerDetails} from './store/sellers-actions'
+import {loadBoard} from './store/dashboard-actions'
 import {fetchAllUsers, fetchAllRiders} from './store/users-actions'
 import {fetchTransactions} from './store/transaction-actions'
 
@@ -43,12 +34,7 @@ const App = () => {
   React.useEffect(() => {
     dispatch(loadBoard());
   }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchAvailableRegions());
-  }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchAllSellers());
-  }, [dispatch]);
+
 
   React.useEffect(() => {
     dispatch(fetchAllUsers());
@@ -57,27 +43,13 @@ const App = () => {
   React.useEffect(() => {
     dispatch(fetchAllRiders());
   }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchAllCategories());
-  }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchServiceCharge());
-  }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchRegion());
-  }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchStore());
-  }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchAllBanners());
-  }, [dispatch]);
+
+
+
   React.useEffect(() => {
     dispatch(fetchAllAdmins());
   }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchAllProducts());
-  }, [dispatch]);
+
   React.useEffect(() => {
     dispatch(fetchTransactions());
   }, [dispatch]);

@@ -66,17 +66,21 @@ const TheHeader = () => {
 
       <CHeaderNav className="d-md-down-none mr-auto">
         <CHeaderNavItem className="px-3">
-          <CHeaderNavLink to="/dashboard">Dashboard</CHeaderNavLink>
+          {/* <CHeaderNavLink to="/dashboard">Dashboard</CHeaderNavLink> */}
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
-          <CHeaderNavLink to="/users">Users</CHeaderNavLink>
+          {/* <CHeaderNavLink to="/users">Users</CHeaderNavLink> */}
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
-          <CHeaderNavLink>Settings</CHeaderNavLink>
+          {/* <CHeaderNavLink>Settings</CHeaderNavLink> */}
         </CHeaderNavItem>
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
+        <div>
+          Paul Ajide
+          <p>Super Admin</p>
+        </div>
         <CToggler
           inHeader
           className="ml-3 c-d-legacy-none"

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CCardBody,
   CCard,
@@ -8,13 +8,20 @@ import {
   CButton,
   CDropdownDivider,
   CTextarea,
-  CSidebarNavDivider
+  CSidebarNavDivider,
+  CSelect
 } from '@coreui/react'
 
 import Verified from './verified.svg'
 import Avatar from './avatar.svg'
 import OrderPayloadItem from './OrderPayloadItem'
 const OrderPayload = () => {
+  const [receivers, setReceivers] = useState('')
+
+  const handleChangeReceiver = (r) => {
+    setReceivers(r)
+
+  }
 
 
   return (
@@ -23,34 +30,26 @@ const OrderPayload = () => {
       <CCardBody>
         <CRow>
           <CCol xs="12" md="12" >
+
             <CRow>
+
               <CCol xs="6" md="6" >
                 <h4>
                   <strong>
-                    Push Notification (General)
+                    Receivers
                   </strong>
                 </h4>
+                <CSelect
+                  custom value={receivers} name="creditReason"
+                  id="creditReason"
+                  onChange={e => handleChangeReceiver(e.target.value)}>
+                  <option value="customers">Customers</option>
+                  <option value="riders">Riders</option>
+                  <option value="general">General</option>
+                </CSelect>
                 <br />
-                <CTextarea minh />
                 <br />
-                <div style={{ display: "flex", justifyContent: 'flex-end' }}>
-                  <CButton
-                    color="primary"
-                    size="xl">
-                    <strong>  Save  </strong>
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    variant="outline"
-                    size="xl"
-                    style={{ marginLeft: 20 }}>
-                    <strong>  Close  </strong>
-                  </CButton>
-                </div>
-              </CCol>
-            </CRow>
-            <CRow>
-              <CCol xs="6" md="6" >
+                <br />
                 <h4>
                   <strong>
                     Push Notification (Customers)
@@ -63,74 +62,21 @@ const OrderPayload = () => {
                   <CButton
                     color="primary"
                     size="xl">
-                    <strong>  Save  </strong>
+                    <strong>  Send  </strong>
                   </CButton>
                   <CButton
                     color="danger"
                     variant="outline"
                     size="xl"
                     style={{ marginLeft: 20 }}>
-                    <strong>  Close  </strong>
+                    <strong>  Clear  </strong>
                   </CButton>
                 </div>
               </CCol>
             </CRow>
-            <CRow>
-              <CCol xs="6" md="6" >
-                <h4>
-                  <strong>
-                    Push Notification (Riders)
-                  </strong>
-                </h4>
-                <br />
-                <CTextarea minh />
-                <br />
-                <div style={{ display: "flex", justifyContent: 'flex-end' }}>
-                  <CButton
-                    color="primary"
-                    size="xl">
-                    <strong>  Save  </strong>
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    variant="outline"
-                    size="xl"
-                    style={{ marginLeft: 20 }}>
-                    <strong>  Close  </strong>
-                  </CButton>
-                </div>
-              </CCol>
-            </CRow>
+
           </CCol>
-          {/* <CCol xs="3" md="3" >
-            <CSidebarNavDivider  />
-          </CCol> */}
-          <CCol xs="12" md="12" >
-            <CCol xs="6" md="6" >
-              <h4>
-                <strong>
-                  Push Notification (General)
-                </strong>
-              </h4>
-              <br />
-              <CTextarea minh />
-              <br />
-              <div style={{ display: "flex", justifyContent: 'flex-end' }}>
-                <CButton
-                  color="primary"
-                  size="xl">
-                  <strong>  Save  </strong>
-                </CButton>
-                <CButton
-                  color="danger"
-                  variant="outline"
-                  size="xl"
-                  style={{ marginLeft: 20 }}>
-                  <strong>  Close  </strong>
-                </CButton>
-              </div>
-            </CCol>
-          </CCol>
+
         </CRow>
       </CCardBody>
     </CCard>

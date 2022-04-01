@@ -7,7 +7,7 @@ import {
   CDataTable,
   CRow, CSelect, CCollapse, CWidgetSimple
 } from "@coreui/react";
-import React, { useState, useEffect, lazy } from "react";
+import React, { useState, lazy } from "react";
 import { useRouteMatch, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
