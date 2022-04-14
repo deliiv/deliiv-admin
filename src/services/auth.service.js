@@ -6,7 +6,7 @@ class AuthService {
   async doLogin(data) {
     return new Promise((resolve, reject) => {
       axios
-        .post("/auth/login", data)
+        .post("/admin/login", data)
         .then((response) => {
           resolve(response);
         })

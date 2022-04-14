@@ -91,13 +91,13 @@ const PaymentTabs = ({ paystack, adminTopups, topusers }) => {
               </CNav>
               <CTabContent>
                 <CTabPane>
-                  <CompletedTable completed={witdrawal.completedWitdraw}/>
+                  <CompletedTable completed={witdrawal && witdrawal.completedWitdraw}/>
                 </CTabPane>
                 <CTabPane>
-                  <Pending pending={witdrawal.withdraw}/>
+                  <Pending pending={witdrawal && witdrawal.withdraw}/>
                 </CTabPane>
                 <CTabPane>
-                  <Cancelled cancelled={witdrawal.cancelledWitdraw}/>
+                  <Cancelled cancelled={witdrawal && witdrawal.cancelledWitdraw}/>
                 </CTabPane>
                 <CTabPane>
                   <DemoTable />
