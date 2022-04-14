@@ -58,7 +58,7 @@ const PaymentPayload = () => {
               <CCardBody>
               <h3>
                 <strong>
-                {witdrawal && witdrawal.total && witdrawal.total.totalCompleted[0].sum}
+                {witdrawal && witdrawal.total && witdrawal.total.totalCompleted.length > 0 ? witdrawal.total.totalCompleted.length[0].sum : 0}
                 </strong>
                 </h3>
               </CCardBody>
