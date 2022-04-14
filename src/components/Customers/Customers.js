@@ -1,15 +1,22 @@
 import { CCard, CCardBody, CButton, CCol, CDataTable, CRow, CInput, CFormGroup } from "@coreui/react";
-import React,{useEffect} from "react";
+import React,{useEffect, useState} from "react";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { useRouteMatch, useHistory } from "react-router-dom";
+import Spinner from "../Spinner";
 
 const Customers = (props) => {
   const { path, url } = useRouteMatch();
   const history = useHistory();
 
   const customers = useSelector((state) => state.users.users);
-  
+
+  useEffect(() =>{
+    if(customers){
+      setLoader(false)
+    }
+  },[customers])
+  const [loader, setLoader] = useState(true)
   const fields = [
     {
       key: "firstname",
@@ -39,7 +46,9 @@ const Customers = (props) => {
     <>
       <CRow>
 
+
         <CCol>
+      {loader && <Spinner width={20} height={20}/>}
 
           <CCard>
             <CFormGroup>

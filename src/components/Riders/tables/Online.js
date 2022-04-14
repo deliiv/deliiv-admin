@@ -1,13 +1,23 @@
 import { CCard, CCardBody, CButton, CCol, CDataTable, CRow, CInput, CFormGroup, CNavLink, CNavItem, CCallout, CTabPane, CTabContent, CNav, CTabs } from "@coreui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {useHistory, useRouteMatch} from 'react-router-dom'
+import Spinner from "src/Spinner";
 import { formateDate, formatTime } from "../../../utils/formatDate";
 
 const Online = ({online}) => {
 
   const history = useHistory();
   const { path, url } = useRouteMatch();
+  const [loader, setLoader] = useState(true)
+
+  useEffect(()=>{
+
+    if(online){
+      setLoader(false)
+
+    }
+  },[online])
 
 
   const fields = [
@@ -48,6 +58,7 @@ const Online = ({online}) => {
       <CRow>
 
         <CCol>
+        {loader && <Spinner width={20} height={20}/>}
 
           <CCard>
 

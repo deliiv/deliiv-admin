@@ -21,6 +21,7 @@ import { toast } from 'react-toastify';
 import Tabs from './Tabs'
 import Modals from './Modals';
 import Modals2 from './Modals2';
+import Spinner from 'src/Spinner';
 const OrderPayload = () => {
 
   let { id } = useParams();
@@ -33,6 +34,8 @@ const OrderPayload = () => {
   const [showDel, setShowDel] = React.useState(false);
   const [dId, setDid] = React.useState('');
   const [docId, setDocId] = React.useState('');
+  const [loader, setLoader] = React.useState(true)
+
 
   React.useEffect(() => {
     setLoading(true);
@@ -44,8 +47,12 @@ const OrderPayload = () => {
         setTransactions(res.data.transactions);
         setDocuments(res.data.documents);
         setLoading(false);
+        setLoader(false)
+
       })
       .catch((error) => {
+        setLoader(false)
+
         console.log(error);
       });
   }, []);
@@ -71,6 +78,8 @@ const OrderPayload = () => {
       <CCardBody>
 
         <CRow>
+        {loader && <Spinner width={20} height={20}/>}
+
           <CCol xs="3" md="3" >
             {customer && customer.user.avatar ? <img src={customer.user.avatar} alt="" width={300} /> : <img src={Avatar} alt="" width={300} />}
             <h4>
