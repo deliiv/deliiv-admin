@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import NotificationDetail from "./NotificationDetail";
+import Modals from "./Modals";
 
 const Notification = (props) => {
 
@@ -44,18 +45,24 @@ const Notification = (props) => {
   return (
     <>
       <CRow>
+      {/* <Modals show={true} message={'ghjfkdjnknfjkn'} title={'ghjkrvsndkjlm'}/> */}
 
         <CCol>
 
           <CCard>
             <CFormGroup>
-              <div style={{ width: "40%", display: "flex", flexDirection: 'row', padding: "30px" }}>
+              <div style={{
+                width: "40%",
+                display: "flex",
+                flexDirection: 'row',
+                padding: "30px"
+              }}>
                 <CInput placeholder="search" style={{ padding: 20 }} />
                 <CButton color="primary" style={{ marginLeft: 20, paddingLeft: 20, paddingRight: 20 }}>Search</CButton>
               </div>
             </CFormGroup>
 
-            <NotificationDetail/>
+            <NotificationDetail />
 
           </CCard>
 

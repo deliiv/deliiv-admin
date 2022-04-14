@@ -11,11 +11,21 @@ import Location from './location.svg'
 import OrderPayloadItem from './OrderPayloadItem'
 import { useRouteMatch, useParams } from "react-router-dom";
 import userService from 'src/services/user.service'
+import Spinner from '../Spinner'
 
 const OrderPayload = ({ item }) => {
 
+  const[loader, setLoader]= useState(true);
+  useEffect(() =>{
+  if(item){
+    setLoader(false)
+  }
+  },[item])
+
+
   return (
     <CCardBody>
+        {loader && <Spinner width={20} height={20}/>}
 
       {item && <CRow>
         <CCol xs="12" md="8" >
@@ -79,10 +89,9 @@ const OrderPayload = ({ item }) => {
               <CRow>
                 <CCol>
                   <CCard style={{ paddingLeft:10 }}>
-
                     <CCardBody>
                       <CRow>
-                        <h6 style={{ fontWeight: "bold" }}>Drop Off Location</h6>
+                        <h6 style={{ fontWeight: "bold" }}>Pick up Location</h6>
 
                       </CRow>
                       <CRow>

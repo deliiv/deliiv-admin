@@ -21,11 +21,13 @@ import { useSelector } from "react-redux";
 import Pickedup from "./tables/PickedupTable";
 import Cancelled from "./tables/CancelledTable";
 import Delivered from "./tables/DeliveredTable";
+import Spinner from "../Spinner";
 
 
 const Tabs = () => {
   const orders = useSelector((state) => state.orders.orders);
 
+  const [loader, setLoader] = useState(true)
   const [svalue, setsValue] = useState('')
   const [pendingOrder, setPendingOrder] = useState(null)
   const [pickedupOrder, setPickedupOrder] = useState(null)
@@ -39,6 +41,7 @@ const Tabs = () => {
       setPickedupOrder(orders.pickedup)
       setDeliveredOrder(orders.delivered)
       setCancelledOrder(orders.cancelled)
+      setLoader(false)
     }
 
   }, [orders])
@@ -108,6 +111,8 @@ const Tabs = () => {
   }
   return (
     <CRow>
+              {loader && <Spinner width={20} height={20}/>}
+
       <CCol xs="12" md="12" className="mb-4">
         <CCard>
           <CFormGroup>

@@ -3,6 +3,7 @@ import {
   CCardBody,
   CCard} from '@coreui/react'
 import NotificationPayload from './NotificationPayload.js'
+import Modals from './Modals.js'
 
 const RiderDetails = () => {
 
@@ -27,6 +28,7 @@ const RiderDetails = () => {
   return (
     <CCard>
     <CCardBody>
+      {/* <Modals show={true} message={'ghjfkdjnknfjkn'} title={'ghjkrvsndkjlm'}/> */}
 
       <NotificationPayload/>
 
