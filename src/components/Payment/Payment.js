@@ -44,7 +44,7 @@ const Payment = (props) => {
 
                     <h3>
                       <strong>
-                        {witdrawal && witdrawal.total &&  witdrawal.total.totalCancelled && witdrawal.total.totalCancelled[0].sum}
+                        {witdrawal && witdrawal.total &&  witdrawal.total.totalCancelled.length > 0 ?  witdrawal.total.totalCancelled[0].sum : 0}
                       </strong>
                     </h3>
                   </CCardBody>
