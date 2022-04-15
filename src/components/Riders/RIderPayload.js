@@ -129,7 +129,7 @@ const OrderPayload = () => {
               <CCardBody>
                 <strong>
                   <h2>
-                    ₦{customer && customer.wallet && customer.wallet.balance.toLocaleString()}
+                    ₦{customer && customer.wallet && customer.wallet.toLocaleString()}
                   </h2>
                 </strong>              </CCardBody>
             </CCard>
