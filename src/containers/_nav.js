@@ -16,7 +16,8 @@ const _nav = [
   },
   {
     _tag: "CSidebarNavItem",
-    name: <NAVITEM icon={Order} name={"Orders"} />,
+    name: <NAVITEM icon={Order}
+    name={"Orders"} />,
     to: "/orders",
   },
   {
@@ -28,7 +29,7 @@ const _nav = [
   {
     _tag: 'CSidebarNavDropdown',
     name: <NAVITEM icon={Riders} name={"Riders"} />,
-    route: '/orders',
+    route: '/riders',
     _children: [
 
       {

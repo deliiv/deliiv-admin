@@ -9,11 +9,13 @@ import userService from "src/services/user.service";
 import Mail from '../../assets/mail.svg'
 import Phone from '../../assets/phone.svg'
 import Modals2 from "./Modals2";
+import Spinner from "src/Spinner";
 const Verification = (props) => {
 
   const [riderName, setRiderName] = useState('')
   const [riders, setRiders] = useState([])
   const [selected, setSelected] = useState({})
+  const [loader, setLoader] = useState(false)
 
   const fields = [
     {
@@ -59,9 +61,8 @@ const Verification = (props) => {
   }
 
   const handleSearch = () => {
-    console.log('GO to - pprime')
 
-
+    setLoader(true)
     userService
       .searchRider({ name: riderName })
       .then(response => {
@@ -72,8 +73,11 @@ const Verification = (props) => {
         // }, 1500);
         console.log('RESP: ', response.data.user)
         setRiders(response.data.user)
+        setLoader(false)
+
       })
       .catch((error) => {
+        setLoader(false)
         console.log(error);
       });
   }
@@ -82,7 +86,6 @@ const Verification = (props) => {
   return (
     <>
       <CRow>
-     
         <CCol>
           <CCard>
             <CFormGroup>
@@ -94,6 +97,8 @@ const Verification = (props) => {
                   onClick={handleSearch}>Search</CButton>
               </div>
             </CFormGroup>
+            {loader && <Spinner width={20} height={20}/>}
+
             <CCardBody>
 
               <CDataTable

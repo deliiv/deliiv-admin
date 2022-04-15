@@ -52,7 +52,7 @@ const Modals = ({
     form.append('document_name', catName);
     form.append('rider_id', id);
     form.append('dId', dId && dId._id);
-    
+
     userService
       .uploadDocument(form)
       .then(() => {

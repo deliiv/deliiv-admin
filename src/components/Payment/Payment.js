@@ -1,12 +1,6 @@
-import { CCard, CCollapse, CWidgetSimple, CCardBody, CButton, CCol, CDataTable, CRow, CFormGroup, CInput } from "@coreui/react";
-import React, { useState } from "react";
+import { CCard, CCardBody, CButton, CCol, CRow, CFormGroup, CInput } from "@coreui/react";
+import React from "react";
 import { useSelector } from "react-redux";
-import { formateDate, formatTime } from "../../utils/formatDate";
-import { Link, useRouteMatch, useHistory } from "react-router-dom";
-import WidgetsDropdown from "src/views/widgets/WidgetsDropdown";
-
-import userService from "src/services/user.service";
-import { toast } from 'react-toastify';
 import PaymentDetails from "./PaymentDetails";
 import Tabs from './PaymentTabs'
 

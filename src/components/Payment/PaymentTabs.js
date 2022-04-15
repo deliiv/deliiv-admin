@@ -44,6 +44,21 @@ const PaymentTabs = ({ paystack, adminTopups, topusers }) => {
           <CCardBody>
             <CTabs >
               <CNav variant="tabs">
+              <CNavItem>
+                  <CNavLink>
+                    <CCallout
+                      color="warning"
+                      style={{
+                        height: "50px",
+                        width: "250px",
+                        paddingTop: "20px",
+                      }}
+                    >
+                      Pending Payments
+                    </CCallout>
+                  </CNavLink>
+                </CNavItem>
+                
                 <CNavItem>
                   <CNavLink>
                     <CCallout
@@ -60,20 +75,7 @@ const PaymentTabs = ({ paystack, adminTopups, topusers }) => {
                 </CNavItem>
 
 
-                <CNavItem>
-                  <CNavLink>
-                    <CCallout
-                      color="warning"
-                      style={{
-                        height: "50px",
-                        width: "250px",
-                        paddingTop: "20px",
-                      }}
-                    >
-                      Pending Payments
-                    </CCallout>
-                  </CNavLink>
-                </CNavItem>
+
                 <CNavItem>
                   <CNavLink>
                     <CCallout
@@ -90,12 +92,14 @@ const PaymentTabs = ({ paystack, adminTopups, topusers }) => {
                 </CNavItem>
               </CNav>
               <CTabContent>
+              <CTabPane>
+                  <Pending pending={witdrawal && witdrawal.withdraw}/>
+                </CTabPane>
+
                 <CTabPane>
                   <CompletedTable completed={witdrawal && witdrawal.completedWitdraw}/>
                 </CTabPane>
-                <CTabPane>
-                  <Pending pending={witdrawal && witdrawal.withdraw}/>
-                </CTabPane>
+
                 <CTabPane>
                   <Cancelled cancelled={witdrawal && witdrawal.cancelledWitdraw}/>
                 </CTabPane>

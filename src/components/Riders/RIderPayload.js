@@ -193,7 +193,11 @@ const OrderPayload = () => {
                     </div>)
                   })
                 }
-                <CButton onClick={()=> {setShow(true); setDid(null)}}>Upload</CButton>
+                <CButton
+                color='success'
+                variant="outline"
+                onClick={()=> {setShow(true); setDid(null)}}
+                 style={{ height:'40px' }}>Upload Document</CButton>
 
               </div>
 
