@@ -6,10 +6,21 @@ import { useRouteMatch, useHistory } from "react-router-dom";
 import RidersDetails from "./RiderDetails";
 import DemoTable from "./DemoTable";
 import Online from "./tables/Online";
+import Spinner from "src/Spinner";
 
 const Riders = (props) => {
 
   const riders = useSelector((state) => state.users.riders);
+
+  const [loader, setLoader] = React.useState(true)
+
+  useEffect(()=>{
+
+    if(riders){
+      setLoader(false)
+    }
+  },[riders])
+
 
   const fields = [
     {
@@ -49,6 +60,7 @@ const Riders = (props) => {
       <CRow>
 
         <CCol>
+        {loader && <Spinner width={20} height={20}/>}
 
           <CCard>
             <CFormGroup>
@@ -97,11 +109,11 @@ const Riders = (props) => {
                       </CNav>
                       <CTabContent>
                         <CTabPane>
-                          <Online online={riders.solo.online} />
+                          <Online online={riders && riders.solo && riders.solo.online} />
                           {/* <DemoTable /> */}
                         </CTabPane>
                         <CTabPane>
-                        <Online online={riders.solo.offline} />
+                        <Online online={riders && riders.solo && riders.solo.offline} />
                         </CTabPane>
 
                       </CTabContent>

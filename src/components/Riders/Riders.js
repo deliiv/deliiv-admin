@@ -6,10 +6,19 @@ import { useRouteMatch, useHistory } from "react-router-dom";
 import RidersDetails from "./RiderDetails";
 import DemoTable from "./DemoTable";
 import Online from "./tables/Online";
+import Spinner from "src/Spinner";
 
 const Customers = (props) => {
 
   const riders = useSelector((state) => state.users.riders);
+  const [loader, setLoader] = React.useState(true)
+
+  useEffect(()=>{
+
+    if(riders){
+      setLoader(false)
+    }
+  },[riders])
 
   const fields = [
     {
@@ -49,6 +58,7 @@ const Customers = (props) => {
       <CRow>
 
         <CCol>
+        {loader && <Spinner width={20} height={20}/>}
 
           <CCard>
             <CFormGroup>
