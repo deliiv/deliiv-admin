@@ -98,11 +98,11 @@ const Customers = (props) => {
                       </CNav>
                       <CTabContent>
                         <CTabPane>
-                          <Online online={riders.agency.online} />
+                          <Online online={riders && riders.agency && riders.agency.online} />
                           {/* <DemoTable /> */}
                         </CTabPane>
                         <CTabPane>
-                        <Online online={riders.agency.offline} />
+                        <Online online={riders && riders.agency && riders.agency.offline} />
                         </CTabPane>
 
                       </CTabContent>

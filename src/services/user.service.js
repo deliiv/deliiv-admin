@@ -212,6 +212,19 @@ class UserService {
         });
     });
   }
+  async sendPushNotification(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/send-push-notification", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async searchRiderDocs(data) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {

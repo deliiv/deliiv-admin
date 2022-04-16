@@ -6,7 +6,7 @@ import { useRouteMatch, useHistory } from "react-router-dom";
 import Spinner from "../Spinner";
 
 const Customers = (props) => {
-  const { path, url } = useRouteMatch();
+  const { url } = useRouteMatch();
   const history = useHistory();
 
   const customers = useSelector((state) => state.users.users);

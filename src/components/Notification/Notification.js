@@ -50,7 +50,7 @@ const Notification = (props) => {
         <CCol>
 
           <CCard>
-            <CFormGroup>
+            {/* <CFormGroup>
               <div style={{
                 width: "40%",
                 display: "flex",
@@ -60,7 +60,7 @@ const Notification = (props) => {
                 <CInput placeholder="search" style={{ padding: 20 }} />
                 <CButton color="primary" style={{ marginLeft: 20, paddingLeft: 20, paddingRight: 20 }}>Search</CButton>
               </div>
-            </CFormGroup>
+            </CFormGroup> */}
 
             <NotificationDetail />
 

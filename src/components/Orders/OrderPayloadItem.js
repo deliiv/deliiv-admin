@@ -25,11 +25,11 @@ const OrderPayloadItem = ({ payload, index }) => {
               <p style={{ paddingTop: "10px", paddingLeft: 10 }}>{payload && index < 2 ? payload.full_name : "" + payload.firstName + ' ' + payload.lastName}</p>
             </div>
             {/* </CRow> */}
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            {/* <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
               <img src={Mail} alt="" />
               <p style={{ paddingTop: "10px", paddingLeft: 10 }}>{payload && payload.email ? payload.email
                 : "No mail"}</p>
-            </div>
+            </div> */}
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
               <img src={Phone} alt="" />
               <p style={{ paddingTop: "10px", paddingLeft: 10 }}>{payload && payload.phone_number}</p>
