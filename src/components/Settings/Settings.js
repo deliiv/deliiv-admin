@@ -42,6 +42,7 @@ const Settings = (props) => {
   const [priceChange, setPrice_change] = React.useState(false);
   const [active, setActive] = React.useState(false);
   const [price, setPrice] = React.useState('');
+  const [update, setUpdate] = React.useState(false);
   const [config, setConfig] = React.useState(null);
 
 
@@ -145,7 +146,7 @@ const Settings = (props) => {
 
   const handlePriceUpdate = () => {
     userService
-      .updateSystemConfig({price:price})
+      .updateSystemConfig({ price: price })
       .then(() => {
 
         toast.success('Price Updated');
@@ -217,7 +218,7 @@ const Settings = (props) => {
                 <CCardBody>
                   <CForm onSubmit={null}>
                     <h3>
-                      <strong> Admin Credentials</strong>
+                      <strong> Admin new admin</strong>
                     </h3>
                     <CInputGroup className="mb-3">
                       <CInput
@@ -336,26 +337,56 @@ const Settings = (props) => {
 
                     <CRow>
 
-                      <CCol xs="12" md="2">
-                        <p>Price per km</p>
-                        <CInputGroup className="mb-3">
-                          <CInput
-                            type="number"
-                            placeholder="Price"
-                            autoComplete="price"
-                            name="price"
-                            value={price}
-                            onChange={e => setPrice(e.target.value)}
-                          />
-                        </CInputGroup>
-                        <CCol xs="6" md="6">
-                          <CButton color="primary"
-                            disabled={!price}
-                            onClick={handlePriceUpdate}>
-                            {loading && <CSpinner size="sm" />}
-                            <span className="ml-2">Update</span>
-                          </CButton>
-                        </CCol>
+                      <CCol xs="12" md="4">
+                        {!update &&
+
+                          <CCard style={{ padding: 10 }}>
+                            Price per kilometer
+                            <CCardBody>
+                              <h3>
+                                <strong>
+                                  {price}
+                                </strong>
+                              </h3>
+                            </CCardBody>
+                            <CButton
+                              color="info"
+                              variant="outline"
+                              size="sm"
+                              onClick={()=>setUpdate(true)}
+                            >
+                              update
+                            </CButton>
+
+                          </CCard>
+                        }
+
+                        {
+                          update &&
+                          <>
+                            <p>Price per km</p>
+                            <CInputGroup className="mb-3">
+                              <CInput
+                                type="number"
+                                placeholder="Price"
+                                autoComplete="price"
+                                name="price"
+                                value={price}
+                                onChange={e => setPrice(e.target.value)}
+                              />
+                            </CInputGroup>
+                            <CCol xs="6" md="6">
+                              <CButton color="primary"
+                                disabled={!price}
+                                onClick={handlePriceUpdate}>
+                                {loading && <CSpinner size="sm" />}
+                                <span className="ml-2">Update</span>
+                              </CButton>
+                            </CCol>
+                          </>
+
+                        }
+
 
                       </CCol>
 

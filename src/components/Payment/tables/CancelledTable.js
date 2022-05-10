@@ -2,7 +2,8 @@ import React from 'react'
 import {
   CCardBody,
   CBadge,
-  CDataTable} from '@coreui/react'
+  CDataTable
+} from '@coreui/react'
 import { useHistory } from 'react-router-dom';
 
 import moment from 'moment';
@@ -16,6 +17,7 @@ const CancelledTable = ({ cancelled }) => {
     { key: 'User', _style: { width: '30%' } },
     { key: 'status', _style: { width: '10%' } },
     { key: 'amount', _style: { width: '10%' } },
+    { key: 'account_detail',label:"Account detail",  _style: { width: '10%' } },
     { key: 'createdAt', label: "Date and Time", _style: { width: '20%' } },
     { key: 'Action', label: "", _style: { width: '40%' } },
 
@@ -61,13 +63,17 @@ const CancelledTable = ({ cancelled }) => {
                 </CBadge>
               </td>
             ),
-          'User':
-            (item) => (
-              <td>
-                <b>{item.user.firstName}  {item.user.lastName}</b>
+          User: (item) => (
+            <td>
+              {item.user ? <b>{item.user.firstName}  {item.user.lastName}</b> : <b>{item.agency.name}</b>}
 
-              </td>
-            ),
+            </td>
+          ),
+          account_detail: (item) => (
+            <td>
+              {item && item.account_detail ? <div>{item.account_detail.bank_name}<br/> {item.account_detail.account_name}<br/> {item.account_detail.account_number}</div> : <i>Not available</i> }
+            </td>
+          ),
           "createdAt": (item) => (
             <td>{moment(item.createdAt).format('DD/MM/YYYY  hh:mm a')}</td>
           ),
@@ -76,7 +82,10 @@ const CancelledTable = ({ cancelled }) => {
               <td className="py-2 px-5">
 
                 <p
-                  onClick={() => history.push(`/riders/details/${item.user._id}`)}>
+                  onClick={() => history.push({
+                    pathname: `/riders/details/${item.user ? item.user._id : item.agency._id}`,
+                    state: { pathname: item.user ? "user" : "agency" }
+                  })}>
                   <strong>View Profile</strong>
                 </p>
 

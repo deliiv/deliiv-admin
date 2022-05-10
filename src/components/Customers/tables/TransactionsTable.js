@@ -8,11 +8,8 @@ import {
 import moment  from 'moment'
 
 const Transactions = ({transactions}) => {
-  console.log('<<<<<<<<<<<<<<<<<<<', transactions)
-  const history = useHistory();
-
   const fields = [
-    { key:"order_ID",lable: 'Order ID', _style: { width: '10%' } },
+    { key:"order_ID",label: 'Trans. ID', _style: { width: '10%' } },
     { key:"type",lable: 'Debit/Credit', _style: { width: '20%' } },
     { key:"description",label: 'Description', _style: { width: '20%' } },
     { key:"amount",label: 'Amount', _style: { width: '20%' } },

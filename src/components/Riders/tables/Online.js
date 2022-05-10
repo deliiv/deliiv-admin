@@ -1,23 +1,23 @@
 import { CCard, CCardBody, CButton, CCol, CDataTable, CRow, CInput, CFormGroup, CNavLink, CNavItem, CCallout, CTabPane, CTabContent, CNav, CTabs } from "@coreui/react";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {useHistory, useRouteMatch} from 'react-router-dom'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 import Spinner from "src/Spinner";
 import { formateDate, formatTime } from "../../../utils/formatDate";
 
-const Online = ({online}) => {
+const Online = ({ online }) => {
 
   const history = useHistory();
   const { path, url } = useRouteMatch();
   const [loader, setLoader] = useState(true)
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    if(online){
+    if (online) {
       setLoader(false)
 
     }
-  },[online])
+  }, [online])
 
 
   const fields = [
@@ -58,7 +58,7 @@ const Online = ({online}) => {
       <CRow>
 
         <CCol>
-        {loader && <Spinner width={20} height={20}/>}
+          {loader && <Spinner width={20} height={20} />}
 
           <CCard>
 
@@ -97,7 +97,7 @@ const Online = ({online}) => {
                     ),
 
                     status: (rider) => (
-                      <td>{rider && rider.account_verified ? <p style={{ color:"green" }}>Verified</p> : <p style={{ color:"red" }}>Unverified</p>}</td>
+                      <td>{rider && rider.account_verified ? <p style={{ color: "green" }}>Verified</p> : <p style={{ color: "red" }}>Unverified</p>}</td>
                     ),
                     date_created: (customer) => (
                       <td>
@@ -113,7 +113,11 @@ const Online = ({online}) => {
                             variant="outline"
                             // shape="square"
                             size="sm"
-                            onClick={() => history.push(`${url}/details/${customer._id}`)}>
+
+                            onClick={() => history.push({
+                              pathname: `/riders/details/${customer._id}`,
+                              state: { pathname: "user" }
+                            })}>
                             View
                           </CButton>
                         </td>

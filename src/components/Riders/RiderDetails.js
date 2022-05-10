@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import {
   CCardBody,
   CBadge,
@@ -8,7 +8,7 @@ import usersData from './UsersData.js'
 import OrderDetails from './RIderPayload.js'
 import Tabs from './RiderTabs'
 
-const RiderDetails = () => {
+const RiderDetails = (props) => {
 
   const fields = [
     { key: 'name', _style: { width: '40%' } },
@@ -18,6 +18,9 @@ const RiderDetails = () => {
 
   ]
 
+  useEffect(() =>{
+    console.log('++++++++++: ', props)
+  },[])
   const getBadge = (status) => {
     switch (status) {
       case 'Active': return 'success'
@@ -32,10 +35,7 @@ const RiderDetails = () => {
     <CCard>
     <CCardBody>
 
-      <OrderDetails/>
-
-      {/* <Tabs/> */}
-
+      <OrderDetails payload={props}/>
 
     </CCardBody>
     </CCard>

@@ -25,33 +25,56 @@ const Modals = ({
   handleSuccess,
   modalColor,
   dId,
-  id
+  handleOnChangeCatname,
+  image_url,
+  id,
+  paymentDetail
 }) => {
+
+  console.log('====', paymentDetail)
+
 
   useEffect(() => {
     if (dId) {
+
       setCatName(dId.document_name ? dId.document_name : '')
     }
   }, [dId])
   const [selectedImage, setSelectedImage] = React.useState('');
   const [catName, setCatName] = React.useState('');
 
-  const handleImageUpload = () => {
 
+  const handleImageUpload = () => {
     let form = new FormData();
     form.append('file', selectedImage);
-    form.append('document_name', dId.name);
-    form.append('rider_id', id);
-    form.append('dId', dId && dId._id);
+    form.append('userId', paymentDetail.agency._id);
+    form.append('witdrawal_request', paymentDetail._id);
+    form.append('remarks', catName);
 
     userService
-      .uploadDocument(form)
+      .uploadReceiptDocument(form)
       .then(() => {
 
-        toast.success('Image uploaded');
+        toast.success('Receipt uploaded');
+
+        let data={
+          wId:paymentDetail._id,
+          status: "completed"
+        }
+
+
+      userService.updateWithdrawalRequest(data)
+      .then((res) => {
+        toast.success('Request updated');
         setTimeout(() => {
           window.location.reload();
         }, 1500);
+      })
+      .catch((error) => {
+        toast.error('Error updating request, please try again later');
+        console.log(error);
+      });
+
       })
       .catch((error) => {
         console.log(error);
@@ -72,8 +95,7 @@ const Modals = ({
                 <CLabel htmlFor="creditReason">Document Name</CLabel>
                 <CInput
                   type="text"
-                  placeholder={dId && dId.name}
-                  readOnly
+                  placeholder="Remarks"
                   value={catName}
                   onChange={e => setCatName(e.target.value)}
                   style={{ marginTop: '20px', marginBottom: '20px' }}
@@ -83,16 +105,15 @@ const Modals = ({
               <CFormGroup>
                 <CLabel htmlFor="region">Document Image</CLabel>
                 <br />
-
                 {
                   dId && dId.document_image && <div style={{ display: 'flex', flexDirection: 'column', marginRight: 10 }}>
-                    <img
-                      src={dId && dId.document_image}
-                      width={150}
-                      height={150}
-                    />
-                    {/* {editMode && (<button onClick={()=>handleImageDelete(item.id)} style={{backgroundColor:"red" }}>Delete</button>)} */}
-                  </div>
+                  <img
+                    src={dId && dId.document_image}
+                    width={150}
+                    height={150}
+                  />
+                  {/* {editMode && (<button onClick={()=>handleImageDelete(item.id)} style={{backgroundColor:"red" }}>Delete</button>)} */}
+                </div>
 
                 }
 
@@ -137,7 +158,7 @@ const Modals = ({
               </CFormGroup>
 
             </CModalBody>
-         
+
           </CModal>
         </CCard>
       </CCol>

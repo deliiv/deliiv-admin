@@ -12,6 +12,7 @@ import Approve from './approve.svg'
 import Decline from './decline.svg'
 import moment from 'moment';
 import Modal from '../Modals2';
+import ReceiptModal from '../Modals';
 import { useHistory } from 'react-router-dom';
 import userService from 'src/services/user.service.js'
 import { toast } from 'react-toastify';
@@ -24,11 +25,13 @@ const PendingTable = ({ pending }) => {
   const [status, setStatus] = useState("")
   const [orderId, setOrderId] = useState("")
   const [show, setShow] = useState(false)
+  const [paymentDetail, setPaymentDetail] = useState(null)
 
   const fields = [
     { key: 'User', _style: { width: '20%' } },
     { key: 'status', _style: { width: '10%' } },
     { key: 'amount', _style: { width: '10%' } },
+    { key: 'account_detail',label:"Account detail",  _style: { width: '10%' } },
     { key: 'createdAt', label: "Date and Time", _style: { width: '20%' } },
     { key: 'Action', label: "", _style: { width: '40%' } },
 
@@ -68,11 +71,16 @@ const PendingTable = ({ pending }) => {
   return (
     <CCardBody>
       <Modal
-        show={show}
+        // show={show}
         title="Change Witdrawal status"
         message={`Are you sure you want to ${status} witdrawal request`}
         handleCancel={()=> setShow(false)}
         handleSuccess={handleRequestUpdate}
+      />
+      <ReceiptModal
+      show={show}
+      title="Upload payment receipt"
+      paymentDetail={paymentDetail}
       />
 
       <CDataTable
@@ -105,7 +113,13 @@ const PendingTable = ({ pending }) => {
             ),
           User: (item) => (
             <td>
-              <b>{item.user.firstName}  {item.user.lastName}</b>
+              {item.user ? <b>{item.user.firstName}  {item.user.lastName}</b> : <b>{item.agency.name}</b> }
+
+            </td>
+          ),
+          account_detail: (item) => (
+            <td>
+              {item && item.account_detail ? <div>{item.account_detail.bank_name}<br/> {item.account_detail.account_name}<br/> {item.account_detail.account_number}</div> : <i>Not available</i> }
             </td>
           ),
           "createdAt": (item) => (
@@ -117,14 +131,21 @@ const PendingTable = ({ pending }) => {
               <td className="py-2 px-5">
                 <CRow>
                   <CCol>
-                    <img src={Approve} alt="" width={50} onClick={() => {setStatus("Approve"); setShow(true); setOrderId(item._id)}} />
+                    <img src={Approve} alt="" width={50} onClick={() => {
+                      // setStatus("Approve");
+                      setPaymentDetail(item);
+                    setShow(true);
+                     setOrderId(item._id)}} />
                   </CCol>
                   <CCol>
                     <img src={Decline} alt="" width={50} onClick={() => {setStatus("Decline"); setShow(true); setOrderId(item._id)}} />
                   </CCol>
                   <CCol>
                     <p style={{ paddingTop: 20, "--hover-color": "green" }}
-                      onClick={() => history.push(`/riders/details/${item.user._id}`)}>
+                      onClick={() => history.push({
+                        pathname:`/riders/details/${item.user ? item.user._id : item.agency._id}`,
+                        state:{pathname: item.user ? "user" : "agency"}
+                        })}>
                             <strong>View Profile</strong></p>
                   </CCol>
                 </CRow>

@@ -29,8 +29,6 @@ import TransactionTable from './tables/TransactionsTable'
 
 const CustomerPayload = () => {
 
-  const { path } = useRouteMatch();
-
   let { id } = useParams();
   const [customer, setCustomer] = React.useState("");
   const [jobs, setJobs] = React.useState("");
@@ -51,7 +49,7 @@ const CustomerPayload = () => {
       .catch((error) => {
         console.log(error);
       });
-   
+
   }, []);
 
 

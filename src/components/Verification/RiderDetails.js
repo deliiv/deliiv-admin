@@ -73,8 +73,11 @@ const RiderDetails = ({ selected }) => {
   }, [selected])
 
   const changeRiderStatus=()=>{
-    let data = { riderId: selected._id, status:!toggleStatus }
+    console.log('==', toggleStatus)
+    let data = { riderId: selected._id, status:toggleStatus === 'on' }
+    console.log('++++', data)
     userService.verifyRider(data).then(response => {
+      setToggleStatus(toggleStatus)
       toast.success('Rider status changed')
       setShowModal(false)
 
@@ -136,7 +139,7 @@ const RiderDetails = ({ selected }) => {
                 color="success"
                 checked={toggleStatus}
                 onChange={e => {
-                  setToggleStatus(e.target.value === 'on' ? true : false);
+                  setToggleStatus(e.target.value);
                   setShowModal(true)
                 }}
                 shape="pill"

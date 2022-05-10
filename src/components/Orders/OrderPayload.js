@@ -9,8 +9,6 @@ import {
 import moment from 'moment'
 import Location from './location.svg'
 import OrderPayloadItem from './OrderPayloadItem'
-import { useRouteMatch, useParams } from "react-router-dom";
-import userService from 'src/services/user.service'
 import Spinner from '../Spinner'
 
 const OrderPayload = ({ item }) => {
@@ -140,8 +138,14 @@ const OrderPayload = ({ item }) => {
               </strong>
             </CCardHeader>
             <CCardBody>
-             {item.instruction}
+             Name: {item.package_name}
+             <br/>
+             <br/>
+             Instruction: {item.instruction}
+
+
             </CCardBody>
+
           </CCard>
 
         </CCol>

@@ -67,11 +67,6 @@ const Verification = (props) => {
       .searchRider({ name: riderName })
       .then(response => {
 
-        //toast.success('Image uploaded');
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 1500);
-        console.log('RESP: ', response.data.user)
         setRiders(response.data.user)
         setLoader(false)
 
@@ -112,7 +107,13 @@ const Verification = (props) => {
                 hover
                 pagination
                 // loading
-                onRowClick={(item, index, col, e) => setSelected(item)}
+                onRowClick={(item, index, col, e) =>{
+                   setSelected(item)
+                   let filteredRider = riders.filter(items => items._id.toString() === item._id)
+                   setRiders(filteredRider)
+
+
+                }}
                 // onPageChange={(val) => console.log('new page:', val)}
                 // onPagesChange={(val) => console.log('new pages:', val)}
                 // onPaginationChange={(val) => console.log('new pagination:', val)}

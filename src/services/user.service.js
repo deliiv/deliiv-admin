@@ -147,6 +147,19 @@ class UserService {
         });
     });
   }
+  async uploadReceiptDocument(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/rider/upload/payment-receipt", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async createAdmin(data) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -553,6 +566,19 @@ class UserService {
     return new Promise((resolve, reject) => {
       axios
         .get(`/admin/get-rider-details/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getSingleAgency(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/get-agency-details/${id}`, config)
         .then((response) => {
           resolve(response);
         })

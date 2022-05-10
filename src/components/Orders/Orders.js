@@ -22,7 +22,7 @@ const WidgetsDropdown = lazy(() =>
 
 const Orders = (props) => {
   //route match
-  const { path, url } = useRouteMatch();
+  const { url } = useRouteMatch();
 
   //Orders
   const orders = useSelector((state) => state.orders.orders);

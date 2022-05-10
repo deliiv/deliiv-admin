@@ -9,7 +9,6 @@ import Mail from './mail.svg'
 import Phone from './phone.svg'
 const OrderPayloadItem = ({ payload, index }) => {
 
-  console.log('******************', payload)
   let arr = ['Sender', 'Receiver', 'Rider Details']
 
   return (
