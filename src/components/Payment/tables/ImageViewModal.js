@@ -34,7 +34,7 @@ const Modals = ({
 }) => {
 
   const saveFile = () => {
-    saveAs(image_url);
+    saveAs(image_url, "payment receipt.png");
   };
 
   return (
