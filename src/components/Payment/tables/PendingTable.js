@@ -79,6 +79,7 @@ const PendingTable = ({ pending }) => {
       />
       <ReceiptModal
       show={show}
+      handleCancel={()=>setShow(false)}
       title="Upload payment receipt"
       paymentDetail={paymentDetail}
       />
