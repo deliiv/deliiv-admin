@@ -12,7 +12,7 @@ import { useHistory } from 'react-router';
 
 import Verified from './verified.svg'
 import Avatar from './avatar.svg'
-import { useRouteMatch, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import moment from 'moment';
 import UserService from "../../services/user.service";
 import Mail from '../../assets/mail.svg'
@@ -45,14 +45,12 @@ const OrderPayload = ({ payload }) => {
 
   const documentName = [
     { id: 1, name: "Motorcycle Particulars" },
-    { id: 2, name: "Hackney Permit" },
-    { id: 3, name: "Advert Permit" },
-    { id: 4, name: "Consolidation" },
-    { id: 5, name: "Motorcycle drivers license" },
+    { id: 2, name: "Hackney Permit"},
+    { id: 3, name: "Advert Permit"},
+    { id: 4, name: "Consolidation"},
+    { id: 5, name: "Motorcycle drivers license"},
     { id: 6, name: "ID card" }
   ]
-
-
 
   React.useEffect(() => {
     if (!payload.history.location.state) {
@@ -170,6 +168,8 @@ const OrderPayload = ({ payload }) => {
               <strong>
                 {customer && customer.user ? customer.user.firstName : ""} {customer && customer.user ? customer.user.lastName : ""}
                 {customer && customer.user ? customer.user.name : ""}
+                {customer && customer.user && customer.user.admin_verified && <img src={Verified}/>}
+
               </strong>
             </h4>
             <medium>

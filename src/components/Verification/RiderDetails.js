@@ -22,6 +22,8 @@ import moment from 'moment'
 import userService from 'src/services/user.service.js'
 import Modals2 from './Modals2.js'
 import { toast } from 'react-toastify';
+import {Toggle} from "react-toggle-component"
+
 
 const RiderDetails = ({ selected }) => {
 
@@ -58,7 +60,7 @@ const RiderDetails = ({ selected }) => {
 
   useEffect(() => {
 
-    setToggleStatus(selected.account_verified)
+   // setToggleStatus(selected.account_verified)
 
     userService.searchRiderDocs({ riderId: selected._id }).then(response => {
       setPayload(response.data)
@@ -72,14 +74,21 @@ const RiderDetails = ({ selected }) => {
 
   }, [selected])
 
+  useEffect(() =>{
+    if(selected){
+     setToggleStatus(selected.admin_verified)
+    }
+  },[selected])
+
   const changeRiderStatus=()=>{
-    console.log('==', toggleStatus)
-    let data = { riderId: selected._id, status:toggleStatus === 'on' }
-    console.log('++++', data)
+    let data = { riderId: selected._id, status:toggleStatus }
+
     userService.verifyRider(data).then(response => {
       setToggleStatus(toggleStatus)
+      setToggleStatus(response.data.rider.admin_verified)
       toast.success('Rider status changed')
       setShowModal(false)
+
 
     }).catch(err => {
       console.log(err)
@@ -99,7 +108,8 @@ const RiderDetails = ({ selected }) => {
             <img src={Avatar} alt="" width={300} />
             <h4>
               <strong>
-                {selected && selected.firstName} {selected && selected.lastName}
+                {selected && selected.firstName} {selected && selected.lastName}     {selected.admin_verified && <img src={Verified}/>}
+
               </strong>
             </h4>
             <medium>
@@ -138,13 +148,15 @@ const RiderDetails = ({ selected }) => {
                 className="mr-1"
                 color="success"
                 checked={toggleStatus}
+
                 onChange={e => {
-                  setToggleStatus(e.target.value);
+                  setToggleStatus(!toggleStatus);
                   setShowModal(true)
                 }}
                 shape="pill"
 
               />
+
             </CCol>
           </CCol>
           <CCol xs="12" md="3">

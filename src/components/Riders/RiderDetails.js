@@ -18,9 +18,6 @@ const RiderDetails = (props) => {
 
   ]
 
-  useEffect(() =>{
-    console.log('++++++++++: ', props)
-  },[])
   const getBadge = (status) => {
     switch (status) {
       case 'Active': return 'success'

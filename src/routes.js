@@ -4,6 +4,7 @@ const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 const Orders = React.lazy(() => import("./components/Orders/Tabs"));
 const Order = React.lazy(() => import("./components/Orders/Order"));
 const Customers = React.lazy(() => import("./components/Customers/Customers"));
+const Agencies = React.lazy(() => import("./components/Agencies/Agencies"));
 const Riders = React.lazy(() => import("./components/Riders/Riders"));
 const Riders2 = React.lazy(() => import("./components/Riders/Riders2"));
 const RidersDetails = React.lazy(() => import("./components/Riders/RiderDetails"));
@@ -11,6 +12,7 @@ const Verification = React.lazy(() => import("./components/Verification/Verifica
 const Notification = React.lazy(() => import("./components/Notification/Notification"));
 const Payment = React.lazy(() => import("./components/Payment/Payment"));
 const CustomerDetails = React.lazy(() => import("./components/Customers/CustomerTabs"));
+const AgencyDetails = React.lazy(() => import("./components/Agencies/AgencyTabs"));
 
 const Settings = React.lazy(() =>
   import("./components/Settings/Settings")
@@ -21,7 +23,8 @@ const routes = [
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
   { path: "/orders", name: "Orders", component: Orders, exact: true },
   { path: "/orders/order/:id", name: "order", component: Order },
-  { path: "/customers", name: "Customers", component: Customers, exact: true },
+  { path: "/customers", name: "Agencies", component: Customers, exact: true },
+  { path: "/agencies", name: "Agencies", component: Agencies, exact: true },
   { path: "/riders", name: "Riders", component: Riders, exact: true },
   { path: "/riders-solo", name: "Riders", component: Riders2, exact: true },
   { path: "/riders/details/:id", name: "Riders", component: RidersDetails, exact: true },
@@ -33,6 +36,16 @@ const routes = [
 
   {
     path: "/customers/details/:id",
+    name: "details",
+    component: CustomerDetails,
+  },
+  {
+    path: "/agencies/details/:id",
+    name: "details",
+    component: AgencyDetails,
+  },
+  {
+    path: "/agencies/details/:id",
     name: "details",
     component: CustomerDetails,
   },

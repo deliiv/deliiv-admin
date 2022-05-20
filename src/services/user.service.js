@@ -1,5 +1,4 @@
 import axios from "axios";
-import Axios from "axios";
 import authHeader from "./auth.header";
 import qs from "qs";
 
@@ -36,6 +35,19 @@ class UserService {
     return new Promise((resolve, reject) => {
       axios
         .get("/admin/get-service-charge", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getAllAgencies() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/get-agencies", config)
         .then((response) => {
           resolve(response);
         })

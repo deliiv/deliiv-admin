@@ -25,6 +25,11 @@ const _nav = [
     name: <NAVITEM icon={Users} name={"Customers"} />,
     to: "/customers",
   },
+  {
+    _tag: "CSidebarNavItem",
+    name: <NAVITEM icon={Users} name={"Agencies"} />,
+    to: "/agencies",
+  },
 
   {
     _tag: 'CSidebarNavDropdown',

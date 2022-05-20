@@ -105,12 +105,12 @@ const Login = (props) => {
                   </div>
                 </CCardBody>
               </CCard>
-              <CCard className="p-8" style={{ height:"100vh" }}>
+              <CCard className="p-8">
                 <CCardBody
                 className=" justify-content-center center-flex">
                   <CForm onSubmit={loginHandler}>
                     {/* <h1>Login</h1> */}
-                    <p className="text-muted">Admin portal login</p>
+                    <p style={{ fontWeight:"bold" }}>Admin portal login</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>

@@ -16,6 +16,7 @@ import {
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import userService from 'src/services/user.service';
+import Spinner from 'src/Spinner';
 
 const Modals = ({
   show,
@@ -35,9 +36,11 @@ const Modals = ({
   }, [dId])
   const [selectedImage, setSelectedImage] = React.useState('');
   const [catName, setCatName] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
   const handleImageUpload = () => {
 
+    setLoading(true)
     let form = new FormData();
     form.append('file', selectedImage);
     form.append('document_name', dId.name);
@@ -46,14 +49,19 @@ const Modals = ({
 
     userService
       .uploadDocument(form)
-      .then(() => {
+      .then(data => {
+
+        setLoading(false)
 
         toast.success('Image uploaded');
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
+        console.log('XXXX', data.data.document.document_image)
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 1500);
       })
       .catch((error) => {
+        setLoading(false)
+
         console.log(error);
       });
   };
@@ -133,11 +141,13 @@ const Modals = ({
                       setSelectedImage(event.target.files[0]);
                     }}
                   />
+                  {loading && <Spinner width={20} height={20} />}
+
                 </div>
               </CFormGroup>
 
             </CModalBody>
-         
+
           </CModal>
         </CCard>
       </CCol>

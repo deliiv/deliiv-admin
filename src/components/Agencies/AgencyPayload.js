@@ -17,32 +17,34 @@ import {
 import Avatar from './avatar.svg'
 import Mail from './mail.svg'
 import Phone from '../../assets/phone.svg'
-import { useRouteMatch, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import UserService from "../../services/user.service";
 import moment from 'moment'
-import PendingTable from './tables/PendingTable'
+import RidersTable from './tables/RidersTable'
 import PickedupTable from './tables/PickedupTable'
 import CancelledTable from './tables/CancelledTable'
 import DeliveredTable from './tables/DeliveredTable'
 import TransactionTable from './tables/TransactionsTable'
 
 
-const CustomerPayload = () => {
+const AgencyPayload = () => {
 
   let { id } = useParams();
   const [customer, setCustomer] = React.useState("");
   const [jobs, setJobs] = React.useState("");
   const [transactions, setTransactions] = React.useState([]);
+  const [rider, setRiders] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     setLoading(true);
 
-    UserService.getSingleCustomer(id)
+    UserService.getSingleAgency(id)
       .then((res) => {
 
         setCustomer(res.data.user_details);
         setJobs(res.data.jobs);
+        setRiders(res.data.riders);
         setTransactions(res.data.transactions);
         setLoading(false);
       })
@@ -66,8 +68,7 @@ const CustomerPayload = () => {
             <img src={Avatar} alt="" />
             <h4>
               <strong>
-                {customer && customer.user.firstName} {customer && customer.user.lastName}
-                {/* {customer && customer.user && customer.user.name} */}
+                {customer && customer.user.name}
               </strong>
             </h4>
             <medium>
@@ -79,7 +80,7 @@ const CustomerPayload = () => {
             <CCard style={{ padding: 10 }}>
               <h4>
                 <strong>
-                  Customer Details
+                  Agency Details
                 </strong>
               </h4>
               <CCardBody>
@@ -107,7 +108,7 @@ const CustomerPayload = () => {
               <CCardBody>
                 <strong>
                   <h2>
-                    ₦{customer && customer.wallet && customer.wallet.balance.toLocaleString()}
+                    ₦{customer && customer.wallet.toLocaleString()}
                   </h2>
                 </strong>
                 <strong>
@@ -140,50 +141,7 @@ const CustomerPayload = () => {
                         paddingTop: "20px",
                       }}
                     >
-                      Pending
-                    </CCallout>
-                  </CNavLink>
-                </CNavItem>
-                <CNavItem>
-                  <CNavLink>
-                    <CCallout
-                      color="dark"
-                      style={{
-                        height: "50px",
-                        width: "200px",
-                        paddingTop: "20px",
-                      }}
-                    >
-                      Picked up
-                    </CCallout>
-                  </CNavLink>
-                </CNavItem>
-
-                <CNavItem>
-                  <CNavLink>
-                    <CCallout
-                      color="success"
-                      style={{
-                        height: "50px",
-                        width: "200px",
-                        paddingTop: "20px",
-                      }}
-                    >
-                      Completed
-                    </CCallout>
-                  </CNavLink>
-                </CNavItem>
-                <CNavItem>
-                  <CNavLink>
-                    <CCallout
-                      color="danger"
-                      style={{
-                        height: "50px",
-                        width: "200px",
-                        paddingTop: "20px",
-                      }}
-                    >
-                      Cancelled
+                      Riders
                     </CCallout>
                   </CNavLink>
                 </CNavItem>
@@ -197,23 +155,14 @@ const CustomerPayload = () => {
                         paddingTop: "20px",
                       }}
                     >
-                      Transactions
+                      Withdrawal Requests
                     </CCallout>
                   </CNavLink>
                 </CNavItem>
               </CNav>
               <CTabContent>
                 <CTabPane>
-                  <PendingTable pending={jobs && jobs.pending} />
-                </CTabPane>
-                <CTabPane>
-                  <PickedupTable pickedup={jobs.pickedup} />
-                </CTabPane>
-                <CTabPane>
-                  <CancelledTable cancelled={jobs.cancelled} />
-                </CTabPane>
-                <CTabPane>
-                  <DeliveredTable delivered={jobs.delivered} />
+                  <RidersTable riders={rider} />
                 </CTabPane>
                 <CTabPane>
                   <TransactionTable  transactions={transactions}  />
@@ -229,4 +178,4 @@ const CustomerPayload = () => {
   )
 }
 
-export default CustomerPayload
+export default AgencyPayload
