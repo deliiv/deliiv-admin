@@ -97,7 +97,7 @@ const Online = ({ online }) => {
                     ),
 
                     status: (rider) => (
-                      <td>{rider && rider.account_verified ? <p style={{ color: "green" }}>Verified</p> : <p style={{ color: "red" }}>Unverified</p>}</td>
+                      <td>{rider && rider.admin_verified ? <p style={{ color: "green" }}>Verified</p> : <p style={{ color: "red" }}>Unverified</p>}</td>
                     ),
                     date_created: (customer) => (
                       <td>
