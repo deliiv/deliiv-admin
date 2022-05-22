@@ -6,7 +6,8 @@ import {
   CRow,
   CBadge,
   CButton,
-  CDropdownDivider
+  CDropdownDivider,
+  CSwitch
 } from '@coreui/react'
 import { useHistory } from 'react-router';
 
@@ -24,6 +25,7 @@ import Tabs from './Tabs'
 import Modals from './Modals';
 import Modals2 from './Modals2';
 import Spinner from 'src/Spinner';
+import userService from '../../services/user.service';
 const OrderPayload = ({ payload }) => {
   const navigate = useHistory();
 
@@ -42,13 +44,15 @@ const OrderPayload = ({ payload }) => {
   const [loader, setLoader] = React.useState(true)
   const [showImageModal, setShowImageModal] = React.useState(false)
   const [imgurl, setimgurl] = React.useState('')
+  const [toggleStatus, setToggleStatus] = React.useState(false)
+  const [showModal, setShowModal] = React.useState(false)
 
   const documentName = [
     { id: 1, name: "Motorcycle Particulars" },
-    { id: 2, name: "Hackney Permit"},
-    { id: 3, name: "Advert Permit"},
-    { id: 4, name: "Consolidation"},
-    { id: 5, name: "Motorcycle drivers license"},
+    { id: 2, name: "Hackney Permit" },
+    { id: 3, name: "Advert Permit" },
+    { id: 4, name: "Consolidation" },
+    { id: 5, name: "Motorcycle drivers license" },
     { id: 6, name: "ID card" }
   ]
 
@@ -85,6 +89,7 @@ const OrderPayload = ({ payload }) => {
         .then((res) => {
           setCustomer(res.data.user_details);
           setRole(res.data.user_details.user.role)
+          setToggleStatus(res.data.user_details.user.active)
           setJobs(res.data.jobs);
           setTransactions(res.data.transactions);
           setDocuments(res.data.documents);
@@ -100,6 +105,20 @@ const OrderPayload = ({ payload }) => {
     }
 
   }, []);
+
+  const changeRiderStatus = () => {
+    let data = { rider: customer.user._id, status: toggleStatus }
+
+    userService.changeActiveStatus(data).then(response => {
+      setToggleStatus(toggleStatus)
+      setToggleStatus(response.data.rider.admin_verified)
+      toast.success('Rider status changed')
+      setShowModal(false)
+
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 
   const handleDelete = () => {
 
@@ -119,13 +138,13 @@ const OrderPayload = ({ payload }) => {
   const renderDocumentImage = (name, id) => {
 
     let docImg = ""
-    if(documents && documents.length > 0){
-    for (let i = 0; i < documents.length; i++) {
-      if (documents[i].document_name === name && documents[i].rider === id) {
-        docImg = documents[i].document_image
+    if (documents && documents.length > 0) {
+      for (let i = 0; i < documents.length; i++) {
+        if (documents[i].document_name === name && documents[i].rider === id) {
+          docImg = documents[i].document_image
+        }
       }
     }
-  }
     return docImg
   }
   const renderImage = (customer) => {
@@ -152,9 +171,16 @@ const OrderPayload = ({ payload }) => {
       <ImageViewerModal
         title={"Docuement image"}
         show={showImageModal}
-        handleCancel={()=> setShowImageModal(false)}
+        handleCancel={() => setShowImageModal(false)}
         image_url={imgurl}
-        />
+      />
+      <Modals2 title={"Change rider status"}
+        message={`Are you sure you want to change rider Active status ?`}
+
+        handleCancel={() => { setShowModal(false); setToggleStatus(customer.user.active) }}
+        handleSuccess={changeRiderStatus}
+        show={showModal}
+      />
       <CCardBody>
 
         <CRow>
@@ -168,7 +194,7 @@ const OrderPayload = ({ payload }) => {
               <strong>
                 {customer && customer.user ? customer.user.firstName : ""} {customer && customer.user ? customer.user.lastName : ""}
                 {customer && customer.user ? customer.user.name : ""}
-                {customer && customer.user && customer.user.admin_verified && <img src={Verified}/>}
+                {customer && customer.user && customer.user.admin_verified && <img src={Verified} />}
 
               </strong>
             </h4>
@@ -186,7 +212,31 @@ const OrderPayload = ({ payload }) => {
               }
             </strong>
 
+            <br />
+            <br />
+            {role === "RIDER"  &&
+              <div>
+
+
+                <h4 style={{ marginRight: "20px" }}>
+                  <strong>Active status</strong>
+                </h4>
+                <CSwitch
+                  className="mr-1"
+                  color="success"
+                  checked={toggleStatus}
+
+                  onChange={e => {
+                    setToggleStatus(!toggleStatus);
+                    setShowModal(true)
+                  }}
+                  shape="pill"
+
+                />
+              </div>
+            }
           </CCol>
+
           <CCol xs="12" md="3">
             <CCard style={{ padding: 10 }}>
               <h5>
@@ -224,6 +274,7 @@ const OrderPayload = ({ payload }) => {
             </CCard>
 
           </CCol>
+
           <CCol xs="12" md="3">
             <CCard style={{ padding: 10 }}>
               <h5>
@@ -270,17 +321,17 @@ const OrderPayload = ({ payload }) => {
                   documentName.map((item, index) => {
                     return (<div style={{ display: "flex", flexDirection: "column", width: '120px', marginRight: '20px' }}>
                       <medium style={{ padding: '10px', maxHeight: "30px", marginBottom: "30px" }}>{item.name}</medium>
-                     {renderDocumentImage(item.name, id) ? (
-                      <img
-                        src={renderDocumentImage(item.name, id)}
-                        onClick={()=> {
-                          setShowImageModal(true)
-                          setimgurl(renderDocumentImage(item.name, id))
-                        }}
-                        alt=""
-                        width={120}
-                        height={100} />
-                     ):(<div style={{ width:'120px', height:"100px",backgroundColor:"black" }}/>)}
+                      {renderDocumentImage(item.name, id) ? (
+                        <img
+                          src={renderDocumentImage(item.name, id)}
+                          onClick={() => {
+                            setShowImageModal(true)
+                            setimgurl(renderDocumentImage(item.name, id))
+                          }}
+                          alt=""
+                          width={120}
+                          height={100} />
+                      ) : (<div style={{ width: '120px', height: "100px", backgroundColor: "black" }} />)}
                       <CButton color='primary'
                         size="sm" style={{ marginTop: 10 }}
                         onClick={() => {

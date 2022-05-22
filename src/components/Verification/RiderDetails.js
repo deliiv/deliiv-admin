@@ -89,7 +89,6 @@ const RiderDetails = ({ selected }) => {
       toast.success('Rider status changed')
       setShowModal(false)
 
-
     }).catch(err => {
       console.log(err)
     })

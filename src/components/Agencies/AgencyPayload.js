@@ -155,7 +155,7 @@ const AgencyPayload = () => {
                         paddingTop: "20px",
                       }}
                     >
-                      Withdrawal Requests
+                      Transactions
                     </CCallout>
                   </CNavLink>
                 </CNavItem>

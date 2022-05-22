@@ -289,6 +289,19 @@ class UserService {
         });
     });
   }
+  async changeActiveStatus(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/change-rider-status", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 
 
   async createRegion(data) {
