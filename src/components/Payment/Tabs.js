@@ -13,11 +13,8 @@ import {
 	CCardHeader,
 	CSwitch
 } from '@coreui/react';
-import CIcon from '@coreui/icons-react';
-import { DocsLink } from 'src/reusable';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-// import SellerProductDetails from './SellerProductDetails';
 import { fetchUserDetails } from '../../store/users-actions';
 import OrderDetails from './OrderDetails';
 import userService from 'src/services/user.service';
@@ -163,9 +160,6 @@ const Tabs = (props) => {
 						)}
 						<CTabs>
 							<CNav variant="tabs">
-								{/* <CNavItem>
-									<CNavLink>Products</CNavLink>
-								</CNavItem> */}
 								<CNavItem>
 									<CNavLink>Orders</CNavLink>
 								</CNavItem>

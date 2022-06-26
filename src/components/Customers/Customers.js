@@ -1,5 +1,5 @@
 import { CCard, CCardBody, CButton, CCol, CDataTable, CRow, CInput, CFormGroup } from "@coreui/react";
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { useRouteMatch, useHistory } from "react-router-dom";
@@ -8,15 +8,19 @@ import Spinner from "../Spinner";
 const Customers = (props) => {
   const { url } = useRouteMatch();
   const history = useHistory();
+  const [localCUstomers, setLocalCustomers] = useState([])
+  const [secondaryLocalCUstomers, setSecondaryLocalCustomers] = useState([])
+  const [search, setSearch] = useState('')
+  const [loader, setLoader] = useState(true)
 
   const customers = useSelector((state) => state.users.users);
 
-  useEffect(() =>{
-    if(customers){
+  useEffect(() => {
+    if (customers) {
+      setLocalCustomers(customers)
       setLoader(false)
     }
-  },[customers])
-  const [loader, setLoader] = useState(true)
+  }, [customers])
   const fields = [
     {
       key: "firstname",
@@ -42,25 +46,82 @@ const Customers = (props) => {
     },
   ];
 
+  const handleOnChange = (e) => {
+
+    if (e.keyCode === 8) {
+
+      const filteredData = e.target.value.trim().length > 0 && localCUstomers &&
+        localCUstomers.filter(entry => {
+          return (
+            entry.firstName && entry.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.lastName && entry.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.email && entry.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.phone_number && entry.phone_number.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          )
+        }
+        );
+      if (filteredData) {
+        setLocalCustomers(filteredData);
+      }
+    }
+    setSearch(e.target.value);
+    const filteredData = e.target.value.trim().length > 0 && localCUstomers &&
+      localCUstomers.filter(entry => {
+        return (
+          entry.firstName && entry.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.lastName && entry.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.email && entry.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.phone_number && entry.phone_number.toLowerCase().includes(e.target.value.trim().toLowerCase())
+        )
+      }
+      );
+
+      filteredData && filteredData.length > 0 && setSecondaryLocalCustomers(localCUstomers)
+
+      if (filteredData) {
+        setLocalCustomers(filteredData);
+      }else{
+        setLocalCustomers(customers)
+        setSecondaryLocalCustomers(customers)
+      }
+  }
+
+  const onKeyUp = (e) => {
+    if (e.keyCode === 8) {
+      // setSecondaryLocalCustomers()
+      setLocalCustomers(secondaryLocalCUstomers)
+    }
+  }
+  const onKeyDown = (e) => {
+    if (e.keyCode === 8) {
+      handleOnChange(e)
+    }
+  }
+
   return (
     <>
       <CRow>
 
 
         <CCol>
-      {loader && <Spinner width={20} height={20}/>}
+          {loader && <Spinner width={20} height={20} />}
 
           <CCard>
             <CFormGroup>
               <div style={{ width: "40%", display: "flex", flexDirection: 'row', padding: "30px" }}>
-                <CInput placeholder="search" style={{ padding: 20 }} />
+                <CInput placeholder="search" style={{ padding: 20 }}
+                  value={search}
+
+                  onChange={handleOnChange}
+                  onKeyDown={onKeyDown}
+                  onKeyUp={onKeyUp} />
                 <CButton color="primary" style={{ marginLeft: 20, paddingLeft: 20, paddingRight: 20 }}>Search</CButton>
               </div>
             </CFormGroup>
             <CCardBody>
               {customers && (
                 <CDataTable
-                  items={customers}
+                  items={localCUstomers}
                   fields={fields}
                   items-per-page-select
                   items-per-page="5"

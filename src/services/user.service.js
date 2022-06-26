@@ -116,6 +116,20 @@ class UserService {
     });
   }
 
+  async cancelJob(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`/admin/cancel-job/${id}`,null, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
 
   async updateStoreProduct(data) {
     const config = await authHeader();

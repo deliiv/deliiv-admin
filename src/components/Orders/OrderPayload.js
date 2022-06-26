@@ -1,29 +1,53 @@
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   CCardBody,
   CCard,
   CCardHeader,
   CCol,
-  CRow
+  CRow,
+  CButton
 } from '@coreui/react'
 import moment from 'moment'
 import Location from './location.svg'
 import OrderPayloadItem from './OrderPayloadItem'
 import Spinner from '../Spinner'
+import userService from "src/services/user.service";
+import ModalC from './ModalsC'
+import { toast } from 'react-toastify'
 
 const OrderPayload = ({ item }) => {
 
-  const[loader, setLoader]= useState(true);
-  useEffect(() =>{
-  if(item){
-    setLoader(false)
+  const [loader, setLoader] = useState(true);
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    if (item) {
+      setLoader(false)
+    }
+  }, [item])
+
+  const handleCancel = () => {
+
+    userService.cancelJob(item._id).then(response => {
+      toast.success(`Order cancelled`)
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }).catch(err => {
+      console.log(err)
+    })
   }
-  },[item])
 
 
   return (
     <CCardBody>
-        {loader && <Spinner width={20} height={20}/>}
+      <ModalC
+        title={"Cancel order"}
+        message={`Are you sure you want to cancel this order?`}
+        show={show}
+        handleSuccess={handleCancel}
+        handleCancel={() => setShow(false)}
+      />
+      {loader && <Spinner width={20} height={20} />}
 
       {item && <CRow>
         <CCol xs="12" md="8" >
@@ -52,8 +76,12 @@ const OrderPayload = ({ item }) => {
                   <p>{item && moment(item.createdAt).format('hh:mm A')}</p>
                 </CCol>
                 <CCol xs="2" md="2">
-                  <h6 style={{ fontWeight: "bold" }}>Status</h6>
+                  <h6 style={{ fontWeight: "bold" }}>Job Status</h6>
                   <p>{item && item.status}</p>
+                </CCol>
+                <CCol xs="2" md="2">
+                  <h6 style={{ fontWeight: "bold" }}>Payment Status</h6>
+                  <p>{item && item.payment_status}</p>
                 </CCol>
               </CRow>
               <CCard>
@@ -64,17 +92,17 @@ const OrderPayload = ({ item }) => {
                     {new Array(3).fill(null).map((i, index) => {
                       if (index === 0) {
                         return (<CCol xs="4" md="4">
-                          <OrderPayloadItem payload={item && item.sender} index={0}/>
+                          <OrderPayloadItem payload={item && item.sender} index={0} />
                         </CCol>)
                       }
                       if (index === 1) {
                         return (<CCol xs="4" md="4">
-                          <OrderPayloadItem payload={item && item.receiver} index={1}/>
+                          <OrderPayloadItem payload={item && item.receiver} index={1} />
                         </CCol>)
                       }
                       if (index === 2) {
                         return (<CCol xs="4" md="4">
-                          <OrderPayloadItem payload={item && item.rider_assign} index={2}/>
+                          <OrderPayloadItem payload={item && item.rider_assign} index={2} />
                         </CCol>)
                       }
 
@@ -86,7 +114,7 @@ const OrderPayload = ({ item }) => {
 
               <CRow>
                 <CCol>
-                  <CCard style={{ paddingLeft:10 }}>
+                  <CCard style={{ paddingLeft: 10 }}>
                     <CCardBody>
                       <CRow>
                         <h6 style={{ fontWeight: "bold" }}>Pick up Location</h6>
@@ -105,7 +133,7 @@ const OrderPayload = ({ item }) => {
 
                 </CCol>
                 <CCol>
-                  <CCard style={{ paddingLeft:10 }}>
+                  <CCard style={{ paddingLeft: 10 }}>
 
                     <CCardBody >
                       <CRow>
@@ -129,7 +157,13 @@ const OrderPayload = ({ item }) => {
             </CCardBody>
 
           </CCard>
+          {item && item.payment_status === 'paid' &&
+            item.status !== 'delivered' &&
+            item.status !== 'cancelled' &&
+            <CButton color="danger" onClick={() => setShow(true)}>Cancel Order</CButton>}
+
         </CCol>
+
         <CCol xs="12" md="4">
           <CCard>
             <CCardHeader>
@@ -138,10 +172,10 @@ const OrderPayload = ({ item }) => {
               </strong>
             </CCardHeader>
             <CCardBody>
-             Name: {item.package_name}
-             <br/>
-             <br/>
-             Instruction: {item.instruction}
+              Name: {item.package_name}
+              <br />
+              <br />
+              Instruction: {item.instruction}
 
 
             </CCardBody>

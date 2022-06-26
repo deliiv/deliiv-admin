@@ -8,7 +8,6 @@ const Order = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [localItem, setLocalItem] = React.useState(false);
   const { id } = useParams();
-  // const {item} = props.location.data
 
   React.useEffect(() => {
     setLoading(true);

@@ -10,10 +10,9 @@ import OrderDetails from '../OrderPayload.js'
 import moment  from 'moment'
 
 const Delivered = ({delivered}) => {
+  
   const history = useHistory();
-
   const [payLoad, setPayLoad] = useState({})
-
 
   const fields = [
     { key:"order_ID",lable: 'Order ID', _style: { width: '10%' } },

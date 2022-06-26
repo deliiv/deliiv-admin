@@ -26,25 +26,17 @@ import CompletedTable from "./tables/CompletedTable";
 import Pending from "./tables/PendingTable";
 import Cancelled from "./tables/CancelledTable";
 
-const PaymentTabs = ({ paystack, adminTopups, topusers }) => {
-
-  const witdrawal = useSelector((state) => state.transactions.witdrawalRequest);
-
-  const [active, setActive] = useState(1);
-  const lorem =
-    "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.";
+const PaymentTabs = ({witdraw,completed, cancelled}) => {
 
   return (
     <CRow>
       <CCol xs="12" md="12" className="mb-4">
         <CCard>
 
-
-          {/* <CCardHeader>Table represents transactions in last 24hrs</CCardHeader> */}
           <CCardBody>
             <CTabs >
               <CNav variant="tabs">
-              <CNavItem>
+                <CNavItem>
                   <CNavLink>
                     <CCallout
                       color="warning"
@@ -58,7 +50,7 @@ const PaymentTabs = ({ paystack, adminTopups, topusers }) => {
                     </CCallout>
                   </CNavLink>
                 </CNavItem>
-                
+
                 <CNavItem>
                   <CNavLink>
                     <CCallout
@@ -92,26 +84,22 @@ const PaymentTabs = ({ paystack, adminTopups, topusers }) => {
                 </CNavItem>
               </CNav>
               <CTabContent>
-              <CTabPane>
-                  <Pending pending={witdrawal && witdrawal.withdraw}/>
+                <CTabPane>
+                  <Pending pending={witdraw} />
                 </CTabPane>
 
                 <CTabPane>
-                  <CompletedTable completed={witdrawal && witdrawal.completedWitdraw}/>
+                  <CompletedTable completed={completed} />
                 </CTabPane>
 
                 <CTabPane>
-                  <Cancelled cancelled={witdrawal && witdrawal.cancelledWitdraw}/>
-                </CTabPane>
-                <CTabPane>
-                  <DemoTable />
-
-                  {/* <PayStack paystack={paystack} /> */}
+                  <Cancelled cancelled={cancelled} />
                 </CTabPane>
                 <CTabPane>
                   <DemoTable />
-
-                  {/* <TopUsers topusers={topusers} /> */}
+                </CTabPane>
+                <CTabPane>
+                  <DemoTable />
                 </CTabPane>
               </CTabContent>
             </CTabs>

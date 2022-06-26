@@ -1,5 +1,5 @@
 import { CCard, CCardBody, CButton, CCol, CDataTable, CRow, CInput, CFormGroup } from "@coreui/react";
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { useRouteMatch, useHistory } from "react-router-dom";
@@ -13,19 +13,23 @@ const Agencies = (props) => {
 
   const [loader, setLoader] = useState(true)
   const [agency, setAgency] = useState([])
+  const [localAgencies, setLocalAgencies] = useState([])
+  const [secondaryLocalAgencies, setSecondaryLocalAgencies] = useState([])
+  const [search, setSearch] = useState('')
 
 
-  useEffect(() =>{
+  useEffect(() => {
     userService.getAllAgencies()
-    .then(item =>{
-      setAgency(item.data.agency)
-      setLoader(false)
-    }).catch(err =>{
-      setLoader(false)
-      toast.error('Error fetching agencies')
-    })
+      .then(item => {
+        setAgency(item.data.agency)
+        setLocalAgencies(item.data.agency)
+        setLoader(false)
+      }).catch(err => {
+        setLoader(false)
+        toast.error('Error fetching agencies')
+      })
 
-  },[])
+  }, [])
 
   const fields = [
     {
@@ -52,25 +56,83 @@ const Agencies = (props) => {
     },
   ];
 
+  const handleOnChange = (e) => {
+
+    if (e.keyCode === 8) {
+
+      const filteredData = e.target.value.trim().length > 0 && localAgencies &&
+        localAgencies.filter(entry => {
+          return (
+            entry.name && entry.name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.email && entry.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.phone_number && entry.phone_number.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          )
+        }
+        );
+      if (filteredData) {
+        setLocalAgencies(filteredData);
+      }
+
+    }
+    setSearch(e.target.value);
+    const filteredData = e.target.value.trim().length > 0 && localAgencies &&
+      localAgencies.filter(entry => {
+        return (
+          entry.name && entry.name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.email && entry.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.phone_number && entry.phone_number.toLowerCase().includes(e.target.value.trim().toLowerCase())
+        )
+      }
+      );
+
+    filteredData && filteredData.length > 0 && setSecondaryLocalAgencies(localAgencies)
+
+    if (filteredData) {
+      setLocalAgencies(filteredData);
+    } else {
+      setLocalAgencies(agency)
+      setSecondaryLocalAgencies(agency)
+
+    }
+
+
+  }
+
+  const onKeyUp = (e) => {
+    if (e.keyCode === 8) {
+      setSecondaryLocalAgencies()
+      setLocalAgencies(secondaryLocalAgencies)
+    }
+  }
+  const onKeyDown = (e) => {
+    if (e.keyCode === 8) {
+      handleOnChange(e)
+    }
+  }
+
   return (
     <>
       <CRow>
 
 
         <CCol>
-      {loader && <Spinner width={20} height={20}/>}
+          {loader && <Spinner width={20} height={20} />}
 
           <CCard>
             <CFormGroup>
               <div style={{ width: "40%", display: "flex", flexDirection: 'row', padding: "30px" }}>
-                <CInput placeholder="search" style={{ padding: 20 }} />
+                <CInput placeholder="search" style={{ padding: 20 }}
+                  value={search}
+                  onChange={handleOnChange}
+                  onKeyDown={onKeyDown}
+                  onKeyUp={onKeyUp} />
                 <CButton color="primary" style={{ marginLeft: 20, paddingLeft: 20, paddingRight: 20 }}>Search</CButton>
               </div>
             </CFormGroup>
             <CCardBody>
               {agency && (
                 <CDataTable
-                  items={agency}
+                  items={localAgencies}
                   fields={fields}
                   items-per-page-select
                   items-per-page="5"

@@ -16,19 +16,11 @@ const OrderPayloadItem = ({ payload, index }) => {
       <h6 style={{ fontWeight: "bold" }}>{arr[index]}</h6>
       {
         payload !== null && <CRow>
-
           <CCol xs="12" md="4">
-            {/* <CRow> */}
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
               <img src={Person} alt="" />
               <p style={{ paddingTop: "10px", paddingLeft: 10 }}>{payload && index < 2 ? payload.full_name : "" + payload.firstName + ' ' + payload.lastName}</p>
             </div>
-            {/* </CRow> */}
-            {/* <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-              <img src={Mail} alt="" />
-              <p style={{ paddingTop: "10px", paddingLeft: 10 }}>{payload && payload.email ? payload.email
-                : "No mail"}</p>
-            </div> */}
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
               <img src={Phone} alt="" />
               <p style={{ paddingTop: "10px", paddingLeft: 10 }}>{payload && payload.phone_number}</p>
@@ -37,11 +29,6 @@ const OrderPayloadItem = ({ payload, index }) => {
 
         </CRow>
       }
-
-
-
-
-
     </CCardBody>
   )
 }

@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import WidgetsDropdown from "src/views/widgets/WidgetsDropdown";
 import {
@@ -90,7 +90,7 @@ const OrderDetails = (props) => {
     },
   ];
 
-  
+
   const toggleDetails = (index) => {
     const position = details.indexOf(index);
     let newDetails = details.slice();
@@ -102,49 +102,45 @@ const OrderDetails = (props) => {
     setDetails(newDetails);
   };
 
-  const handleUpdateOrder =()=>{
-    let data={
+  const handleUpdateOrder = () => {
+    let data = {
       order_id: orderId,
-      status:orderStatus
+      status: orderStatus
     }
-  userService.updateOrderStatus(data).then(response =>{
-    toast.success(`Order status updated to ${orderStatus}`)
-    setTimeout(() => {
-			window.location.reload();
-		}, 1000);
-  }).catch(err =>{
-    console.log(err)
-  })
+    userService.updateOrderStatus(data).then(response => {
+      toast.success(`Order status updated to ${orderStatus}`)
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
-  const handleOnChangeUpdateOrder =(id, status)=>{
+  const handleOnChangeUpdateOrder = (id, status) => {
     setShow(true)
     setOrderId(id)
     setOrderStatus(status)
-    
+
     setTimeout(() => {
       console.log(`Status is ${status} and id: ${id}`)
     }, 3000);
   }
 
-  useEffect(() =>{ console.log('++++++++++', props);
-},[])
 
   return (
     <>
-      {/* <WidgetsDropdown widgetList={widgetList} /> */}
-
-<Modals
-title={"Change order status"}
-message={`Are you sure you want to change order to ${orderStatus} `}
- show={show}
- handleSuccess={handleUpdateOrder}
- handleCancel={()=>setShow(false)}/>
+      <Modals
+        title={"Change order status"}
+        message={`Are you sure you want to change order to ${orderStatus} `}
+        show={show}
+        handleSuccess={handleUpdateOrder}
+        handleCancel={() => setShow(false)} />
       <CRow>
         <CCol>
           <CCard>
             <CCardBody>
-              {props.order && props.order.user_detail&&  props.order.user_detail.order && props.order.user_detail.order.length > 0 && (
+              {props.order && props.order.user_detail && props.order.user_detail.order && props.order.user_detail.order.length > 0 && (
                 <CDataTable
                   items={props.order.user_detail.order}
                   fields={fields}
@@ -160,32 +156,6 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                     </div>
                   }
                   scopedSlots={{
-                  //   firstName: (serviceman) => (
-                  //     <td>
-                  //       <Link
-                  //         to={{
-                  //           pathname: `${url}/serviceman-${serviceman._id}`,
-                  //         }}
-                  //       >
-                  //         {serviceman ? serviceman.firstName : null}
-                  //       </Link>
-                  //     </td>
-                  //   ),
-                  //   number: (serviceman) => (
-                  //     <td>{serviceman ? serviceman.phone : null}</td>
-                  //   ),
-                  //   no_of_jobs: (serviceman) => (
-                  //     <td>
-                  //       {serviceman ? serviceman.numberOfJobs : "Not Available"}
-                  //     </td>
-                  //   ),
-                  //   active_status: (serviceman) => (
-                  //     <td>
-                  //       {serviceman.active_status === true
-                  //         ? "active"
-                  //         : "inactive"}
-                  //     </td>
-                  //   ),
                     created_at: (date) => (
                       <td>
                         {formateDate(date.created_at)}{" "}
@@ -198,7 +168,7 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                         {formatTime(date.updated_at)}
                       </td>
                     ),
-                    
+
                     status: (order) => (
                       <td>
                         <CBadge
@@ -214,15 +184,15 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                         <td className="py-2">
                           <CButton
                             color="info"
-                             variant="outline"
+                            variant="outline"
                             // shape="square"
                             size="sm"
                             onClick={() => {
                               toggleDetails(item.id);
                               //console.log(products[item.id]);
                               console.log('>>>>>>>', item)
-                             // setSelectedProduct(item.seller_details.order.filter(it => it.id === item.id));
-                              
+                              // setSelectedProduct(item.seller_details.order.filter(it => it.id === item.id));
+
                             }}
                           >
                             {details.includes(item.id) ? "Hide" : "Show"}
@@ -234,7 +204,7 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                       return (
                         <CCollapse show={details.includes(item.id)}>
                           <CCardBody>
-                          <CWidgetSimple>
+                            <CWidgetSimple>
                               <table>
                                 <thead className="thead-light">
                                   <tr>
@@ -249,141 +219,47 @@ message={`Are you sure you want to change order to ${orderStatus} `}
                                   </tr>
                                 </thead>
                                 <tbody>
-                                {
-                              item.products.map(item =>{
-                                return(
-                                  <>
-                                <tr>
-                                  <td>{item.id}</td>
-                                  <td>{item.name}</td>
-                                  <td>{item.description}</td>
-                                  <td>{item.quantity}</td>
-                                  <td>{item.price}</td>
-                                  <td>{item.discount_price}</td>
-                                  <td>{item.region}</td>
-                                  <td>
-                                  {item.images && item.images.map(item =>{
-                                  return(<img src={item.image_url} width={50} height={50}/>)
-                                })}
-                                  </td>
+                                  {
+                                    item.products.map(item => {
+                                      return (
+                                        <>
+                                          <tr>
+                                            <td>{item.id}</td>
+                                            <td>{item.name}</td>
+                                            <td>{item.description}</td>
+                                            <td>{item.quantity}</td>
+                                            <td>{item.price}</td>
+                                            <td>{item.discount_price}</td>
+                                            <td>{item.region}</td>
+                                            <td>
+                                              {item.images && item.images.map(item => {
+                                                return (<img src={item.image_url} width={50} height={50} />)
+                                              })}
+                                            </td>
 
-                                </tr>
-                                
-                                </>
-                                )
-                              })
-                            }
+                                          </tr>
+
+                                        </>
+                                      )
+                                    })
+                                  }
                                   <tr>
                                     <td></td>
                                   </tr>
                                 </tbody>
-                                </table>
-                                </CWidgetSimple>
-                         
+                              </table>
+                            </CWidgetSimple>
+
                             <p className="text-muted">{item.details}</p>
-                            {/* <CButton
-                              size="sm"
-                              color="primary"
-                              className="ml-1"
-                              onClick={() => {
-                                selectedProduct = products[item.id];
-                                //console.log("Edit Product", selectedProduct);
-                                props.history.push({
-                                  pathname: `${url}/add_image`,
-                                  selectedProduct,
-                                });
-                              }}
-                            >
-                              Add Image
-                            </CButton>
-                            <CButton
-                              size="sm"
-                              color="primary"
-                              className="ml-1"
-                              onClick={() => {
-                                selectedProduct = products[item.id];
-                                //console.log("Edit Product", selectedProduct);
-                                props.history.push({
-                                  pathname: `${url}/view_product_images`,
-                                  state: products[item.id].id,
-                                });
-                              }}
-                            >
-                              View Images
-                            </CButton>
-                            <CButton
-                              size="sm"
-                              color="secondary"
-                              className="ml-1"
-                              onClick={() => {
-                                selectedProduct = products[item.id];
-                                //console.log("Edit Product", selectedProduct);
-                                props.history.push({
-                                  pathname: `${url}/edit`,
-                                  selectedProduct,
-                                });
-                              }}
-                            >
-                              Edit Product
-                            </CButton>
 
-                            {item.on_promo && (
-                              <CButton
-                                size="sm"
-                                color="warning"
-                                className="ml-1"
-                                onClick={() => {
-                                  // unMarkForPromo(item._id, "");
-                                }}
-                              >
-                                Un-mark for Promo
-                              </CButton>
-                            )}
-
-                            {!item.on_promo && (
-                              <CButton
-                                size="sm"
-                                color="primary"
-                                className="ml-1"
-                                onClick={() => {
-                                  //console.log(products[item.id]);
-                                  //console.log("Edit Product", selectedProduct);
-                                  props.history.push({
-                                    pathname: `${url}/available_promos`,
-                                    productId: item._id,
-                                  });
-                                }}
-                              >
-                                Mark for Promo
-                              </CButton>
-                            )}
-
-                            <CButton
-                              size="sm"
-                              color={item.available ? "warning" : "success"}
-                              className="ml-1"
-                              onClick={() => {
-                                selectedProduct = products[item.id];
-                                // toggleAvailability(item);
-                              }}
-                            >
-                              {item.available ? "Disable" : "Enable"} Product
-                              {/* {disPrdSpinner ? (
-                                <CSpinner
-                                  size="sm"
-                                  color="info"
-                                  className="ml-2"
-                                />
-                              ) : null} */}
-                            {/* </CButton> */}
-                          </CCardBody> 
+                          </CCardBody>
                         </CCollapse>
                       );
                     },
-           
+
                   }}
                 />
-               )} 
+              )}
             </CCardBody>
           </CCard>
         </CCol>
