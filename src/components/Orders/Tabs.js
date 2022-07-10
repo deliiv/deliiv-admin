@@ -207,8 +207,8 @@ const Tabs = () => {
       deliveredOrder.filter(entry => {
         console.log("&&&&&: ", entry)
         return (
-          entry.user.firstName        && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.user.lastName      && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          entry.user && entry.user.firstName        && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.user && entry.user.lastName      && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
           || entry.sender.full_name   && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
           || entry.sender.email       && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
           || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
