@@ -205,6 +205,7 @@ const Tabs = () => {
         )});
     const filteredData3 = e.target.value.trim().length > 0 && deliveredOrder &&
       deliveredOrder.filter(entry => {
+        console.log("&&&&&: ", entry)
         return (
           entry.user.firstName        && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
           || entry.user.lastName      && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
