@@ -53,10 +53,13 @@ const Tabs = () => {
       setCancelledOrder(orders.cancelled)
       setLoader(false)
     }
-    setXR(orders.pending)
-    setXR2(orders.pickedup)
-    setXR3(orders.delivered)
-    setXR4(orders.cancelled)
+
+    setTimeout(() => {
+      setXR(orders.pending)
+      setXR2(orders.pickedup)
+      setXR3(orders.delivered)
+      setXR4(orders.cancelled)
+    }, 2000);
 
   }, [orders])
 

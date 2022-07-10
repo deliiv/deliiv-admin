@@ -23,7 +23,7 @@ const routes = [
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
   { path: "/orders", name: "Orders", component: Orders, exact: true },
   { path: "/orders/order/:id", name: "order", component: Order },
-  { path: "/customers", name: "Agencies", component: Customers, exact: true },
+  { path: "/customers", name: "Customers", component: Customers, exact: true },
   { path: "/agencies", name: "Agencies", component: Agencies, exact: true },
   { path: "/riders", name: "Riders", component: Riders, exact: true },
   { path: "/riders-solo", name: "Riders", component: Riders2, exact: true },

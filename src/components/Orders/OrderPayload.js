@@ -157,10 +157,7 @@ const OrderPayload = ({ item }) => {
             </CCardBody>
 
           </CCard>
-          {item && item.payment_status === 'paid' &&
-            item.status !== 'delivered' &&
-            item.status !== 'cancelled' &&
-            <CButton color="danger" onClick={() => setShow(true)}>Cancel Order</CButton>}
+
 
         </CCol>
 
@@ -171,6 +168,7 @@ const OrderPayload = ({ item }) => {
                 Package Details
               </strong>
             </CCardHeader>
+
             <CCardBody>
               Name: {item.package_name}
               <br />
@@ -181,7 +179,10 @@ const OrderPayload = ({ item }) => {
             </CCardBody>
 
           </CCard>
-
+          {item && item.payment_status === 'paid' &&
+            item.status !== 'delivered' &&
+            item.status !== 'cancelled' &&
+            <CButton color="danger" onClick={() => setShow(true)}>Cancel Order</CButton>}
         </CCol>
       </CRow>}
 

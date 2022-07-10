@@ -31,9 +31,12 @@ const Payment = () => {
       setCompleted(witdrawal.completedWitdraw);
       setCancelled(witdrawal.cancelledWitdraw);
     }
-    setXR(witdrawal.withdraw);
-    setXR2(witdrawal.completedWitdraw);
-    setXR3(witdrawal.cancelledWitdraw);
+    setTimeout(() => {
+      setXR(witdrawal.withdraw);
+      setXR2(witdrawal.completedWitdraw);
+      setXR3(witdrawal.cancelledWitdraw);
+    }, 2000);
+
 
   }, []);
 

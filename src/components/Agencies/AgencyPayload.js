@@ -25,6 +25,7 @@ import PickedupTable from './tables/PickedupTable'
 import CancelledTable from './tables/CancelledTable'
 import DeliveredTable from './tables/DeliveredTable'
 import TransactionTable from './tables/TransactionsTable'
+import { toast } from 'react-toastify'
 
 
 const AgencyPayload = () => {
@@ -50,6 +51,9 @@ const AgencyPayload = () => {
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
+        toast.error('An error occurred, please try again later')
+
       });
 
   }, []);
