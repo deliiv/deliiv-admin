@@ -76,14 +76,14 @@ const Customers = (props) => {
       }
       );
 
-      filteredData && filteredData.length > 0 && setSecondaryLocalCustomers(localCUstomers)
+    filteredData && filteredData.length > 0 && setSecondaryLocalCustomers(localCUstomers)
 
-      if (filteredData) {
-        setLocalCustomers(filteredData);
-      }else{
-        setLocalCustomers(customers)
-        setSecondaryLocalCustomers(customers)
-      }
+    if (filteredData) {
+      setLocalCustomers(filteredData);
+    } else {
+      setLocalCustomers(customers)
+      setSecondaryLocalCustomers(customers)
+    }
   }
 
   const onKeyUp = (e) => {
@@ -97,7 +97,19 @@ const Customers = (props) => {
       handleOnChange(e)
     }
   }
-
+  const handleSearchButton = (s) => {
+    const filteredData = s.trim().length > 0 && localCUstomers &&
+      localCUstomers.filter(entry => {
+        return (
+          entry.firstName && entry.firstName.toLowerCase().includes(s.trim().toLowerCase()) > -1
+          || entry.lastName && entry.lastName.toLowerCase().includes(s.trim().toLowerCase())
+          || entry.email && entry.email.toLowerCase().includes(s.trim().toLowerCase())
+          || entry.phone_number && entry.phone_number.toLowerCase().includes(s.trim().toLowerCase())
+        )
+      }
+      );
+      setLocalCustomers(filteredData)
+  }
   return (
     <>
       <CRow>
@@ -115,7 +127,10 @@ const Customers = (props) => {
                   onChange={handleOnChange}
                   onKeyDown={onKeyDown}
                   onKeyUp={onKeyUp} />
-                <CButton color="primary" style={{ marginLeft: 20, paddingLeft: 20, paddingRight: 20 }}>Search</CButton>
+                <CButton color="primary" style={{ marginLeft: 20, paddingLeft: 20, paddingRight: 20 }}
+                  onClick={() => handleSearchButton(search)}
+
+                >Search</CButton>
               </div>
             </CFormGroup>
             <CCardBody>

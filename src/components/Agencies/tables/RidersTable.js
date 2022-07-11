@@ -41,35 +41,10 @@ const Riders = ({riders}) => {
         pagination
         // loading
         onRowClick={(item,index,col,e) =>{
-         //  console.log(item,index,col,e)}
-          // setPayLoad(item)
-          history.push({pathname:`/orders/order/${item._id}`, data:{item: item}})
-        }}
-        // onPageChange={(val) => console.log('new page:', val)}
-        // onPagesChange={(val) => console.log('new pages:', val)}
-        // onPaginationChange={(val) => console.log('new pagination:', val)}
-        // onFilteredItemsChange={(val) => console.log('new filtered items:', val)}
-        // onSorterValueChange={(val) => console.log('new sorter value:', val)}
-        // onTableFilterChange={(val) => console.log('new table filter:', val)}
-        // onColumnFilterChange={(val) => console.log('new column filter:', val)}
-        scopedSlots={{
-          // order_ID: (order) => <td>{order.job_id}</td>,
-          // user: (order) => <td>{order.user.firstName} {order.user.lastName}</td>,
-          // sender: (order) => <td>{order.sender.full_name}</td>,
-          // receiver: (order) => <td>{order.receiver.full_name}</td>,
-          // rider: (order) => <td>{order.rider_assign ? ""+ order.rider_assign.firstName +" "+ order.rider_assign.lastName: 'No Rider'}</td>,
-          // date: (order) => <td>{moment(order.createdAt).format("DD/MM/YYYY hh:MM A")}</td>,
-
-          // 'status':
-          //   (item) => (
-          //     <td>
-          //       <CBadge color={getBadge(item.status)}>
-          //         {item.status}
-          //       </CBadge>
-          //     </td>
-          //   ),
-
-
+          history.push({
+            pathname:`/riders/details/${item._id}`,
+           state:{pathname: 'user'}
+          })
         }}
       />
 

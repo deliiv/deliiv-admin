@@ -70,11 +70,11 @@ const Tabs = () => {
       const filteredData = e.target.value.trim().length > 0 && pendingOrder &&
         pendingOrder.filter(entry => {
           return (
-            entry.user.firstName   && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            entry.user.firstName && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
             || entry.user.lastName && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
 
             || entry.sender.full_name && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-            || entry.sender.email     && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.sender.email && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
 
             || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
             || entry.receiver.email && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
@@ -92,11 +92,11 @@ const Tabs = () => {
       const filteredData2 = e.target.value.trim().length > 0 && pickedupOrder &&
         pickedupOrder.filter(entry => {
           return (
-            entry.user.firstName   && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            entry.user.firstName && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
             || entry.user.lastName && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
 
             || entry.sender.full_name && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-            || entry.sender.email     && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.sender.email && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
 
             || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
             || entry.receiver.email && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
@@ -114,11 +114,11 @@ const Tabs = () => {
       const filteredData3 = e.target.value.trim().length > 0 && deliveredOrder &&
         deliveredOrder.filter(entry => {
           return (
-            entry.user.firstName   && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            entry.user.firstName && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
             || entry.user.lastName && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
 
             || entry.sender.full_name && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-            || entry.sender.email     && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.sender.email && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
 
             || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
             || entry.receiver.email && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
@@ -136,11 +136,11 @@ const Tabs = () => {
       const filteredData4 = e.target.value.trim().length > 0 && cancelledOrder &&
         cancelledOrder.filter(entry => {
           return (
-            entry.user.firstName   && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            entry.user.firstName && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
             || entry.user.lastName && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
 
             || entry.sender.full_name && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-            || entry.sender.email     && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.sender.email && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
 
             || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
             || entry.receiver.email && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
@@ -172,101 +172,187 @@ const Tabs = () => {
     const filteredData = e.target.value.trim().length > 0 && pendingOrder &&
       pendingOrder.filter(entry => {
         return (
-          entry.user.firstName        && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.user.lastName      && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.sender.full_name   && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.sender.email       && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          entry.user.firstName && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.user.lastName && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.sender.full_name && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.sender.email && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
           || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.receiver.email     && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.package_name       && entry.package_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.pickup_address     && entry.pickup_address.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.rider_assign       && entry.rider_assign.firstName.toLowerCase().indexOf(svalue) > -1
-          || entry.rider_assign       && entry.rider_assign.lastName.toLowerCase().indexOf(svalue) > -1
-          || entry.rider_assign       && entry.rider_assign.phone_number.toLowerCase().indexOf(svalue) > -1
-          || entry.job_id             && entry.job_id.toLowerCase().indexOf(svalue) > -1
+          || entry.receiver.email && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.package_name && entry.package_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.pickup_address && entry.pickup_address.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.rider_assign && entry.rider_assign.firstName.toLowerCase().indexOf(svalue) > -1
+          || entry.rider_assign && entry.rider_assign.lastName.toLowerCase().indexOf(svalue) > -1
+          || entry.rider_assign && entry.rider_assign.phone_number.toLowerCase().indexOf(svalue) > -1
+          || entry.job_id && entry.job_id.toLowerCase().indexOf(svalue) > -1
 
-        )});
+        )
+      });
     const filteredData2 = e.target.value.trim().length > 0 && pickedupOrder &&
       pickedupOrder.filter(entry => {
         return (
-          entry.user.firstName        && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.user.lastName      && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.sender.full_name   && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.sender.email       && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          entry.user.firstName && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.user.lastName && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.sender.full_name && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.sender.email && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
           || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.receiver.email     && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.package_name       && entry.package_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.pickup_address     && entry.pickup_address.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.rider_assign       && entry.rider_assign.firstName.toLowerCase().indexOf(svalue) > -1
-          || entry.rider_assign       && entry.rider_assign.lastName.toLowerCase().indexOf(svalue) > -1
-          || entry.rider_assign       && entry.rider_assign.phone_number.toLowerCase().indexOf(svalue) > -1
-          || entry.job_id             && entry.job_id.toLowerCase().indexOf(svalue) > -1
+          || entry.receiver.email && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.package_name && entry.package_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.pickup_address && entry.pickup_address.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.rider_assign && entry.rider_assign.firstName.toLowerCase().indexOf(svalue) > -1
+          || entry.rider_assign && entry.rider_assign.lastName.toLowerCase().indexOf(svalue) > -1
+          || entry.rider_assign && entry.rider_assign.phone_number.toLowerCase().indexOf(svalue) > -1
+          || entry.job_id && entry.job_id.toLowerCase().indexOf(svalue) > -1
 
-        )});
+        )
+      });
     const filteredData3 = e.target.value.trim().length > 0 && deliveredOrder &&
       deliveredOrder.filter(entry => {
-        console.log("&&&&&: ", entry)
         return (
-          entry.user && entry.user.firstName        && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.user && entry.user.lastName      && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.sender.full_name   && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.sender.email       && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          entry.user && entry.user.firstName && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.user && entry.user.lastName && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.sender.full_name && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.sender.email && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
           || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.receiver.email     && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.package_name       && entry.package_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.pickup_address     && entry.pickup_address.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.rider_assign       && entry.rider_assign.firstName.toLowerCase().indexOf(svalue) > -1
-          || entry.rider_assign       && entry.rider_assign.lastName.toLowerCase().indexOf(svalue) > -1
-          || entry.rider_assign       && entry.rider_assign.phone_number.toLowerCase().indexOf(svalue) > -1
-          || entry.job_id             && entry.job_id.toLowerCase().indexOf(svalue) > -1
+          || entry.receiver.email && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.package_name && entry.package_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.pickup_address && entry.pickup_address.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.rider_assign && entry.rider_assign.firstName.toLowerCase().indexOf(svalue) > -1
+          || entry.rider_assign && entry.rider_assign.lastName.toLowerCase().indexOf(svalue) > -1
+          || entry.rider_assign && entry.rider_assign.phone_number.toLowerCase().indexOf(svalue) > -1
+          || entry.job_id && entry.job_id.toLowerCase().indexOf(svalue) > -1
 
-        )});
+        )
+      });
     const filteredData4 = e.target.value.trim().length > 0 && cancelledOrder &&
       cancelledOrder.filter(entry => {
         return (
-          entry.user.firstName        && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.user.lastName      && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.sender.full_name   && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.sender.email       && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          entry.user.firstName && entry.user.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.user.lastName && entry.user.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.sender.full_name && entry.sender.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.sender.email && entry.sender.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
           || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.receiver.email     && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.package_name       && entry.package_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.pickup_address     && entry.pickup_address.toLowerCase().includes(e.target.value.trim().toLowerCase())
-          || entry.rider_assign       && entry.rider_assign.firstName.toLowerCase().indexOf(svalue) > -1
-          || entry.rider_assign       && entry.rider_assign.lastName.toLowerCase().indexOf(svalue) > -1
-          || entry.rider_assign       && entry.rider_assign.phone_number.toLowerCase().indexOf(svalue) > -1
-          || entry.job_id             && entry.job_id.toLowerCase().indexOf(svalue) > -1
+          || entry.receiver.email && entry.receiver.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.package_name && entry.package_name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.pickup_address && entry.pickup_address.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.rider_assign && entry.rider_assign.firstName.toLowerCase().indexOf(svalue) > -1
+          || entry.rider_assign && entry.rider_assign.lastName.toLowerCase().indexOf(svalue) > -1
+          || entry.rider_assign && entry.rider_assign.phone_number.toLowerCase().indexOf(svalue) > -1
+          || entry.job_id && entry.job_id.toLowerCase().indexOf(svalue) > -1
 
-        )});
-   filteredData.length > 0 && setPpendingOrder(pendingOrder)
-   filteredData2.length > 0 && setpPickedupOrder(pickedupOrder)
-   filteredData3.length > 0 && setDdeliveredOrder(deliveredOrder)
-   filteredData4.length > 0 && setCcancelledOrder(cancelledOrder)
+        )
+      });
+
+    filteredData.length > 0 && setPpendingOrder(pendingOrder)
+    filteredData2.length > 0 && setpPickedupOrder(pickedupOrder)
+    filteredData3.length > 0 && setDdeliveredOrder(deliveredOrder)
+    filteredData4.length > 0 && setCcancelledOrder(cancelledOrder)
 
     if (filteredData) {
       setPendingOrder(filteredData);
     } else {
-     setPendingOrder(xR)
-     setPpendingOrder(xR)
+      setPendingOrder(xR)
+      setPpendingOrder(xR)
     }
     if (filteredData2) {
       setPickedupOrder(filteredData2);
     } else {
-     setPickedupOrder(xR2)
-     setpPickedupOrder(xR2)
+      setPickedupOrder(xR2)
+      setpPickedupOrder(xR2)
     }
     if (filteredData3) {
       setDeliveredOrder(filteredData3);
     } else {
-     setDeliveredOrder(xR3)
-     setDdeliveredOrder(xR3)
+      setDeliveredOrder(xR3)
+      setDdeliveredOrder(xR3)
     }
     if (filteredData4) {
       setCancelledOrder(filteredData4);
     } else {
-     setCancelledOrder(xR4)
-     setCcancelledOrder(xR4)
+      setCancelledOrder(xR4)
+      setCcancelledOrder(xR4)
     }
+  }
+
+  const handleSearchButton = async (s) => {
+
+    const filteredDatax = await s.trim().length > 0 && pendingOrder &&
+      pendingOrder.filter(entry => {
+        return (
+          entry.user.firstName && entry.user.firstName.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.user.lastName && entry.user.lastName.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.sender.full_name && entry.sender.full_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.sender.email && entry.sender.email.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.receiver.email && entry.receiver.email.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.package_name && entry.package_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.pickup_address && entry.pickup_address.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.firstName.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.lastName.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.phone_number.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.job_id && entry.job_id.toLowerCase().indexOf(s.toLowerCase()) > -1
+
+        )
+      });
+    const filteredDatax1 = await s.trim().length > 0 && pickedupOrder &&
+      pickedupOrder.filter(entry => {
+        return (
+          entry.user.firstName && entry.user.firstName.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.user.lastName && entry.user.lastName.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.sender.full_name && entry.sender.full_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.sender.email && entry.sender.email.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.receiver.email && entry.receiver.email.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.package_name && entry.package_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.pickup_address && entry.pickup_address.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.firstName.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.lastName.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.phone_number.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.job_id && entry.job_id.toLowerCase().indexOf(s.toLowerCase()) > -1
+
+        )
+      });
+    const filteredDatax2 = await s.trim().length > 0 && cancelledOrder &&
+      cancelledOrder.filter(entry => {
+        return (
+          entry.user.firstName && entry.user.firstName.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.user.lastName && entry.user.lastName.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.sender.full_name && entry.sender.full_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.sender.email && entry.sender.email.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.receiver.email && entry.receiver.email.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.package_name && entry.package_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.pickup_address && entry.pickup_address.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.firstName.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.lastName.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.phone_number.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.job_id && entry.job_id.toLowerCase().indexOf(s.toLowerCase()) > -1
+
+        )
+      });
+    const filteredDatax3 = await s.trim().length > 0 && deliveredOrder &&
+      deliveredOrder.filter(entry => {
+        return (
+          entry.user.firstName && entry.user.firstName.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.user.lastName && entry.user.lastName.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.sender.full_name && entry.sender.full_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.sender.email && entry.sender.email.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.receiver.full_name && entry.receiver.full_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.receiver.email && entry.receiver.email.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.package_name && entry.package_name.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.pickup_address && entry.pickup_address.toLowerCase().indexOf(s.trim().toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.firstName.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.lastName.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.rider_assign && entry.rider_assign.phone_number.toLowerCase().indexOf(s.toLowerCase()) > -1
+          || entry.job_id && entry.job_id.toLowerCase().indexOf(s.toLowerCase()) > -1
+
+        )
+      });
+
+    setPendingOrder(filteredDatax)
+    setPickedupOrder(filteredDatax1)
+    setDeliveredOrder(filteredDatax3)
+    setCancelledOrder(filteredDatax2)
+
   }
 
   const onKeyUp = (e) => {
@@ -291,10 +377,12 @@ const Tabs = () => {
       <CCol xs="12" md="12" className="mb-4">
         <CCard>
           <CFormGroup>
-            <div style={{ width: "40%",
-             display: "flex",
-            flexDirection: 'row',
-            padding: "30px" }}>
+            <div style={{
+              width: "40%",
+              display: "flex",
+              flexDirection: 'row',
+              padding: "30px"
+            }}>
               <CInput
                 placeholder="search"
                 style={{ padding: 20 }}
@@ -304,7 +392,13 @@ const Tabs = () => {
                 onKeyUp={onKeyUp}
               />
 
-              <CButton color="primary" style={{ marginLeft: 20, paddingLeft: 20, paddingRight: 20 }}>Search</CButton>
+              <CButton color="primary" style={{
+                marginLeft: 20,
+                paddingLeft: 20,
+                paddingRight: 20
+              }}
+                onClick={() => handleSearchButton(svalue)}
+              >Search</CButton>
             </div>
           </CFormGroup>
           <CCardBody>
