@@ -274,6 +274,7 @@ const Tabs = () => {
   }
 
   const handleSearchButton = async (s) => {
+    console.log('*************',s)
 
     const filteredDatax = await s.trim().length > 0 && pendingOrder &&
       pendingOrder.filter(entry => {
