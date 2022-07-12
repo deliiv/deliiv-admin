@@ -42,8 +42,6 @@ const Tabs = () => {
   const [xR3, setXR3] = useState([])
   const [xR4, setXR4] = useState([])
 
-
-
   useEffect(() => {
 
     if (orders) {
@@ -290,7 +288,6 @@ const Tabs = () => {
           || entry.rider_assign && entry.rider_assign.lastName.toLowerCase().indexOf(s.toLowerCase()) > -1
           || entry.rider_assign && entry.rider_assign.phone_number.toLowerCase().indexOf(s.toLowerCase()) > -1
           || entry.job_id && entry.job_id.toLowerCase().indexOf(s.toLowerCase()) > -1
-
         )
       });
     const filteredDatax1 = await s.trim().length > 0 && pickedupOrder &&
