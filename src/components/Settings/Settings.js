@@ -24,7 +24,9 @@ import {
 
 import userService from "src/services/user.service";
 import { toast } from 'react-toastify';
+import LocalStorage from "../../utils/localstorage";
 
+const userData = LocalStorage.get("user_data");
 
 const Settings = (props) => {
   const [formIsValid, setFormIsValid] = React.useState(true);
@@ -37,6 +39,7 @@ const Settings = (props) => {
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [accountVerification, setAccountVerification] = React.useState(false);
+  const [accountSettings, setAccountSettings] = React.useState(false);
   const [paymentApproval, setPaymentApproval] = React.useState(false);
   const [notificationAccess, setNotificationAccess] = React.useState(false);
   const [priceChange, setPrice_change] = React.useState(false);
@@ -67,8 +70,10 @@ const Settings = (props) => {
     setFullName(activeAdmin.full_name)
     setEmail(activeAdmin.email)
     setAccountVerification(activeAdmin.account_verification)
+    setAccountSettings(activeAdmin.setting_access)
     setNotificationAccess(activeAdmin.notification_access)
     setPaymentApproval(activeAdmin.payment_approval)
+    setPrice_change(activeAdmin.price_change)
     setActive(activeAdmin.active)
   }, [activeAdmin])
 
@@ -95,6 +100,8 @@ const Settings = (props) => {
       full_name: fullName,
       password: password,
       account_verification: accountVerification,
+      setting_access: accountSettings,
+      price_change: priceChange,
       notification_access: notificationAccess,
       payment_approval: paymentApproval,
       active: active,
@@ -124,7 +131,9 @@ const Settings = (props) => {
       full_name: fullName,
       password: password,
       account_verification: accountVerification,
+      setting_access: accountSettings,
       notification_access: notificationAccess,
+      price_change:priceChange,
       payment_approval: paymentApproval,
       active: active,
     }
@@ -260,6 +269,15 @@ const Settings = (props) => {
                     <CFormGroup variant="custom-checkbox" className="my-2 mt-4">
                       <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
                         <input type="checkbox"
+                          value={accountSettings}
+                          checked={accountSettings}
+
+                          style={{ width: '40px', height: "40px" }}
+                          onChange={e =>  setAccountSettings(!accountSettings)                          } />
+                        <label for="" style={{ textAlign: "center", padding: "10px" }}> Settings Access</label>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
+                        <input type="checkbox"
                           value={accountVerification}
                           checked={accountVerification}
 
@@ -295,11 +313,11 @@ const Settings = (props) => {
                       </div>
                       <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
                         <input type="checkbox"
-                          value={price}
-                          checked={price}
+                          value={priceChange}
+                          checked={priceChange}
 
                           style={{ width: '40px', height: "40px" }}
-                          onChange={e => setPrice(!price)} />
+                          onChange={e => setPrice_change(!priceChange)} />
                         <label for="" style={{ textAlign: "center", padding: "10px" }}> Update price</label>
                       </div>
                       {/* <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
@@ -337,7 +355,7 @@ const Settings = (props) => {
 
                     <CRow>
 
-                      <CCol xs="12" md="4">
+                      {userData.price_change && <CCol xs="12" md="4">
                         {!update &&
 
                           <CCard style={{ padding: 10 }}>
@@ -360,8 +378,7 @@ const Settings = (props) => {
 
                           </CCard>
                         }
-
-                        {
+                         {
                           update &&
                           <>
                             <p>Price per km</p>
@@ -388,38 +405,8 @@ const Settings = (props) => {
                         }
 
 
-                      </CCol>
+                      </CCol>}
 
-
-                      {/* <CCol xs="12" md="2">
-                        <CFormGroup>
-                          <CSelect custom name="ccmonth" id="ccmonth">
-                            <option value="1">This month</option>
-                            <option value="2">This week</option>
-                            <option value="3">Three week</option>
-                          </CSelect>
-                        </CFormGroup>
-                      </CCol>
-                      <CCol xs="12" md="2">
-                        <CFormGroup>
-                          <CSelect custom name="ccmonth" id="ccmonth">
-                            <option value="1">This month</option>
-                            <option value="2">This week</option>
-                            <option value="3">Three week</option>
-                          </CSelect>
-                        </CFormGroup>
-
-                      </CCol>
-                      <CCol xs="12" md="2">
-                        <CFormGroup>
-                          <CSelect custom name="ccmonth" id="ccmonth">
-                            <option value="1">This month</option>
-                            <option value="2">This week</option>
-                            <option value="3">Three week</option>
-                          </CSelect>
-                        </CFormGroup>
-
-                      </CCol> */}
                     </CRow>
                   </CForm>
 

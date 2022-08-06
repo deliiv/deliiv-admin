@@ -7,8 +7,21 @@ import Notify from './notify.svg'
 import Pay from './pay.svg'
 import Verify from './verify.svg'
 import Settings from './settings.svg'
+import LocalStorage from "../../src/utils/localstorage";
 
-const _nav = [
+const userData = LocalStorage.get("user_data");
+
+
+let ver = {
+  _tag:  "CSidebarNavItem",
+  name:  <NAVITEM icon={Verify} name={"Verify"} />,
+  to: "/verification",
+}
+
+console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%<<',userData)
+
+
+let _nav =  [
   {
     _tag: "CSidebarNavItem",
     name: <NAVITEM icon={Dash} name={"Dashboard"} />,
@@ -53,24 +66,26 @@ const _nav = [
 
   {
     _tag: "CSidebarNavItem",
-    name: <NAVITEM icon={Notify} name={"Notifications"} />,
-    to: "/notifications",
+    name: userData.notification_access && <NAVITEM icon={Notify} name={"Notifications"} />,
+    to:  userData.notification_access &&  "/notifications",
+  },
+  {
+    _tag:  "CSidebarNavItem",
+    name: userData.payment_approval && <NAVITEM icon={Pay} name={"Payment"} />,
+    to:  userData.payment_approval && "/payment",
+  },
+  {
+    _tag:  "CSidebarNavItem",
+    name:  userData.account_verify &&<NAVITEM icon={Verify} name={"Verify"} />,
+    to: userData.account_verify &&  "/verification",
   },
   {
     _tag: "CSidebarNavItem",
-    name: <NAVITEM icon={Pay} name={"Payment"} />,
-    to: "/payment",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: <NAVITEM icon={Verify} name={"Verify"} />,
-    to: "/verification",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: <NAVITEM icon={Settings} name={"Settings"} />,
-    to: "/settings",
+    name: userData.setting_access && <NAVITEM icon={Settings} name={"Settings"} />,
+    to: userData.setting_access && "/settings",
   }
-];
+]
 
-export default _nav;
+
+
+ export default _nav;

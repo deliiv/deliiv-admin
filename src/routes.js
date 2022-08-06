@@ -1,4 +1,5 @@
 import React from "react";
+import LocalStorage from "../src/utils/localstorage";
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 const Orders = React.lazy(() => import("./components/Orders/Tabs"));
@@ -14,9 +15,14 @@ const Payment = React.lazy(() => import("./components/Payment/Payment"));
 const CustomerDetails = React.lazy(() => import("./components/Customers/CustomerTabs"));
 const AgencyDetails = React.lazy(() => import("./components/Agencies/AgencyTabs"));
 
+
+const userData = LocalStorage.get("user_data");
 const Settings = React.lazy(() =>
   import("./components/Settings/Settings")
 );
+
+let ver = userData.account_verification ? Verification : null
+let ver1 = userData.account_verification ? 'Riders' : null
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -29,7 +35,7 @@ const routes = [
   { path: "/riders-solo", name: "Riders", component: Riders2, exact: true },
   { path: "/riders/details/:id", name: "Riders", component: RidersDetails, exact: true },
   { path: "/riders-solo/details/:id", name: "Riders", component: RidersDetails, exact: true },
-  { path: "/verification", name: "Riders", component: Verification, exact: true },
+  { path: "/verification", name: "Riders", component:  ver, exact: true },
   { path: "/notifications", name: "Notification", component: Notification, exact: true },
   { path: "/payment", name: "Payments", component: Payment, exact: true },
   { path: "/settings", name: "Settings", component: Settings },
