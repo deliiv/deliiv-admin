@@ -42,7 +42,7 @@ const Settings = (props) => {
   const [accountSettings, setAccountSettings] = React.useState(false);
   const [paymentApproval, setPaymentApproval] = React.useState(false);
   const [notificationAccess, setNotificationAccess] = React.useState(false);
-  const [priceChange, setPrice_change] = React.useState(false);
+  // const [priceChange, setPrice_change] = React.useState(false);
   const [active, setActive] = React.useState(false);
   const [price, setPrice] = React.useState('');
   const [update, setUpdate] = React.useState(false);
@@ -73,7 +73,7 @@ const Settings = (props) => {
     setAccountSettings(activeAdmin.setting_access)
     setNotificationAccess(activeAdmin.notification_access)
     setPaymentApproval(activeAdmin.payment_approval)
-    setPrice_change(activeAdmin.price_change)
+    // setPrice_change(activeAdmin.price_change)
     setActive(activeAdmin.active)
   }, [activeAdmin])
 
@@ -101,7 +101,7 @@ const Settings = (props) => {
       password: password,
       account_verification: accountVerification,
       setting_access: accountSettings,
-      price_change: priceChange,
+      // price_change: priceChange,
       notification_access: notificationAccess,
       payment_approval: paymentApproval,
       active: active,
@@ -133,7 +133,7 @@ const Settings = (props) => {
       account_verification: accountVerification,
       setting_access: accountSettings,
       notification_access: notificationAccess,
-      price_change:priceChange,
+      // price_change:priceChange,
       payment_approval: paymentApproval,
       active: active,
     }
@@ -311,7 +311,7 @@ const Settings = (props) => {
                           onChange={e => setActive(!active)} />
                         <label for="" style={{ textAlign: "center", padding: "10px" }}> Active</label>
                       </div>
-                      <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
+                      {/* <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
                         <input type="checkbox"
                           value={priceChange}
                           checked={priceChange}
@@ -319,7 +319,7 @@ const Settings = (props) => {
                           style={{ width: '40px', height: "40px" }}
                           onChange={e => setPrice_change(!priceChange)} />
                         <label for="" style={{ textAlign: "center", padding: "10px" }}> Update price</label>
-                      </div>
+                      </div> */}
                       {/* <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
                     <input type="checkbox" name="love" value="love" id="love"
                       style={{ width: '40px', height: "40px" }} />
@@ -355,7 +355,7 @@ const Settings = (props) => {
 
                     <CRow>
 
-                      {userData.price_change && <CCol xs="12" md="4">
+                       <CCol xs="12" md="4">
                         {!update &&
 
                           <CCard style={{ padding: 10 }}>
@@ -405,7 +405,7 @@ const Settings = (props) => {
                         }
 
 
-                      </CCol>}
+                      </CCol>
 
                     </CRow>
                   </CForm>
