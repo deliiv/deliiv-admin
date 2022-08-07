@@ -23,6 +23,9 @@ import routes from "../routes";
 
 import { uiActions } from "../store/ui-slice";
 
+import LocalStorage from "../utils/localstorage";
+const userData = LocalStorage.get("user_data");
+
 const TheHeader = () => {
   const dispatch = useDispatch();
   //const darkMode = useSelector((state) => state.UI.darkMode);
@@ -77,9 +80,9 @@ const TheHeader = () => {
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
-        <div>
-          Paul Ajide
-          <p>Super Admin</p>
+        <div><b>
+          {userData && userData.full_name}
+          </b>
         </div>
         <CToggler
           inHeader

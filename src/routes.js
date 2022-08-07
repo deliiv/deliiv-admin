@@ -21,8 +21,6 @@ const Settings = React.lazy(() =>
   import("./components/Settings/Settings")
 );
 
-let ver = userData.account_verification ? Verification : null
-let ver1 = userData.account_verification ? 'Riders' : null
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -35,7 +33,7 @@ const routes = [
   { path: "/riders-solo", name: "Riders", component: Riders2, exact: true },
   { path: "/riders/details/:id", name: "Riders", component: RidersDetails, exact: true },
   { path: "/riders-solo/details/:id", name: "Riders", component: RidersDetails, exact: true },
-  { path: "/verification", name: "Riders", component:  ver, exact: true },
+  { path: "/verification", name: "Riders", component:  Verification, exact: true },
   { path: "/notifications", name: "Notification", component: Notification, exact: true },
   { path: "/payment", name: "Payments", component: Payment, exact: true },
   { path: "/settings", name: "Settings", component: Settings },

@@ -11,16 +11,6 @@ import LocalStorage from "../../src/utils/localstorage";
 
 const userData = LocalStorage.get("user_data");
 
-
-let ver = {
-  _tag:  "CSidebarNavItem",
-  name:  <NAVITEM icon={Verify} name={"Verify"} />,
-  to: "/verification",
-}
-
-console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%<<',userData)
-
-
 let _nav =  [
   {
     _tag: "CSidebarNavItem",
@@ -76,8 +66,8 @@ let _nav =  [
   },
   {
     _tag:  "CSidebarNavItem",
-    name:  userData.account_verify &&<NAVITEM icon={Verify} name={"Verify"} />,
-    to: userData.account_verify &&  "/verification",
+    name:  userData.account_verification &&<NAVITEM icon={Verify} name={"Verify"} />,
+    to: userData.account_verification &&  "/verification",
   },
   {
     _tag: "CSidebarNavItem",
