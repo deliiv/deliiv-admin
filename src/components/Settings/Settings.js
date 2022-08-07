@@ -40,7 +40,7 @@ const Settings = (props) => {
   const [email, setEmail] = React.useState('');
   const [accountVerification, setAccountVerification] = React.useState(false);
   const [accountSettings, setAccountSettings] = React.useState(false);
-  const [paymentApproval, setPaymentApproval] = React.useState(false);
+  // const [paymentApproval, setPaymentApproval] = React.useState(false);
   const [notificationAccess, setNotificationAccess] = React.useState(false);
   // const [priceChange, setPrice_change] = React.useState(false);
   const [active, setActive] = React.useState(false);
@@ -72,7 +72,7 @@ const Settings = (props) => {
     setAccountVerification(activeAdmin.account_verification)
     setAccountSettings(activeAdmin.setting_access)
     setNotificationAccess(activeAdmin.notification_access)
-    setPaymentApproval(activeAdmin.payment_approval)
+    // setPaymentApproval(activeAdmin.payment_approval)
     // setPrice_change(activeAdmin.price_change)
     setActive(activeAdmin.active)
   }, [activeAdmin])
@@ -103,7 +103,7 @@ const Settings = (props) => {
       setting_access: accountSettings,
       // price_change: priceChange,
       notification_access: notificationAccess,
-      payment_approval: paymentApproval,
+      // payment_approval: paymentApproval,
       active: active,
     }
     if (!email || !fullName || !password) {
@@ -134,7 +134,7 @@ const Settings = (props) => {
       setting_access: accountSettings,
       notification_access: notificationAccess,
       // price_change:priceChange,
-      payment_approval: paymentApproval,
+      // payment_approval: paymentApproval,
       active: active,
     }
     userService
@@ -285,14 +285,14 @@ const Settings = (props) => {
                           onChange={e => setAccountVerification(!accountVerification)} />
                         <label for="" style={{ textAlign: "center", padding: "10px" }}> Account Verification</label>
                       </div>
-                      <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
+                      {/* <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
                         <input type="checkbox"
                           checked={paymentApproval}
                           value={paymentApproval}
                           style={{ width: '40px', height: "40px" }}
                           onChange={e => setPaymentApproval(!paymentApproval)} />
                         <label for="" style={{ textAlign: "center", padding: "10px" }}> Payment Approval</label>
-                      </div>
+                      </div> */}
                       <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
                         <input type="checkbox"
                           value={notificationAccess}
