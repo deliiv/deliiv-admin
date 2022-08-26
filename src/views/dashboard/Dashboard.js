@@ -46,7 +46,6 @@ const Dashboard = (props) => {
   const [g, setG] = React.useState([])
 
   useEffect(() => {
-    console.log('*************', ddata.dashbord.dashboardData)
     let k = []
     let q = []
     if (chart) {
@@ -54,7 +53,6 @@ const Dashboard = (props) => {
       for (let i = 0; i < chart.length; i++) {
         k.push(chart[i]["year(created_at)"])
         q.push(chart[i]["SUM(total_price)"])
-        console.log(chart[i]["year(created_at)"])
       }
       setD(k)
       setE(q)
@@ -68,7 +66,6 @@ const Dashboard = (props) => {
       for (let i = 0; i < pie.length; i++) {
         k.push(pie[i].region)
         q.push(pie[i]["SUM(price)"])
-        // console.log(chart[i]["year(created_at)"])
       }
       setF(k)
       setG(q)

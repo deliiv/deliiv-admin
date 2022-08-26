@@ -406,7 +406,7 @@ const Settings = (props) => {
                               />
                             </CInputGroup>
                             <>
-                              <p>Service charge</p>
+                              <p>Service charge (%)</p>
                               <CInputGroup className="mb-3">
                                 <CInput
                                   type="number"
