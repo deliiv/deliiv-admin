@@ -372,7 +372,7 @@ const Settings = (props) => {
                               </h3>
                             </CCardBody>
 
-                            Service charge
+                            Service charge (%)
                             <CCardBody>
                               <h3>
                                 <strong>
