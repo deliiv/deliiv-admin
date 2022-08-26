@@ -12,10 +12,9 @@ class AuthService {
           console.log('====',response)
           resolve(response);
         })
-        // .catch((error) => {
-        //   console.log('==||===', error)
-        //   reject(error);
-        // });
+        .catch(err=>{
+          reject(err)
+        })
     });
   }
 }

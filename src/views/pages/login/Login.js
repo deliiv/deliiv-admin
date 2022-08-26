@@ -60,23 +60,25 @@ const Login = (props) => {
 
     const { email, password } = state;
 
-    AuthService.doLogin({ email, password })
+    AuthService.doLogin({ email: email.toLowerCase(), password })
       .then((res) => {
-        console.log("=========*+", res.data);
-        if(!res.data.user.active){
+        if (!res.data.user.active) {
           setError("Account not active, contact super Admin")
-        }else{
+
+        } else {
           setLoading(false);
           ExpirySession.set("access", res.data.access_token);
           LocalStorage.set("user_data", res.data.user);
-         props.history.push("/");
-         window.location.reload();
+          props.history.push("/");
+          window.location.reload();
         }
+        setLoading(false)
 
       })
       .catch((error) => {
         if (error.response) {
-          setError(error.response.data.detail || error.response.data.message);
+          setLoading(false)
+          setError(error.response.data[0].detail || error.response.data[0].message);
         }
       });
   };
@@ -90,28 +92,28 @@ const Login = (props) => {
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
-    {/* <div className="c-app c-default-layout c-dark-theme flex-row align-items-center"> */}
+      {/* <div className="c-app c-default-layout c-dark-theme flex-row align-items-center"> */}
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md="12">
             <CCardGroup>
 
               <CCard
-              style={{ backgroundColor:"#E6E9FF" }}
+                style={{ backgroundColor: "#E6E9FF" }}
                 className="text-white py-5 d-md-down-none"
               >
                 <CCardBody className="text-center center-flex">
                   <div>
-                    <img src={Logo} alt="sendmeerrand logo"  width={300}/>
+                    <img src={Logo} alt="sendmeerrand logo" width={300} />
                   </div>
                 </CCardBody>
               </CCard>
               <CCard className="p-8">
                 <CCardBody
-                className=" justify-content-center center-flex">
+                  className=" justify-content-center center-flex">
                   <CForm onSubmit={loginHandler}>
                     {/* <h1>Login</h1> */}
-                    <p style={{ fontWeight:"bold" }}>Admin portal login</p>
+                    <p style={{ fontWeight: "bold" }}>Admin portal login</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>

@@ -45,6 +45,7 @@ const Settings = (props) => {
   // const [priceChange, setPrice_change] = React.useState(false);
   const [active, setActive] = React.useState(false);
   const [price, setPrice] = React.useState('');
+  const [charge, setCharge] = React.useState('');
   const [update, setUpdate] = React.useState(false);
   const [config, setConfig] = React.useState(null);
 
@@ -56,6 +57,7 @@ const Settings = (props) => {
       setAdmin(data.data.admin)
       setConfig(data.data.system_config)
       setPrice(data.data.system_config[0].price_per_km)
+      setCharge(data.data.system_config[0].service_charge)
 
     }).catch((error) => {
       console.log(error);
@@ -154,17 +156,19 @@ const Settings = (props) => {
   }
 
   const handlePriceUpdate = () => {
+    console.log('price: ', price)
+    console.log('charge: ', charge)
     userService
-      .updateSystemConfig({ price: price })
+      .updateSystemConfig({ price: price, charge: charge })
       .then(() => {
 
-        toast.success('Price Updated');
+        toast.success('Price and charge Updated');
         setTimeout(() => {
           window.location.reload();
         }, 2000);
       })
       .catch((error) => {
-        toast.error('Error updating price')
+        toast.error('Error updating price and charge')
         console.log(error);
         toast.error(error.response.data.message);
       });
@@ -273,7 +277,7 @@ const Settings = (props) => {
                           checked={accountSettings}
 
                           style={{ width: '40px', height: "40px" }}
-                          onChange={e =>  setAccountSettings(!accountSettings)                          } />
+                          onChange={e => setAccountSettings(!accountSettings)} />
                         <label for="" style={{ textAlign: "center", padding: "10px" }}> Settings Access</label>
                       </div>
                       <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
@@ -355,7 +359,7 @@ const Settings = (props) => {
 
                     <CRow>
 
-                       <CCol xs="12" md="4">
+                      <CCol xs="12" md="4">
                         {!update &&
 
                           <CCard style={{ padding: 10 }}>
@@ -367,18 +371,27 @@ const Settings = (props) => {
                                 </strong>
                               </h3>
                             </CCardBody>
+
+                            Service charge
+                            <CCardBody>
+                              <h3>
+                                <strong>
+                                  {charge}
+                                </strong>
+                              </h3>
+                            </CCardBody>
                             <CButton
                               color="info"
                               variant="outline"
                               size="sm"
-                              onClick={()=>setUpdate(true)}
+                              onClick={() => setUpdate(true)}
                             >
                               update
                             </CButton>
 
                           </CCard>
                         }
-                         {
+                        {
                           update &&
                           <>
                             <p>Price per km</p>
@@ -392,17 +405,33 @@ const Settings = (props) => {
                                 onChange={e => setPrice(e.target.value)}
                               />
                             </CInputGroup>
-                            <CCol xs="6" md="6">
-                              <CButton color="primary"
-                                disabled={!price}
-                                onClick={handlePriceUpdate}>
-                                {loading && <CSpinner size="sm" />}
-                                <span className="ml-2">Update</span>
-                              </CButton>
-                            </CCol>
+                            <>
+                              <p>Service charge</p>
+                              <CInputGroup className="mb-3">
+                                <CInput
+                                  type="number"
+                                  placeholder="Charge"
+                                  autoComplete="charge"
+                                  name="charge"
+                                  value={charge}
+                                  onChange={e => setCharge(e.target.value)}
+                                />
+                              </CInputGroup>
+                              <CCol xs="6" md="6">
+                                <CButton color="primary"
+                                  disabled={!charge}
+                                  onClick={handlePriceUpdate}
+                                >
+                                  {loading && <CSpinner size="sm" />}
+                                  <span className="ml-2">Update</span>
+                                </CButton>
+                              </CCol>
+                            </>
+
                           </>
 
                         }
+
 
 
                       </CCol>
