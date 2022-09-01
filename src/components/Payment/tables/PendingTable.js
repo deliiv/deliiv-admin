@@ -18,6 +18,7 @@ import { toast } from 'react-toastify';
 
 
 const PendingTable = ({ pending }) => {
+  console.log('====PENDING: ', pending)
 
   const history = useHistory();
 
