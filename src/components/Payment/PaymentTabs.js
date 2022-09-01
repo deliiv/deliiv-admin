@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
   CCol,
   CNav,
@@ -25,8 +25,13 @@ import { useSelector } from "react-redux";
 import CompletedTable from "./tables/CompletedTable";
 import Pending from "./tables/PendingTable";
 import Cancelled from "./tables/CancelledTable";
+import userService from "src/services/user.service";
 
 const PaymentTabs = ({witdraw,completed, cancelled}) => {
+
+  useEffect(()=>{
+    userService.getAllPayment()
+  },[])
 
   return (
     <CRow>
