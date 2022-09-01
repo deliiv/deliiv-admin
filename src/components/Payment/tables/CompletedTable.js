@@ -80,7 +80,7 @@ const CompletedTable = ({ completed }) => {
             ),
           User: (item) => (
             <td>
-              {item.user ? <b>{item.user.firstName}  {item.user.lastName}</b> : <b>{item.agency.name}</b>}
+              {item.user ? <b>{item.agency ? item.agency.name : ""} {item.user ? item.user.firstName : ""}  {item.user ? item.user.lastName :""}</b> : <b>{item.agency.name}</b>}
 
             </td>
           ),
