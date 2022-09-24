@@ -277,10 +277,10 @@ const OrderPayload = ({ item }) => {
             </CCardBody>
 
           </CCard>
-          {item && item.payment_status === 'paid' &&
+          {/* {item && item.payment_status === 'paid' &&
             item.status !== 'delivered' &&
             item.status !== 'cancelled' &&
-            <CButton color="danger" onClick={() => setShow(true)}>Cancel Order</CButton>}
+            <CButton color="danger" onClick={() => setShow(true)}>Cancel Order</CButton>} */}
         </CCol>
       </CRow>}
       <Modals title={modalTitle}
