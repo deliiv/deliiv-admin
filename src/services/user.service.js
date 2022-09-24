@@ -56,12 +56,38 @@ class UserService {
         });
     });
   }
+  async getAllActiveRiders() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/active-riders", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 
   async updateServiceCharge(data) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
         .post("/admin/update-service-charge", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async changeJobRider(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/change-job-rider", data, config)
         .then((response) => {
           resolve(response);
         })

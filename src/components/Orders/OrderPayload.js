@@ -5,7 +5,9 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CButton
+  CButton,
+  CSelect,
+  CFormGroup
 } from '@coreui/react'
 import moment from 'moment'
 import Location from './location.svg'
@@ -13,17 +15,43 @@ import OrderPayloadItem from './OrderPayloadItem'
 import Spinner from '../Spinner'
 import userService from "src/services/user.service";
 import ModalC from './ModalsC'
+import Modals from './Modals'
 import { toast } from 'react-toastify'
+
 
 const OrderPayload = ({ item }) => {
 
   const [loader, setLoader] = useState(true);
   const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [riders, setRiders] = useState([]);
+  const [modalTitle, setModalTitle] = useState('');
+  const [newRiderId, setNewRiderId] = useState('');
+  const [message, setMessage] = useState('');
+
+  const [riderPayload, setRiderPayload] = useState({})
+  const [updatedRiderPayload, setUpdatedRiderPayload] = useState({})
+
   useEffect(() => {
     if (item) {
       setLoader(false)
+
+      let tempRiderPayload ={}
+      tempRiderPayload.firstName =item.rider_assign.firstName
+      tempRiderPayload.lastName =item.rider_assign.lastName
+      tempRiderPayload.phone_number =item.rider_assign.phone_number
+      tempRiderPayload.full_name =item.rider_assign.phone_number
+      setRiderPayload(tempRiderPayload)
     }
   }, [item])
+
+  useEffect(() => {
+    userService.getAllActiveRiders()
+      .then(riders => {
+        setRiders(riders.data.riders)
+      })
+
+  }, [])
 
   const handleCancel = () => {
 
@@ -37,6 +65,39 @@ const OrderPayload = ({ item }) => {
     })
   }
 
+  const handleChangeJobStatus = (value) => {
+    let rider = JSON.parse(value)
+    setModalTitle("Change job status")
+    setNewRiderId(rider._id)
+    setShowModal(true)
+    setMessage(`Change job rider to ${rider.firstName} ${rider.lastName} ?`)
+
+    let tempRiderPayload ={}
+      tempRiderPayload.firstName =rider.firstName
+      tempRiderPayload.lastName =rider.lastName
+      tempRiderPayload.phone_number =rider.phone_number
+      tempRiderPayload.full_name =rider.phone_number
+      setUpdatedRiderPayload(tempRiderPayload)
+
+  }
+
+  const handleSuccess = () => {
+
+    setShowModal(false)
+    let jobPayload = {
+      jobId: item._id,
+      riderId: newRiderId
+    }
+
+    userService.changeJobRider(jobPayload)
+      .then(response => {
+        toast.success("Rider successfully changed")
+        setRiderPayload(updatedRiderPayload)
+      }).catch(error => {
+        toast.error("Error changing rider")
+      })
+
+  }
 
   return (
     <CCardBody>
@@ -102,7 +163,7 @@ const OrderPayload = ({ item }) => {
                       }
                       if (index === 2) {
                         return (<CCol xs="4" md="4">
-                          <OrderPayloadItem payload={item && item.rider_assign} index={2} />
+                          <OrderPayloadItem payload={item && riderPayload} index={2} />
                         </CCol>)
                       }
 
@@ -184,8 +245,51 @@ const OrderPayload = ({ item }) => {
             item.status !== 'cancelled' &&
             <CButton color="danger" onClick={() => setShow(true)}>Cancel Order</CButton>}
         </CCol>
-      </CRow>}
 
+        <CCol xs="12" md="4">
+          <CCard>
+            <CCardHeader>
+              <strong>
+                Switch Job Rider
+              </strong>
+            </CCardHeader>
+
+            <CCardBody>
+              <CFormGroup row>
+                <CCol xs="12" md="9">
+                  <CSelect
+                    custom
+                    size="sm"
+                    name="selectSm"
+                    id="SelectLm"
+                    onChange={e => handleChangeJobStatus(e.target.value)}
+                  >
+                    {
+                      riders.length > 0 && riders.map(rider => {
+                        return <option value={JSON.stringify(rider)}>{rider.firstName} {rider.lastName}</option>
+                      })
+                    }
+
+                  </CSelect>
+                </CCol>
+              </CFormGroup>
+
+            </CCardBody>
+
+          </CCard>
+          {item && item.payment_status === 'paid' &&
+            item.status !== 'delivered' &&
+            item.status !== 'cancelled' &&
+            <CButton color="danger" onClick={() => setShow(true)}>Cancel Order</CButton>}
+        </CCol>
+      </CRow>}
+      <Modals title={modalTitle}
+        show={showModal}
+        message={message}
+        handleSuccess={handleSuccess}
+        handleCancel={() => setShowModal(false)}
+
+      />
     </CCardBody>
   )
 }

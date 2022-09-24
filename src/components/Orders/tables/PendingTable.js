@@ -46,26 +46,13 @@ const Pending = ({pending}) => {
       <CDataTable
         items={pending}
         fields={fields}
-        // columnFilter
-        // tableFilter
-        // cleaner
         itemsPerPageSelect
         itemsPerPage={5}
         hover
         pagination
-        // loading
         onRowClick={(item,index,col,e) =>{
-         //  console.log(item,index,col,e)}
-          // setPayLoad(item)
           history.push({pathname:`/orders/order/${item._id}`, data:{item: item}})
         }}
-        // onPageChange={(val) => console.log('new page:', val)}
-        // onPagesChange={(val) => console.log('new pages:', val)}
-        // onPaginationChange={(val) => console.log('new pagination:', val)}
-        // onFilteredItemsChange={(val) => console.log('new filtered items:', val)}
-        // onSorterValueChange={(val) => console.log('new sorter value:', val)}
-        // onTableFilterChange={(val) => console.log('new table filter:', val)}
-        // onColumnFilterChange={(val) => console.log('new column filter:', val)}
         scopedSlots={{
           order_ID: (order) => <td>{order.job_id}</td>,
           user: (order) => <td>{order.user.firstName} {order.user.lastName}</td>,

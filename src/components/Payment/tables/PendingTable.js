@@ -115,7 +115,7 @@ const PendingTable = ({ pending }) => {
             ),
           User: (item) => (
             <td>
-              {item.user ? <b>{item.agency ? item.agency.name : ""} {item.user ? item.user.firstName : ""}  {item.user ? item.user.lastName :""}</b> : <b>{item.agency.name}</b>}
+  <b> {item.user ? item.user.firstName : ""} </b>
 
             </td>
           ),

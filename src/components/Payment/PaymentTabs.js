@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CCol,
   CNav,
@@ -28,9 +28,16 @@ import Cancelled from "./tables/CancelledTable";
 import userService from "src/services/user.service";
 
 const PaymentTabs = ({witdraw,completed, cancelled}) => {
+  const [payment, setPayment] = useState([])
 
   useEffect(()=>{
-    userService.getAllPayment()
+
+    (async function anyNameFunction() {
+      let pay=  await userService.getAllPayment();
+      setPayment(pay)
+    })();
+
+   console.log('>>',payment)
   },[])
 
   return (
