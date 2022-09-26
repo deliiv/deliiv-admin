@@ -37,10 +37,10 @@ const OrderPayload = ({ item }) => {
       setLoader(false)
 
       let tempRiderPayload ={}
-      tempRiderPayload.firstName =item.rider_assign.firstName
-      tempRiderPayload.lastName =item.rider_assign.lastName
-      tempRiderPayload.phone_number =item.rider_assign.phone_number
-      tempRiderPayload.full_name =item.rider_assign.phone_number
+      tempRiderPayload.firstName =item.rider_assign?.firstName
+      tempRiderPayload.lastName =item.rider_assign?.lastName
+      tempRiderPayload.phone_number =item.rider_assign?.phone_number
+      tempRiderPayload.full_name =item.rider_assign?.phone_number
       setRiderPayload(tempRiderPayload)
     }
   }, [item])
