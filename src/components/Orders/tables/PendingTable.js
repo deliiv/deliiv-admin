@@ -55,7 +55,7 @@ const Pending = ({pending}) => {
         }}
         scopedSlots={{
           order_ID: (order) => <td>{order.job_id}</td>,
-          user: (order) => <td>{order.user.firstName} {order.user.lastName}</td>,
+          user: (order) => <td>{order && order.user && order.user.firstName} {order && order.user && order.user.lastName}</td>,
           sender: (order) => <td>{order.sender.full_name}</td>,
           receiver: (order) => <td>{order.receiver.full_name}</td>,
           rider: (order) => <td>{order.rider_assign ? ""+ order.rider_assign.firstName +" "+ order.rider_assign.lastName: 'No Rider'}</td>,
