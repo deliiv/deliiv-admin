@@ -419,7 +419,7 @@ const Settings = (props) => {
                               </CInputGroup>
                               <CCol xs="6" md="6">
                                 <CButton color="primary"
-                                  disabled={!charge}
+                                  // disabled={!charge}
                                   onClick={handlePriceUpdate}
                                 >
                                   {loading && <CSpinner size="sm" />}

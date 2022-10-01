@@ -66,6 +66,7 @@ const OrderPayload = ({ item }) => {
   }
 
   const handleChangeJobStatus = (value) => {
+    if(value === 'select rider') return;
     let rider = JSON.parse(value)
     setModalTitle("Change job status")
     setNewRiderId(rider._id)
@@ -264,6 +265,7 @@ const OrderPayload = ({ item }) => {
                     id="SelectLm"
                     onChange={e => handleChangeJobStatus(e.target.value)}
                   >
+                    <option>select rider</option>
                     {
                       riders.length > 0 && riders.map(rider => {
                         return <option value={JSON.stringify(rider)}>{rider.firstName} {rider.lastName}</option>
