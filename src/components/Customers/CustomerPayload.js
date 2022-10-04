@@ -40,7 +40,6 @@ const CustomerPayload = () => {
 
     UserService.getSingleCustomer(id)
       .then((res) => {
-
         setCustomer(res.data.user_details);
         setJobs(res.data.jobs);
         setTransactions(res.data.transactions);
@@ -210,10 +209,12 @@ const CustomerPayload = () => {
                   <PickedupTable pickedup={jobs.pickedup} />
                 </CTabPane>
                 <CTabPane>
-                  <CancelledTable cancelled={jobs.cancelled} />
+                <DeliveredTable delivered={jobs.delivered} />
+
                 </CTabPane>
                 <CTabPane>
-                  <DeliveredTable delivered={jobs.delivered} />
+                <CancelledTable cancelled={jobs.cancelled} />
+
                 </CTabPane>
                 <CTabPane>
                   <TransactionTable  transactions={transactions}  />

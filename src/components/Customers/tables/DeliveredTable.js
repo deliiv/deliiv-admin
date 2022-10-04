@@ -11,7 +11,7 @@ import moment  from 'moment'
 const Delivered = ({delivered}) => {
   const history = useHistory();
 
-  const [payLoad, setPayLoad] = useState({})
+  const [payLoad] = useState({})
 
 
   const fields = [

@@ -9,11 +9,11 @@ import Mail from './mail.svg'
 import Phone from './phone.svg'
 const OrderPayloadItem = ({ payload, index }) => {
 
-  let arr = ['Sender', 'Receiver', 'Rider Details']
+  let arr = ['Sender', 'Receiver', 'Rider Details',"User"]
 
   return (
     <CCardBody>
-      <h6 style={{ fontWeight: "bold" }}>{arr[index]}</h6>
+      <h6 style={{ fontWeight: "bold",paddingLeft:'10px' }}>{arr[index]}</h6>
       {
         payload !== null && <CRow>
           <CCol xs="12" md="4">

@@ -30,18 +30,27 @@ const OrderPayload = ({ item }) => {
   const [message, setMessage] = useState('');
 
   const [riderPayload, setRiderPayload] = useState({})
+  const [userPayload, setUserPayload] = useState({})
   const [updatedRiderPayload, setUpdatedRiderPayload] = useState({})
 
   useEffect(() => {
     if (item) {
+      console.log(item)
       setLoader(false)
 
-      let tempRiderPayload ={}
-      tempRiderPayload.firstName =item.rider_assign?.firstName
-      tempRiderPayload.lastName =item.rider_assign?.lastName
-      tempRiderPayload.phone_number =item.rider_assign?.phone_number
-      tempRiderPayload.full_name =item.rider_assign?.phone_number
+      let tempRiderPayload = {}
+      tempRiderPayload.firstName = item.rider_assign?.firstName
+      tempRiderPayload.lastName = item.rider_assign?.lastName
+      tempRiderPayload.phone_number = item.rider_assign?.phone_number
+      tempRiderPayload.full_name = item.rider_assign?.phone_number
       setRiderPayload(tempRiderPayload)
+
+      let userPayload ={}
+      userPayload.firstName = item.user.firstName
+      userPayload.lastName = item.user.lastName
+      userPayload.phone_number = item.user.phone_number
+
+      setUserPayload(userPayload)
     }
   }, [item])
 
@@ -66,19 +75,19 @@ const OrderPayload = ({ item }) => {
   }
 
   const handleChangeJobStatus = (value) => {
-    if(value === 'select rider') return;
+    if (value === 'select rider') return;
     let rider = JSON.parse(value)
     setModalTitle("Change job status")
     setNewRiderId(rider._id)
     setShowModal(true)
     setMessage(`Change job rider to ${rider.firstName} ${rider.lastName} ?`)
 
-    let tempRiderPayload ={}
-      tempRiderPayload.firstName =rider.firstName
-      tempRiderPayload.lastName =rider.lastName
-      tempRiderPayload.phone_number =rider.phone_number
-      tempRiderPayload.full_name =rider.phone_number
-      setUpdatedRiderPayload(tempRiderPayload)
+    let tempRiderPayload = {}
+    tempRiderPayload.firstName = rider.firstName
+    tempRiderPayload.lastName = rider.lastName
+    tempRiderPayload.phone_number = rider.phone_number
+    tempRiderPayload.full_name = rider.phone_number
+    setUpdatedRiderPayload(tempRiderPayload)
 
   }
 
@@ -151,7 +160,7 @@ const OrderPayload = ({ item }) => {
                 <CCardBody>
                   <CRow>
 
-                    {new Array(3).fill(null).map((i, index) => {
+                    {new Array(4).fill(null).map((i, index) => {
                       if (index === 0) {
                         return (<CCol xs="4" md="4">
                           <OrderPayloadItem payload={item && item.sender} index={0} />
@@ -165,6 +174,11 @@ const OrderPayload = ({ item }) => {
                       if (index === 2) {
                         return (<CCol xs="4" md="4">
                           <OrderPayloadItem payload={item && riderPayload} index={2} />
+                        </CCol>)
+                      }
+                      if (index === 3) {
+                        return (<CCol xs="4" md="4">
+                          <OrderPayloadItem payload={item && userPayload} index={3} />
                         </CCol>)
                       }
 
@@ -209,15 +223,10 @@ const OrderPayload = ({ item }) => {
                       </CRow>
 
                     </CCardBody>
-
                   </CCard>
-
                 </CCol>
               </CRow>
-
-
             </CCardBody>
-
           </CCard>
 
 

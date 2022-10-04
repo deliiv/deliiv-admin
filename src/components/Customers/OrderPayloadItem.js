@@ -12,7 +12,7 @@ const OrderPayloadItem = () => {
 
   return (
     <CCardBody>
-                            <h6 style={{ fontWeight: "bold" }}>Rider Details</h6>
+      <h6 style={{ fontWeight: "bold" }}>Rider Details</h6>
 
       <CRow>
 
