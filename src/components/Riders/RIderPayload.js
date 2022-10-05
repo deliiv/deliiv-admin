@@ -214,7 +214,7 @@ const OrderPayload = ({ payload }) => {
 
             <br />
             <br />
-            {role === "RIDER"  &&
+            {role === "RIDER" &&
               <div>
 
 
@@ -343,8 +343,14 @@ const OrderPayload = ({ payload }) => {
                         variant="outline"
                         style={{ marginTop: 10 }}
                         onClick={() => {
-                          setDocId(item._id);
-                          setShowDel(true)
+
+                          documents.filter(it => {
+                            if (it.document_name === item.name) {
+                              setDocId(it._id);
+                              setShowDel(true)
+                            }
+                          })
+
                         }}
                         size="sm"><strong>Remove</strong></CButton>
                     </div>)

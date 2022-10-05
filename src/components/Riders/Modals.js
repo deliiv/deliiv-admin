@@ -135,7 +135,7 @@ const Modals = ({
                   <br />
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/png, image/jpeg, image/jpg"
                     name="myImage"
                     onChange={(event) => {
                       setSelectedImage(event.target.files[0]);
