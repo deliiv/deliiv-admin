@@ -126,17 +126,15 @@ const handleOnChangeUpdateOrder = (id, status) => {
   setOrderStatus(status)
 
   setTimeout(() => {
-    console.log(`Status is ${status} and id: ${id}`)
   }, 3000);
 }
 
 useEffect(() => {
-  console.log('++++++++++', props);
 }, [])
 
 return (
   <>
- 
+
     <CRow>
       <CCol>
         <CCard>

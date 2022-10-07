@@ -45,9 +45,10 @@ const Modals = ({
 
 
   const handleImageUpload = () => {
+    console.log('}}}}}====', paymentDetail)
     let form = new FormData();
     form.append('file', selectedImage);
-    form.append('userId', paymentDetail.agency._id);
+    form.append('userId', paymentDetail.agency? paymentDetail.agency._id: paymentDetail.user._id);
     form.append('witdrawal_request', paymentDetail._id);
     form.append('remarks', catName);
 

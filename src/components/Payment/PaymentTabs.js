@@ -28,6 +28,7 @@ import Cancelled from "./tables/CancelledTable";
 import userService from "src/services/user.service";
 
 const PaymentTabs = ({witdraw,completed, cancelled}) => {
+  console.log('*************: ',witdraw)
   const [payment, setPayment] = useState([])
 
   useEffect(()=>{

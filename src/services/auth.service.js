@@ -9,7 +9,6 @@ class AuthService {
       axios
         .post("admin/login", data)
         .then((response) => {
-          console.log('====',response)
           resolve(response);
         })
         .catch(err=>{

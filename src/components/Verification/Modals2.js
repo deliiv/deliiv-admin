@@ -50,9 +50,6 @@ const Modals2 = ({
     form.append('rider_id', id);
     form.append('dId', dId && dId._id);
 
-    console.log('DNAME: ', catName)
-    console.log('MID: ', id)
-
     userService
       .uploadDocument(form)
       .then(() => {

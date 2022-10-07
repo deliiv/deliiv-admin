@@ -53,14 +53,12 @@ const Settings = (props) => {
 
   useEffect(() => {
     userService.allAdmin().then(data => {
-      console.log(data.data)
       setAdmin(data.data.admin)
       setConfig(data.data.system_config)
       setPrice(data.data.system_config[0].price_per_km)
       setCharge(data.data.system_config[0].service_charge)
 
     }).catch((error) => {
-      console.log(error);
       toast.error(error.response.data.message);
     });
 
@@ -123,7 +121,6 @@ const Settings = (props) => {
       })
       .catch((error) => {
         toast.error('Error adding admin')
-        console.log(error);
         toast.error(error.response.data.message);
       });
   }
@@ -149,15 +146,11 @@ const Settings = (props) => {
         }, 2000);
       })
       .catch((error) => {
-        toast.error('Error updating admin')
-        console.log(error);
         toast.error(error.response.data.message);
       });
   }
 
   const handlePriceUpdate = () => {
-    console.log('price: ', price)
-    console.log('charge: ', charge)
     userService
       .updateSystemConfig({ price: price, charge: charge })
       .then(() => {

@@ -54,7 +54,6 @@ const Modals = ({
         setLoading(false)
 
         toast.success('Image uploaded');
-        console.log('XXXX', data.data.document.document_image)
         setTimeout(() => {
           window.location.reload();
         }, 1500);

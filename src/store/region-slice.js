@@ -9,7 +9,6 @@ const regionSlice = createSlice({
   initialState: initialState,
   reducers: {
     setRegion: (state, action) => {
-      console.log('+++++++++++++', action.payload.region.regions)
       state.region = action.payload.region.regions;
     },
   },

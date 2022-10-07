@@ -50,7 +50,6 @@ const AgencyPayload = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
         setLoading(false);
         toast.error('An error occurred, please try again later')
 
