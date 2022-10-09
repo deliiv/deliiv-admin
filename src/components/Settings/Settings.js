@@ -49,6 +49,15 @@ const Settings = (props) => {
   const [update, setUpdate] = React.useState(false);
   const [config, setConfig] = React.useState(null);
 
+  const [newUserBonus, setNewUserBonus] = React.useState(false);
+  const [newUserBonusValue, setNewUserBonusValue] = React.useState(0);
+
+  const [refferalBonus, setRefferalBonus] = React.useState(false);
+  const [refferalBonusValue, setRefferalBonusValue] = React.useState(0);
+
+  const [freeDelivery, setFreeDelivery] = React.useState(false);
+  const [freeDeliveryValue, setFreeDeliveryValue] = React.useState(0);
+
 
 
   useEffect(() => {
@@ -420,17 +429,102 @@ const Settings = (props) => {
                                 </CButton>
                               </CCol>
                             </>
-
                           </>
-
                         }
-
-
-
                       </CCol>
-
                     </CRow>
                   </CForm>
+                  <br />
+                  <br />
+                  <br />
+                  <h4><strong>Bonus</strong></h4>
+                  <CFormGroup variant="custom-checkbox" className="my-2 mt-4">
+                    <div style={{ flexDirection: "column" }}>
+
+                      <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
+                        <input type="checkbox"
+                          value={newUserBonus}
+                          checked={newUserBonus}
+                          style={{ width: '40px', height: "40px" }}
+                          onChange={e => setNewUserBonus(!newUserBonus)} />
+                        <label for="" style={{ textAlign: "center", padding: "10px" }}>New User</label>
+
+                      </div>
+                      {
+                        newUserBonus && <div style={{ paddingLeft: '50px' }}>
+                          <p><i>This is the amount a user will be credited via their wallet when they join Deliiv</i></p>
+                          <CInputGroup className="mb-3" style={{ width: '200px' }}>
+                            <CInput
+                              type="number"
+                              placeholder="New user bonus"
+                              name="newUserBonus"
+                              value={newUserBonusValue}
+                              onChange={e => setNewUserBonusValue(e.target.value)}
+                            />
+                          </CInputGroup>
+                          <br />
+                        </div>
+                      }
+
+                    </div>
+                    <div style={{ flexDirection: "column" }}>
+                      <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
+                        <input type="checkbox"
+                          value={refferalBonus}
+                          checked={refferalBonus}
+
+                          style={{ width: '40px', height: "40px" }}
+                          onChange={e => setRefferalBonus(!refferalBonus)} />
+                        <label for="" style={{ textAlign: "center", padding: "10px" }}> Referral </label>
+                      </div>
+
+                      {refferalBonus && <div style={{ paddingLeft: '50px' }}>
+                        <p><i>This is the amount a user will be credited when they are reffered and joined Deliiv</i></p>
+                        <CInputGroup className="mb-3" style={{ width: '200px' }}>
+                          <CInput
+                            type="number"
+                            placeholder="Refferal Bonus"
+                            name="refferalBonusValue"
+                            value={refferalBonusValue}
+
+                            onChange={e => setRefferalBonusValue(e.target.value)}
+                          />
+                        </CInputGroup>
+                        <br />
+                      </div>}
+                    </div>
+                    <div style={{ flexDirection: "column" }}>
+                      <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
+                        <input type="checkbox"
+                          checked={freeDelivery}
+                          value={freeDelivery}
+                          style={{ width: '40px', height: "40px" }}
+                          onChange={e => setFreeDelivery(!freeDelivery)} />
+                        <label for="" style={{ textAlign: "center", padding: "10px" }}> Free delivery </label>
+                      </div>
+                      {freeDelivery &&
+                        <div style={{ paddingLeft: '50px' }}>
+                          <p>
+                            <i>If the number of jobs a user has booked in a day which are
+                              in picked-up or delivered status totals to the value below,
+                              the next job (one job) after that will be free
+                            </i>
+                          </p>
+                          <CInputGroup className="mb-3" style={{ width: '200px' }}>
+                            <CInput
+                              type="number"
+                              placeholder="Free delivery"
+                              name="refferalBonusValue"
+                              value={freeDeliveryValue}
+
+                              onChange={e => setFreeDeliveryValue(e.target.value)}
+                            />
+                          </CInputGroup>
+                          <br />
+                        </div>}
+
+                    </div>
+                  </CFormGroup>
 
                 </CCardBody>
               </CCard>
