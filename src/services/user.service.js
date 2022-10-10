@@ -251,6 +251,20 @@ class UserService {
         });
     });
   }
+
+  async updateSystemBonus(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .put("/admin/update-system-bonus", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async allAdmin() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {

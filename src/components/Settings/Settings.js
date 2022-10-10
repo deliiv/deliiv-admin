@@ -58,14 +58,27 @@ const Settings = (props) => {
   const [freeDelivery, setFreeDelivery] = React.useState(false);
   const [freeDeliveryValue, setFreeDeliveryValue] = React.useState(0);
 
+  const [discountStatus, setDiscountStatus] = React.useState(false);
+  const [discount, setDiscount] = React.useState(0);
+
 
 
   useEffect(() => {
     userService.allAdmin().then(data => {
       setAdmin(data.data.admin)
       setConfig(data.data.system_config)
+
       setPrice(data.data.system_config[0].price_per_km)
       setCharge(data.data.system_config[0].service_charge)
+
+      setAllVariable(data.data.system_config[0].ft_bonus_active_status,
+        data.data.system_config[0].ft_bonus_price_tag,
+        data.data.system_config[0].ref_bonus_active_status,
+        data.data.system_config[0].ref_bonus_price_tag,
+        data.data.system_config[0].free_delivery_bonus_active,
+        data.data.system_config[0].free_delivery_bonus_trigger,
+        data.data.system_config[0].dicount_active_status,
+        data.data.system_config[0].discount_rate)
 
     }).catch((error) => {
       toast.error(error.response.data.message);
@@ -73,6 +86,20 @@ const Settings = (props) => {
 
 
   }, [])
+
+  const setAllVariable = (newUserBonus, newUserBonusValue,
+    refferalBonus, refferalBonusValue,
+    freeDelivery, freeDeliveryValue,
+    discountStatus, discount) => {
+    setNewUserBonus(newUserBonus)
+    setNewUserBonusValue(newUserBonusValue)
+    setRefferalBonus(refferalBonus)
+    setRefferalBonusValue(refferalBonusValue)
+    setFreeDelivery(freeDelivery)
+    setFreeDeliveryValue(freeDeliveryValue)
+    setDiscountStatus(discountStatus)
+    setDiscount(discount)
+  }
 
   useEffect(() => {
 
@@ -141,7 +168,6 @@ const Settings = (props) => {
       account_verification: accountVerification,
       setting_access: accountSettings,
       notification_access: notificationAccess,
-      // price_change:priceChange,
       payment_approval: paymentApproval,
       active: active,
     }
@@ -155,6 +181,40 @@ const Settings = (props) => {
         }, 2000);
       })
       .catch((error) => {
+        toast.error(error.response.data.message);
+      });
+  }
+
+  const updateSystemBonus = () => {
+
+    let data = {
+      free_delivery_status: freeDelivery,
+      free_delivery_trigger: freeDeliveryValue,
+      discount_rate: discount,
+      discount_status: discountStatus,
+      first_time_price: newUserBonusValue,
+      first_time_bonus: newUserBonus,
+      referral_price: refferalBonusValue,
+      referral_bonus: refferalBonus
+    }
+
+    userService
+      .updateSystemBonus(data)
+      .then(() => {
+
+        toast.success('Bonus updated');
+
+        setAllVariable(data.first_time_bonus,
+          data.first_time_price,
+          data.referral_bonus,
+          data.referral_price,
+          data.free_delivery_status,
+          data.free_delivery_trigger,
+          data.discount_status,
+          data.discount_rate)
+      })
+      .catch((error) => {
+        toast.error("Error updating bonus")
         toast.error(error.response.data.message);
       });
   }
@@ -523,6 +583,45 @@ const Settings = (props) => {
                           <br />
                         </div>}
 
+                    </div>
+                    <div style={{ flexDirection: "column" }}>
+                      <div style={{ display: "flex", flexDirection: "row", margin: 20 }}>
+                        <input type="checkbox"
+                          checked={discountStatus}
+                          value={discountStatus}
+                          style={{ width: '40px', height: "40px" }}
+                          onChange={e => setDiscountStatus(!discountStatus)} />
+                        <label for="" style={{ textAlign: "center", padding: "10px" }}>Job discount </label>
+                      </div>
+                      {discountStatus &&
+                        <div style={{ paddingLeft: '50px' }}>
+                          <p>
+                            <i>Based on the percentage discount that is set below, discount will apply to all jobs at the point of payment
+                            </i>
+                          </p>
+                          <CInputGroup className="mb-3" style={{ width: '200px' }}>
+                            <CInput
+                              type="number"
+                              placeholder="Percentage discount"
+                              name="discount"
+                              value={discount}
+
+                              onChange={e => setDiscount(e.target.value)}
+                            />
+                          </CInputGroup>
+                          <br />
+
+                        </div>}
+                      <CButton
+                        style={{ width: "100px", marginLeft: '20px' }}
+                        color="info"
+                        variant="outline"
+                        size="sm"
+                        // onClick={() => setUpdate(true)}
+                        onClick={() => updateSystemBonus()}
+                      >
+                        update
+                      </CButton>
                     </div>
                   </CFormGroup>
 
