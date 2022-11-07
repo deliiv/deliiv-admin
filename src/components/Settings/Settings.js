@@ -512,7 +512,7 @@ const Settings = (props) => {
                       </div>
                       {
                         newUserBonus && <div style={{ paddingLeft: '50px' }}>
-                          <p><i>This is the amount a user will be credited via their wallet when they join Deliiv</i></p>
+                          <p><i>This is the amount a new user will be credited via their wallet when they join Deliiv</i></p>
                           <CInputGroup className="mb-3" style={{ width: '200px' }}>
                             <CInput
                               type="number"
@@ -539,7 +539,7 @@ const Settings = (props) => {
                       </div>
 
                       {refferalBonus && <div style={{ paddingLeft: '50px' }}>
-                        <p><i>This is the amount a user will be credited when they are reffered and joined Deliiv</i></p>
+                        <p><i>This is the amount a user (An existing user) will be credited when a new user use their referral code to join Deliiv</i></p>
                         <CInputGroup className="mb-3" style={{ width: '200px' }}>
                           <CInput
                             type="number"
