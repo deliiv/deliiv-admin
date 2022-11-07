@@ -115,10 +115,12 @@ const Customers = (props) => {
     userService.creditOrDebitUserWallet(data)
     .then(customer =>{
       toast.success(`User successfully ${action}ed`)
+      setShow(false)
 
     }).catch(err =>{
+      setShow(false)
+
       console.log(err.response.data[0].message)
-      toast.error("ERROR")
       toast.error(err.response.data[0].message)
     })
   }
