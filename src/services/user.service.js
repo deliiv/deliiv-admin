@@ -3,6 +3,20 @@ import authHeader from "./auth.header";
 import qs from "qs";
 
 class UserService {
+  async creditOrDebitUserWallet(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/fund-wallet", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
   async getOrders() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {

@@ -4,6 +4,9 @@ import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import Spinner from "../Spinner";
+import CustomerModals from "./CustomerModals";
+import userService from "src/services/user.service";
+import { toast } from 'react-toastify';
 
 const Customers = (props) => {
   const { url } = useRouteMatch();
@@ -12,6 +15,12 @@ const Customers = (props) => {
   const [secondaryLocalCUstomers, setSecondaryLocalCustomers] = useState([])
   const [search, setSearch] = useState('')
   const [loader, setLoader] = useState(true)
+
+  const [action, setAction] = useState('')
+  const [amount, setAmount] = useState(0)
+  const [show, setShow] = useState(false)
+  const [customer, setCustomer] = useState(false)
+
 
   const customers = useSelector((state) => state.users.users);
 
@@ -42,6 +51,16 @@ const Customers = (props) => {
     {
       key: "view",
       label: "Action",
+
+    },
+    {
+      key: "fund",
+      label: "Fund Wallet",
+
+    },
+    {
+      key: "debit",
+      label: "Debit Wallet",
 
     },
   ];
@@ -86,9 +105,25 @@ const Customers = (props) => {
     }
   }
 
+  const handleSuccess = () => {
+
+    let data = {
+      amount: action === 'Credit' ?  parseFloat(amount) : parseFloat(-amount),
+      user: customer
+
+    }
+    userService.creditOrDebitUserWallet(data)
+    .then(customer =>{
+      toast.success(`User successfully ${action}ed`)
+
+    }).catch(err =>{
+      console.log(err.response.data[0].message)
+      toast.error("ERROR")
+      toast.error(err.response.data[0].message)
+    })
+  }
   const onKeyUp = (e) => {
     if (e.keyCode === 8) {
-      // setSecondaryLocalCustomers()
       setLocalCustomers(secondaryLocalCUstomers)
     }
   }
@@ -108,12 +143,19 @@ const Customers = (props) => {
         )
       }
       );
-      setLocalCustomers(filteredData)
+    setLocalCustomers(filteredData)
   }
   return (
     <>
       <CRow>
-
+        <CustomerModals
+          title={action}
+          show={show}
+          modalColor={"#F9B115"}
+          handleOnChangeSCost={(e)=>{ setAmount(e.target.value)}}
+          handleSuccess={handleSuccess}
+          handleCancel={() => setShow(false)}
+        />
 
         <CCol>
           {loader && <Spinner width={20} height={20} />}
@@ -189,6 +231,42 @@ const Customers = (props) => {
                             size="sm"
                             onClick={() => history.push(`${url}/details/${customer._id}`)}>
                             View
+                          </CButton>
+                        </td>
+                      );
+                    },
+                    fund: (customer) => {
+                      return (
+                        <td className="py-2">
+                          <CButton
+                            color="success"
+                            // variant="outline"
+                            // shape="square"
+                            size="sm"
+                            onClick={() => {
+                              setAction("Credit")
+                              setShow(true)
+                              setCustomer(customer._id)
+                            }}>
+                            Fund Wallet
+                          </CButton>
+                        </td>
+                      );
+                    },
+                    debit: (customer) => {
+                      return (
+                        <td className="py-2">
+                          <CButton
+                            color="warning"
+
+                            size="sm"
+                            onClick={() => {
+                              setAction("Debit")
+                              setShow(true)
+                              setCustomer(customer._id)
+
+                            }}>
+                            Debit Wallet
                           </CButton>
                         </td>
                       );
