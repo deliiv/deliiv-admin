@@ -17,6 +17,19 @@ class UserService {
     });
   }
 
+  async filterObjects(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/filter-jobs?start_date=${data.start_date}&end_date=${data.end_date}&status=delivered`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async getOrders() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
