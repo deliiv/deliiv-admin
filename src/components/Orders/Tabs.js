@@ -14,19 +14,21 @@ import {
   CCallout,
   CFormGroup,
   CButton,
-  CSelect,
 } from "@coreui/react";
 import PendingTable from "./tables/PendingTable";
-import { useSelector } from "react-redux";
 import Pickedup from "./tables/PickedupTable";
 import Cancelled from "./tables/CancelledTable";
 import Delivered from "./tables/DeliveredTable";
 import Spinner from "../Spinner";
+import userService from "src/services/user.service";
+import { toast } from "react-toastify";
+
 
 
 const Tabs = () => {
-  const orders = useSelector((state) => state.orders.orders);
+  // const orders = useSelector((state) => state.orders.orders);
 
+  const [orders, setOrders] = useState([])
   const [loader, setLoader] = useState(true)
   const [svalue, setsValue] = useState('')
   const [pendingOrder, setPendingOrder] = useState(null)
@@ -60,6 +62,23 @@ const Tabs = () => {
     }, 2000);
 
   }, [orders])
+
+
+React.useEffect(() => {
+  setLoader(true)
+  userService.getOrders()
+  .then(data =>{
+    setOrders(data.data.order)
+    setLoader(false)
+
+  }).catch(err =>{
+    setLoader(false)
+    toast.error("Error fetching orders, try again later")
+
+  })
+
+
+}, []);
 
 
   const handleOnChange = (e) => {

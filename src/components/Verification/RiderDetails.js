@@ -27,40 +27,13 @@ import {Toggle} from "react-toggle-component"
 
 const RiderDetails = ({ selected }) => {
 
-  const [rId, setRid] = useState('')
   const [status, setStatus] = useState(true)
   const [payload, setPayload] = useState({})
-
-  const [show, setShow] = React.useState(false);
-  const [showDel, setShowDel] = React.useState(false);
-  const [dId, setDid] = React.useState('');
-  const [docId, setDocId] = React.useState('');
   const [toggleStatus, setToggleStatus] = React.useState(false);
-  const [showModal, setShowModal] = React.useState(false);
-
-
-  const fields = [
-    { key: 'name', _style: { width: '40%' } },
-    'registered',
-    { key: 'role', _style: { width: '20%' } },
-    { key: 'status', _style: { width: '20%' } },
-
-  ]
-
-  const getBadge = (status) => {
-    switch (status) {
-      case 'Active': return 'success'
-      case 'Inactive': return 'secondary'
-      case 'Pending': return 'warning'
-      case 'Banned': return 'danger'
-      default: return 'primary'
-    }
-  }
+  const [showModal, setShowModal] = React.useState(false)
 
 
   useEffect(() => {
-
-   // setToggleStatus(selected.account_verified)
 
     userService.searchRiderDocs({ riderId: selected._id }).then(response => {
       setPayload(response.data)

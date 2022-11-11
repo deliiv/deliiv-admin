@@ -4,7 +4,7 @@ import ExpirySession from "./utils/expirysession";
 import "./scss/style.scss";
 
 import { useDispatch } from "react-redux";
-import { fetchOrders } from "./store/order-actions";
+
 import { fetchAllAdmins } from './store/admin-actions'
 
 import {loadBoard} from './store/dashboard-actions'
@@ -53,9 +53,7 @@ const App = () => {
   React.useEffect(() => {
     dispatch(fetchTransactions());
   }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchOrders());
-  }, [dispatch]);
+
 
   return (
     <HashRouter>

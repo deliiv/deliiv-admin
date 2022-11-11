@@ -91,7 +91,7 @@ const Dashboard = () => {
 
         <CCard>
           <CCardHeader>
-          <b>Delivered Jobs</b>
+            <b>Delivered Jobs</b>
             <CCardBody>
               <div class="row">
                 <CCol xs="12" md="3">
@@ -111,9 +111,11 @@ const Dashboard = () => {
                     placeholder="date"
                     onChange={e => setEndDate(e.target.value)} />
                 </CCol>
-                <CButton color="primary" onClick={handleDatePicked}>Fetch</CButton>
                 {loading && <Spinner />}
               </div>
+              <br/>
+              <CButton color="primary" disabled={!start_date || !end_date } onClick={handleDatePicked}>Fetch</CButton>
+
               <CDataTable
                 items={data}
                 fields={fields}
