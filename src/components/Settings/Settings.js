@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import WidgetsDropdown from "src/views/widgets/WidgetsDropdown";
 import {
   CCard,
   CCardBody,
@@ -8,23 +6,18 @@ import {
   CDataTable,
   CRow,
   CButton,
-  CModal,
   CInput,
   CInputGroup,
-  CInputGroupPrepend,
-  CInputGroupText,
   CForm,
   CSpinner,
-  CFormGroup,
-  CInputCheckbox,
-  CLabel,
-  CSelect,
-  CBadge
+  CFormGroup
 } from "@coreui/react";
 
 import userService from "src/services/user.service";
 import { toast } from 'react-toastify';
 import LocalStorage from "../../utils/localstorage";
+import RadioButtonGroup from "./RadioGroup";
+import Modals from "./Modals";
 
 const userData = LocalStorage.get("user_data");
 
@@ -42,7 +35,6 @@ const Settings = (props) => {
   const [accountSettings, setAccountSettings] = React.useState(false);
   const [paymentApproval, setPaymentApproval] = React.useState(false);
   const [notificationAccess, setNotificationAccess] = React.useState(false);
-  // const [priceChange, setPrice_change] = React.useState(false);
   const [active, setActive] = React.useState(false);
   const [price, setPrice] = React.useState('');
   const [charge, setCharge] = React.useState('');
@@ -51,25 +43,36 @@ const Settings = (props) => {
 
   const [newUserBonus, setNewUserBonus] = React.useState(false);
   const [newUserBonusValue, setNewUserBonusValue] = React.useState(0);
-
   const [refferalBonus, setRefferalBonus] = React.useState(false);
   const [refferalBonusValue, setRefferalBonusValue] = React.useState(0);
-
   const [freeDelivery, setFreeDelivery] = React.useState(false);
   const [freeDeliveryValue, setFreeDeliveryValue] = React.useState(0);
-
   const [discountStatus, setDiscountStatus] = React.useState(false);
   const [discount, setDiscount] = React.useState(0);
+  const [selectedLabel, setSelectedLabel] = React.useState('');
+
+  const [show, setShow] = React.useState(false);
+
+  const labelOptions = [{
+    label: "Rider",
+    value: "rider"
+  }, {
+    label: "Platform",
+    value: "platform"
+  }]
+
 
 
 
   useEffect(() => {
     userService.allAdmin().then(data => {
+      console.log('PAYLOAD: ',  data.data.system_config[0].bonus_bearer)
       setAdmin(data.data.admin)
       setConfig(data.data.system_config)
 
       setPrice(data.data.system_config[0].price_per_km)
       setCharge(data.data.system_config[0].service_charge)
+      setSelectedLabel( data.data.system_config[0].bonus_bearer)
 
       setAllVariable(data.data.system_config[0].ft_bonus_active_status,
         data.data.system_config[0].ft_bonus_price_tag,
@@ -78,7 +81,9 @@ const Settings = (props) => {
         data.data.system_config[0].free_delivery_bonus_active,
         data.data.system_config[0].free_delivery_bonus_trigger,
         data.data.system_config[0].dicount_active_status,
-        data.data.system_config[0].discount_rate)
+        data.data.system_config[0].discount_rate,
+        data.data.system_config[0].bonus_bearer
+      )
 
     }).catch((error) => {
       toast.error(error.response.data.message);
@@ -90,7 +95,7 @@ const Settings = (props) => {
   const setAllVariable = (newUserBonus, newUserBonusValue,
     refferalBonus, refferalBonusValue,
     freeDelivery, freeDeliveryValue,
-    discountStatus, discount) => {
+    discountStatus, discount,bonus_bearer) => {
     setNewUserBonus(newUserBonus)
     setNewUserBonusValue(newUserBonusValue)
     setRefferalBonus(refferalBonus)
@@ -99,6 +104,7 @@ const Settings = (props) => {
     setFreeDeliveryValue(freeDeliveryValue)
     setDiscountStatus(discountStatus)
     setDiscount(discount)
+    setSelectedLabel(bonus_bearer)
   }
 
   useEffect(() => {
@@ -195,7 +201,8 @@ const Settings = (props) => {
       first_time_price: newUserBonusValue,
       first_time_bonus: newUserBonus,
       referral_price: refferalBonusValue,
-      referral_bonus: refferalBonus
+      referral_bonus: refferalBonus,
+      bonus_bearer:selectedLabel
     }
 
     userService
@@ -211,12 +218,14 @@ const Settings = (props) => {
           data.free_delivery_status,
           data.free_delivery_trigger,
           data.discount_status,
-          data.discount_rate)
+          data.discount_rate,
+          data.bonus_bearer)
       })
       .catch((error) => {
         toast.error("Error updating bonus")
         toast.error(error.response.data.message);
       });
+      setShow(false)
   }
 
   const handlePriceUpdate = () => {
@@ -236,9 +245,21 @@ const Settings = (props) => {
       });
   }
 
+  const handleOnChangeLable = (value) => {
+
+    setSelectedLabel(value)
+
+  }
+
   return (
     <>
       <CCard>
+        <Modals show={show}
+          handleCancel={()=>setShow(false)}
+          handleSuccess={()=>updateSystemBonus()}
+          title={"Update Bonus"}
+          message={"Are you sure you want to update the settings to Bonus ? "}
+        />
 
         <CCardBody>
           <h3>
@@ -249,22 +270,9 @@ const Settings = (props) => {
             <CDataTable
               items={admin}
               fields={fields}
-              // columnFilter
-              // tableFilter
-              // cleaner
-              // itemsPerPageSelect
               itemsPerPage={50}
               hover
               pagination
-              // loading
-              // onRowClick={(item,index,col,e) => console.log(item,index,col,e)}
-              // onPageChange={(val) => console.log('new page:', val)}
-              // onPagesChange={(val) => console.log('new pages:', val)}
-              // onPaginationChange={(val) => console.log('new pagination:', val)}
-              // onFilteredItemsChange={(val) => console.log('new filtered items:', val)}
-              // onSorterValueChange={(val) => console.log('new sorter value:', val)}
-              // onTableFilterChange={(val) => console.log('new table filter:', val)}
-              // onColumnFilterChange={(val) => console.log('new column filter:', val)}
               scopedSlots={{
 
                 view: (data) => {
@@ -611,14 +619,20 @@ const Settings = (props) => {
                           </CInputGroup>
                           <br />
 
+                          <h4><b>Who bears disount cost</b></h4>
+                          <RadioButtonGroup options={labelOptions} selectedValue={selectedLabel} onChange={handleOnChangeLable} />
+
+                          <br />
+
                         </div>}
+
                       <CButton
                         style={{ width: "100px", marginLeft: '20px' }}
                         color="info"
                         variant="outline"
                         size="sm"
                         // onClick={() => setUpdate(true)}
-                        onClick={() => updateSystemBonus()}
+                        onClick={() => setShow(true)}
                       >
                         update
                       </CButton>
