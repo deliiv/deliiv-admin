@@ -9,13 +9,11 @@ import {
 } from '@coreui/react'
 import { useHistory } from 'react-router-dom';
 
-import Approve from './approve.svg'
-import Decline from './decline.svg'
+
 import moment from 'moment';
-import ReceiptModal from './ImageViewModal'
 
 
-const CompletedTable = ({ completed }) => {
+const TransactionTable = ({ withdrawal }) => {
 
   const history = useHistory()
 
@@ -39,20 +37,16 @@ const CompletedTable = ({ completed }) => {
       case 'completed': return 'success'
       case 'Inactive': return 'secondary'
       case 'Pending': return 'warning'
-      case 'Banned': return 'danger'
+      case 'cancelled': return 'danger'
       default: return 'primary'
     }
   }
 
   return (
     <CCardBody>
-      <ReceiptModal
-        title={"Receipt"}
-        show={showModal}
-        handleCancel={()=> setShow(false)}
-        image_url={imgurl} />
+
       <CDataTable
-        items={completed}
+        items={withdrawal}
         fields={fields}
         // columnFilter
         // tableFilter
@@ -81,7 +75,7 @@ const CompletedTable = ({ completed }) => {
             ),
           User: (item) => (
             <td>
-             <b>{item.user ? item.user.firstName : ""}  {item.user ? item.user.lastName :""}</b>
+              <b>{item.user ? item.user.firstName : ""}  {item.user ? item.user.lastName : ""}</b>
 
             </td>
           ),
@@ -97,9 +91,9 @@ const CompletedTable = ({ completed }) => {
             return (
               <td className="py-2 px-5">
 
-<CButton
-                 color="success"
-                 variant="outline"
+                <CButton
+                  color="success"
+                  variant="outline"
                   onClick={() => history.push({
                     pathname: `/riders/details/${item.user ? item.user._id : item.agency._id}`,
                     state: { pathname: item.user ? "user" : "agency" }
@@ -109,10 +103,12 @@ const CompletedTable = ({ completed }) => {
                 <br />
                 <br />
                 {item && item.receipt && item.receipt.receipt_image && <CButton
-                 color="info"
-                 variant="outline"
-                onClick={() => { setShow(true);
-                setimgurl(item.receipt.receipt_image) }}>
+                  color="info"
+                  variant="outline"
+                  onClick={() => {
+                    setShow(true);
+                    setimgurl(item.receipt.receipt_image)
+                  }}>
                   View Receipt
                 </CButton>}
               </td>
@@ -127,4 +123,4 @@ const CompletedTable = ({ completed }) => {
   )
 }
 
-export default CompletedTable
+export default TransactionTable

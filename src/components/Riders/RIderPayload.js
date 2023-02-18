@@ -46,6 +46,7 @@ const OrderPayload = ({ payload }) => {
   const [imgurl, setimgurl] = React.useState('')
   const [toggleStatus, setToggleStatus] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
+  const [withdrawal, setWithdrawal] = React.useState([])
 
   const documentName = [
     { id: 1, name: "Motorcycle Particulars" },
@@ -87,6 +88,8 @@ const OrderPayload = ({ payload }) => {
       setLoading(true);
       UserService.getSingleRider(id)
         .then((res) => {
+          console.log('****************', res.data.withdrawal)
+          setWithdrawal( res.data.withdrawal)
           setCustomer(res.data.user_details);
           setRole(res.data.user_details.user.role)
           setToggleStatus(res.data.user_details.user.active)
@@ -156,15 +159,7 @@ const OrderPayload = ({ payload }) => {
       return <img src={Avatar} alt="" width={300} />
     }
   }
-  const renderName = (customer) => {
-    if (customer && customer.user) {
-      return customer.user.firstName + " " + customer.user.lastName
-    } else if (customer && customer.agency) {
-      return customer.agency.name
-    } else {
-      return "No name"
-    }
-  }
+
 
   return (
     <CCard>
@@ -270,7 +265,8 @@ const OrderPayload = ({ payload }) => {
                   <h2>
                     ₦{customer && customer.wallet && customer.wallet.toLocaleString()}
                   </h2>
-                </strong>              </CCardBody>
+                </strong>
+              </CCardBody>
             </CCard>
 
           </CCol>
@@ -369,7 +365,7 @@ const OrderPayload = ({ payload }) => {
         </CRow>}
         <CDropdownDivider />
 
-        <Tabs jobs={jobs} />
+        <Tabs jobs={jobs} withdrawal={withdrawal}/>
       </CCardBody>
     </CCard>
   )

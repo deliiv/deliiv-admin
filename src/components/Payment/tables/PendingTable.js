@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CCardBody,
   CBadge,
@@ -17,9 +17,7 @@ import userService from 'src/services/user.service.js'
 import { toast } from 'react-toastify';
 
 
-const PendingTable = ({ pending }) => {
-  console.log('====PENDING: ', pending)
-
+const PendingTable = ({ pending, search }) => {
   const history = useHistory();
 
   const [status, setStatus] = useState("")
@@ -28,8 +26,11 @@ const PendingTable = ({ pending }) => {
   const [showCancel, setShowCancel] = useState(false)
   const [paymentDetail, setPaymentDetail] = useState(null)
 
+
+
   const fields = [
-    { key: 'User', _style: { width: '20%' } },
+    { key: 'reference', _style: { width: '10%' } },
+    { key: 'User', _style: { width: '10%' } },
     { key: 'status', _style: { width: '10%' } },
     { key: 'amount', _style: { width: '10%' } },
     { key: 'account_detail', label: "Account detail", _style: { width: '10%' } },
@@ -69,6 +70,10 @@ const PendingTable = ({ pending }) => {
       });
   }
 
+
+
+
+
   return (
     <CCardBody>
       <Modal
@@ -88,22 +93,10 @@ const PendingTable = ({ pending }) => {
       <CDataTable
         items={pending}
         fields={fields}
-        // columnFilter
-        // tableFilter
-        // cleaner
         itemsPerPageSelect
         itemsPerPage={5}
         hover
         pagination
-        // loading
-        // onRowClick={(item,index,col,e) => console.log(item,index,col,e)}
-        // onPageChange={(val) => console.log('new page:', val)}
-        // onPagesChange={(val) => console.log('new pages:', val)}
-        // onPaginationChange={(val) => console.log('new pagination:', val)}
-        // onFilteredItemsChange={(val) => console.log('new filtered items:', val)}
-        // onSorterValueChange={(val) => console.log('new sorter value:', val)}
-        // onTableFilterChange={(val) => console.log('new table filter:', val)}
-        // onColumnFilterChange={(val) => console.log('new column filter:', val)}
         scopedSlots={{
           'status':
             (item) => (
@@ -115,7 +108,7 @@ const PendingTable = ({ pending }) => {
             ),
           User: (item) => (
             <td>
-  <b> {item.user ? item.user.firstName : ""} </b>
+              <b> {item.user ? item.user.firstName : ""} </b>
 
             </td>
           ),
@@ -167,6 +160,9 @@ const PendingTable = ({ pending }) => {
 
         }}
       />
+
+{/* <SearchableTable data={pending} /> */}
+
     </CCardBody>
   )
 }

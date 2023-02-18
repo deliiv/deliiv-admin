@@ -943,21 +943,7 @@ class UserService {
   }
 
   async getCategory(id) {
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/x-www-form-urlencoded",
-    //   },
-    // };    return new Promise((resolve, reject) => {
-    //   axios
-    //     .get(`/admin/get-category/${id}`, config)
-    //     .then(response => {
-    //       resolve(response);
-    //     })
-    //     .catch((error) => {
-    //       console.log('ERR: ', error.response)
-    //       reject(error);
-    //     });
-    // });
+  
 
     var data = JSON.stringify({
       "name": "master"

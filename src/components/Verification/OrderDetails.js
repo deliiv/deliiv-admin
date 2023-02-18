@@ -196,9 +196,7 @@ return (
                           size="sm"
                           onClick={() => {
                             toggleDetails(item.id);
-                            //console.log(products[item.id]);
-                            // setSelectedProduct(item.seller_details.order.filter(it => it.id === item.id));
-
+                            
                           }}
                         >
                           {details.includes(item.id) ? "Hide" : "Show"}

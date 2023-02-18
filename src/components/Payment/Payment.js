@@ -9,11 +9,12 @@ import {
 } from "@coreui/react";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import userService from "src/services/user.service";
 import PaymentDetails from "./PaymentDetails";
 import Tabs from "./PaymentTabs";
+import SearchableTable from "./SearchTable";
 
 const Payment = () => {
-  const witdrawal = useSelector((state) => state.transactions.witdrawalRequest);
   const [witdraw, setWitdraw] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [cancelled, setCancelled] = useState([]);
@@ -21,304 +22,48 @@ const Payment = () => {
   const [secCompleted, setSecCompleted] = useState([]);
   const [secCancelled, setSecCancelled] = useState([]);
   const [search, setSearch] = useState("");
-  const [xR, setXR] = useState([]);
-  const [xR2, setXR2] = useState([]);
-  const [xR3, setXR3] = useState([]);
+
+  const [witdrawal, setWitdrawal] = useState([])
 
   useEffect(() => {
-    if (witdrawal) {
-      setWitdraw(witdrawal.withdraw);
-      setCompleted(witdrawal.completedWitdraw);
-      setCancelled(witdrawal.cancelledWitdraw);
-    }
-    setTimeout(() => {
-      setXR(witdrawal && witdrawal.withdraw && witdrawal.withdraw);
-      setXR2(witdrawal && witdrawal.completedWitdraw);
-      setXR3(witdrawal && witdrawal.cancelledWitdraw);
-    }, 2000);
+    userService.getAllPayment()
+      .then(data => {
+        setWitdraw(data.data.withdraw)
+      //  setWitdrawal(data.data.withdraw)
+        setCompleted(data.data.completedWitdraw);
+        setCancelled(data.data.cancelledWitdraw);
+      }).catch(err => {
+      })
 
+  }, [])
 
-  }, []);
+  const handleOnChange=(e)=>{
+    setSearch(e.target.value.toLowerCase())
+  }
 
-  const handleOnChange = (e) => {
-    if (e.keyCode === 8) {
-      const filteredData = e.target.value.trim().length > 0 && witdraw && witdraw.filter((entry) => {
-        return (
-          (entry.amount.toString() && entry.amount.toString().includes(e.target.value.trim())) ||
-          (entry.reference &&
-            entry.reference
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.status &&
-            entry.status
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.email
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.phone_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.account_detail &&
-            entry.account_detail.bank_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase()))
-        );
-      });
-      if (filteredData) {
-        setWitdraw(filteredData);
-      }
-
-
-      const filteredData2 = e.target.value.trim().length > 0 && completed && completed.filter((entry) => {
-        return (
-          (entry.amount.toString() && entry.amount.toString().includes(e.target.value.trim())) ||
-          (entry.reference &&
-            entry.reference
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.status &&
-            entry.status
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.email
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.phone_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.account_detail &&
-            entry.account_detail.bank_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase()))
-        );
-      });
-      if (filteredData) {
-        setWitdraw(filteredData);
-      }
-      if (filteredData2) {
-        setCompleted(filteredData2);
-      }
-
-      const filteredData3 = e.target.value.trim().length > 0 && cancelled && cancelled.filter((entry) => {
-        return (
-          (entry.amount.toString() && entry.amount.toString().includes(e.target.value.trim())) ||
-          (entry.reference &&
-            entry.reference
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.status &&
-            entry.status
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.email
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.phone_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.account_detail &&
-            entry.account_detail.bank_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase()))
-        );
-      });
-      if (filteredData3) {
-        setCancelled(filteredData3);
-      }
-      if (filteredData3) {
-        setCancelled(filteredData3);
-      }
-    }
-    setSearch(e.target.value);
-    const filteredData =
-      e.target.value.trim().length > 0 &&
-      witdraw &&
-      witdraw.filter((entry) => {
-        console.log(entry);
-        return ((entry.amount.toString() && entry.amount.toString().includes(e.target.value.trim().toLowerCase())) ||
-          (entry.reference &&
-            entry.reference
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.status &&
-            entry.status
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.email
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.phone_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.account_detail &&
-            entry.account_detail.bank_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase()))
-        );
-      });
-    const filteredData2 =
-      e.target.value.trim().length > 0 &&
-      completed &&
-      completed.filter((entry) => {
-        return ((entry.amount.toString() && entry.amount.toString().includes(e.target.value.trim().toLowerCase())) ||
-          (entry.reference &&
-            entry.reference
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.status &&
-            entry.status
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.email
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.phone_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.account_detail &&
-            entry.account_detail.bank_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase()))
-        );
-      });
-    const filteredData3 =
-      e.target.value.trim().length > 0 && cancelled && cancelled.filter((entry) => {
-        return ((entry.amount.toString() && entry.amount.toString().includes(e.target.value.trim().toLowerCase())) ||
-          (entry.reference &&
-            entry.reference
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.status &&
-            entry.status
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.email
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.agency &&
-            entry.agency.phone_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_number.includes(
-              e.target.value.trim().toLowerCase()
-            )) ||
-          (entry.account_detail &&
-            entry.account_detail.account_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase())) ||
-          (entry.account_detail &&
-            entry.account_detail.bank_name
-              .toLowerCase()
-              .includes(e.target.value.trim().toLowerCase()))
-        );
-      });
-
-    filteredData && filteredData.length   > 0 && setSecWitdraw(witdraw);
-    filteredData2 && filteredData2.length > 0 && setSecCompleted(completed);
-    filteredData3 && filteredData3.length > 0 && setSecCancelled(cancelled);
-
-    if (filteredData) {
-      setWitdraw(filteredData);
-    } else {
-      setWitdraw(xR);
-      setSecWitdraw(xR2);
-      setSecCancelled(xR3);
-    }
-    if (filteredData2) {
-      setCompleted(filteredData2);
-    } else {
-      setCompleted(xR2);
-      setSecCompleted(xR2);
-
-      setCancelled(xR3);
-      setSecCancelled(xR3);
-    }
-    if (filteredData3) {
-      setCancelled(filteredData3);
-    } else {
-      setCancelled(xR3);
-      setSecCancelled(xR3);
-    }
-  };
+  const pendingPayment = witdraw.filter((item) => {
+    return (
+      item.account_detail.account_name.toLowerCase().includes(search) ||
+      item.account_detail.account_number.toLowerCase().includes(search) ||
+      item.account_detail.bank_name.toLowerCase().includes(search) ||
+      item.amount.toString().toLowerCase().includes(search) ||
+      item.reference.toLowerCase().includes(search) ||
+      item.status.toLowerCase().includes(search)
+    );
+  });
+  const completedPayment = completed.filter((item) => {
+    return (
+      item.account_detail?.account_name.toLowerCase().includes(search) ||
+      item.account_detail?.account_number.toLowerCase().includes(search) ||
+      item.account_detail?.bank_name.toLowerCase().includes(search) ||
+      item.amount.toString().toLowerCase().includes(search) ||
+      item.reference.toLowerCase().includes(search) ||
+      item.status.toLowerCase().includes(search)
+    );
+  });
 
   const onKeyUp = (e) => {
+    console.log('Case 1')
     if (e.keyCode === 8) {
       setWitdraw(secWitdraw);
       setCompleted(secCompleted);
@@ -327,8 +72,10 @@ const Payment = () => {
   };
 
   const onKeyDown = (e) => {
+    console.log('Case 2')
+
     if (e.keyCode === 8) {
-      handleOnChange(e);
+     // handleOnChange(e);
     }
   };
 
@@ -350,6 +97,7 @@ const Payment = () => {
                   placeholder="search"
                   style={{ padding: 20 }}
                   value={search}
+                  // onChange={(e) => setSearch(e.target.value.toLowerCase())}
                   onChange={handleOnChange}
                   onKeyDown={onKeyDown}
                   onKeyUp={onKeyUp}
@@ -385,12 +133,14 @@ const Payment = () => {
               </CCol>
             </CRow>
           </CCard>
+          {/* <SearchableTable data={witdraw}/> */}
 
           <Tabs
-          witdrawal={witdrawal}
-           witdraw={witdraw}
-            completed={completed}
-            cancelled={cancelled}/>
+          search={search}
+          //  witdrawal={witdrawal}
+            witdraw={pendingPayment}
+            completed={completedPayment}
+            cancelled={cancelled} />
         </CCol>
       </CRow>
     </>

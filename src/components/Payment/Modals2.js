@@ -24,11 +24,7 @@ const Modals2 = ({
   handleCancel,
   handleSuccess,
   modalColor,
-  dId,
-  handleOnChangeCatname,
-  image_url,
-  id
-}) => {
+  dId }) => {
 
   useEffect(() => {
     if (dId) {
@@ -36,43 +32,16 @@ const Modals2 = ({
       setCatName(dId.document_name ? dId.document_name : '')
     }
   }, [dId])
-  const [selectedImage, setSelectedImage] = React.useState('');
   const [catName, setCatName] = React.useState('');
 
 
-  const handleImageUpload = () => {
-    if (!catName) {
-      toast.error('Document name required')
-    }
-    let form = new FormData();
-    form.append('file', selectedImage);
-    form.append('document_name', catName);
-    form.append('rider_id', id);
-    form.append('dId', dId && dId._id);
-
-    console.log('DNAME: ', catName)
-    console.log('MID: ', id)
-
-    userService
-      .uploadDocument(form)
-      .then(() => {
-
-        toast.success('Image uploaded');
-        setTimeout(() => {
-        	window.location.reload();
-        }, 1500);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   return (
     <CRow>
       <CCol>
         <CCard>
           <CModal show={show}
-          onClose={handleCancel}
-          color={modalColor}>
+            onClose={handleCancel}
+            color={modalColor}>
             <CModalHeader closeButton>
               <CModalTitle>{title}</CModalTitle>
             </CModalHeader>

@@ -31,7 +31,6 @@ const Modals = ({
   paymentDetail
 }) => {
 
-  console.log('====', paymentDetail)
 
 
   useEffect(() => {
@@ -45,7 +44,6 @@ const Modals = ({
 
 
   const handleImageUpload = () => {
-    console.log('}}}}}====', paymentDetail)
     let form = new FormData();
     form.append('file', selectedImage);
     form.append('userId', paymentDetail.agency? paymentDetail.agency._id: paymentDetail.user._id);
@@ -149,7 +147,7 @@ const Modals = ({
                   <br />
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/jpeg,image/jpeg, image/png"
                     name="myImage"
                     onChange={(event) => {
                       setSelectedImage(event.target.files[0]);

@@ -27,19 +27,16 @@ import Pending from "./tables/PendingTable";
 import Cancelled from "./tables/CancelledTable";
 import userService from "src/services/user.service";
 
-const PaymentTabs = ({witdraw,completed, cancelled}) => {
-  console.log('*************: ',witdraw)
+const PaymentTabs = ({search, witdraw, completed, cancelled }) => {
+
   const [payment, setPayment] = useState([])
 
-  useEffect(()=>{
-
+  useEffect(() => {
     (async function anyNameFunction() {
-      let pay=  await userService.getAllPayment();
+      let pay = await userService.getAllPayment();
       setPayment(pay)
     })();
-
-   console.log('>>',payment)
-  },[])
+  }, [])
 
   return (
     <CRow>
@@ -98,7 +95,7 @@ const PaymentTabs = ({witdraw,completed, cancelled}) => {
               </CNav>
               <CTabContent>
                 <CTabPane>
-                  <Pending pending={witdraw} />
+                  <Pending pending={witdraw} search={search} />
                 </CTabPane>
 
                 <CTabPane>
