@@ -88,8 +88,7 @@ const OrderPayload = ({ payload }) => {
       setLoading(true);
       UserService.getSingleRider(id)
         .then((res) => {
-          console.log('****************', res.data.withdrawal)
-          setWithdrawal( res.data.withdrawal)
+          setWithdrawal(res.data.withdrawal)
           setCustomer(res.data.user_details);
           setRole(res.data.user_details.user.role)
           setToggleStatus(res.data.user_details.user.active)
@@ -230,6 +229,17 @@ const OrderPayload = ({ payload }) => {
                 />
               </div>
             }
+            {
+              role === "RIDER" || role === 'AGENCY_RIDER' &&
+              <>
+                <br />
+                <br />
+                <div>
+                  <p>Admin verified: {customer.user.admin_verified === true ? "Yes" : "No"}</p>
+                  <p>User verified: {customer.user.account_verified === true ? "Yes" : "No"}</p>
+                  <p><i>Note: If either <b>Admin verified</b> or <b>User verified</b> is No for a rider, there's possibility that the rider might not show up on the list of riders that job can be switched to</i></p>
+                </div></>
+            }
           </CCol>
 
           <CCol xs="12" md="3">
@@ -365,7 +375,7 @@ const OrderPayload = ({ payload }) => {
         </CRow>}
         <CDropdownDivider />
 
-        <Tabs jobs={jobs} withdrawal={withdrawal}/>
+        <Tabs jobs={jobs} withdrawal={withdrawal} />
       </CCardBody>
     </CCard>
   )
