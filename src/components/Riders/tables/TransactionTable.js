@@ -3,15 +3,9 @@ import {
   CCardBody,
   CBadge,
   CDataTable,
-  CButton,
-  CRow,
-  CCol
-} from '@coreui/react'
+  CButton} from '@coreui/react'
 import { useHistory } from 'react-router-dom';
-
-
 import moment from 'moment';
-
 
 const TransactionTable = ({ withdrawal }) => {
 
@@ -106,6 +100,7 @@ const TransactionTable = ({ withdrawal }) => {
                   color="info"
                   variant="outline"
                   onClick={() => {
+                    console.log('*****************',item.receipt.receipt_image)
                     setShow(true);
                     setimgurl(item.receipt.receipt_image)
                   }}>

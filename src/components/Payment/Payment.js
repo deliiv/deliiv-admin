@@ -43,27 +43,26 @@ const Payment = () => {
 
   const pendingPayment = witdraw.filter((item) => {
     return (
-      item.account_detail.account_name.toLowerCase().includes(search) ||
-      item.account_detail.account_number.toLowerCase().includes(search) ||
-      item.account_detail.bank_name.toLowerCase().includes(search) ||
-      item.amount.toString().toLowerCase().includes(search) ||
-      item.reference.toLowerCase().includes(search) ||
-      item.status.toLowerCase().includes(search)
+      item?.account_detail?.account_name?.toLowerCase().includes(search) ||
+      item?.account_detail?.account_number?.toLowerCase().includes(search) ||
+      item?.account_detail?.bank_name?.toLowerCase().includes(search) ||
+      item?.amount?.toString().toLowerCase().includes(search) ||
+      item?.reference?.toLowerCase().includes(search) ||
+      item?.status?.toLowerCase().includes(search)
     );
   });
   const completedPayment = completed.filter((item) => {
     return (
-      item.account_detail?.account_name.toLowerCase().includes(search) ||
-      item.account_detail?.account_number.toLowerCase().includes(search) ||
-      item.account_detail?.bank_name.toLowerCase().includes(search) ||
-      item.amount.toString().toLowerCase().includes(search) ||
-      item.reference.toLowerCase().includes(search) ||
-      item.status.toLowerCase().includes(search)
+      item?.account_detail?.account_name?.toLowerCase().includes(search) ||
+      item?.account_detail?.account_number?.toLowerCase().includes(search) ||
+      item?.account_detail?.bank_name?.toLowerCase().includes(search) ||
+      item?.amount?.toString().toLowerCase().includes(search) ||
+      item?.reference?.toLowerCase().includes(search) ||
+      item?.status?.toLowerCase().includes(search)
     );
   });
 
   const onKeyUp = (e) => {
-    console.log('Case 1')
     if (e.keyCode === 8) {
       setWitdraw(secWitdraw);
       setCompleted(secCompleted);
@@ -72,7 +71,6 @@ const Payment = () => {
   };
 
   const onKeyDown = (e) => {
-    console.log('Case 2')
 
     if (e.keyCode === 8) {
      // handleOnChange(e);

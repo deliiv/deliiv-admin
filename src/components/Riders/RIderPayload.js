@@ -375,7 +375,10 @@ const OrderPayload = ({ payload }) => {
         </CRow>}
         <CDropdownDivider />
 
-        <Tabs jobs={jobs} withdrawal={withdrawal} />
+        <Tabs
+          jobs={jobs}
+          withdrawal={withdrawal}
+        />
       </CCardBody>
     </CCard>
   )

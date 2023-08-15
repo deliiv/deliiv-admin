@@ -38,7 +38,6 @@ const Tabs = ({ jobs,withdrawal }) => {
                     <CCardBody>
             <CTabs >
               <CNav variant="tabs">
-
               <CNavItem>
                   <CNavLink>
                     <CCallout
