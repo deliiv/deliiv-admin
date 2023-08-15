@@ -13,7 +13,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-import Logo from "../assets/images/_logo.png";
+import Logo from "../assets/images/deliiv.svg";
 
 //AuthService for logout
 import { Logout } from "../services/auth.service";
@@ -22,6 +22,9 @@ import { Logout } from "../services/auth.service";
 import routes from "../routes";
 
 import { uiActions } from "../store/ui-slice";
+
+import LocalStorage from "../utils/localstorage";
+const userData = LocalStorage.get("user_data");
 
 const TheHeader = () => {
   const dispatch = useDispatch();
@@ -61,22 +64,26 @@ const TheHeader = () => {
         onClick={toggleSidebar}
       />
       <CHeaderBrand className="mx-auto d-lg-none" to="/">
-        <img src={Logo} alt="fix234 logo" style={{ height: "35px" }} />
+        <img src={Logo} alt="Deliiv logo" style={{ height: "35px" }} />
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
         <CHeaderNavItem className="px-3">
-          <CHeaderNavLink to="/dashboard">Dashboard</CHeaderNavLink>
+          {/* <CHeaderNavLink to="/dashboard">Dashboard</CHeaderNavLink> */}
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
-          <CHeaderNavLink to="/users">Users</CHeaderNavLink>
+          {/* <CHeaderNavLink to="/users">Users</CHeaderNavLink> */}
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
-          <CHeaderNavLink>Settings</CHeaderNavLink>
+          {/* <CHeaderNavLink>Settings</CHeaderNavLink> */}
         </CHeaderNavItem>
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
+        <div><b>
+          {userData && userData.full_name}
+          </b>
+        </div>
         <CToggler
           inHeader
           className="ml-3 c-d-legacy-none"

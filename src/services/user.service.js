@@ -3,11 +3,52 @@ import authHeader from "./auth.header";
 import qs from "qs";
 
 class UserService {
+  async creditOrDebitUserWallet(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/fund-wallet", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async filterObjects(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/filter-jobs?start_date=${data.start_date}&end_date=${data.end_date}&status=delivered`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async getOrders() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get("/order", config)
+        .get("/admin/all-orders", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async updateOrderStatus(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-order", data, config)
         .then((response) => {
           resolve(response);
         })
@@ -21,6 +62,32 @@ class UserService {
     return new Promise((resolve, reject) => {
       axios
         .get("/admin/get-service-charge", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getAllAgencies() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/get-agencies", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getAllActiveRiders() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/active-riders", config)
         .then((response) => {
           resolve(response);
         })
@@ -43,11 +110,354 @@ class UserService {
         });
     });
   }
+  async changeJobRider(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/change-job-rider", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  //*************STORE PRODUCT */
+
+  async createStoreProduct(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/create-store-product", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+
+  async updateStoreProductImage(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/upload-store-product-image", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async deleteStoreProductImage(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`/admin/delete-store-product-pic/${id}`,null, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async cancelJob(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`/admin/cancel-job/${id}`,null, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+
+  async updateStoreProduct(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-store-product", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  /****************CATEGORY**************/
+  async updateCategory(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-category", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async uploadDocument(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/rider/upload/admin-upload", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async uploadReceiptDocument(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/rider/upload/payment-receipt", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async createAdmin(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/create-admin", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async updateAdmin(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-admin", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async updateSystemConfig(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-system-config", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async updateSystemBonus(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .put("/admin/update-system-bonus", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async allAdmin() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/all-admin",config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async searchRider(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/search-rider", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async sendPushNotification(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/send-push-notification", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async searchRiderDocs(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/search-rider-docs", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async updateWithdrawalRequest(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("admin/update-withdrawal-request", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async verifyRider(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/verify-rider", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async changeActiveStatus(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/change-rider-status", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+
+  async createRegion(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/add-region", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async deleteDoc(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/delete-doc", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+
+  async updateRegion(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-region", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async createServiceCharge(data) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
         .post("/admin/create-service-charge", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async createServiceChargePrice(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/create-service-charge-price", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async updateServiceChargePriceRange(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-service-charge-price", data, config)
         .then((response) => {
           resolve(response);
         })
@@ -85,6 +495,45 @@ class UserService {
         });
     });
   }
+  async getAllStoreProducts() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/all-store-product", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getAllTransaction() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/fetch-transactions", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getAllPayment() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/admin/get-all-withdrawal-request", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async getDashboardData() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -99,11 +548,12 @@ class UserService {
         });
     });
   }
-  async fetchAvailableRegionData() {
+
+  async fetchAvailableCategories() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get("/admin/get-all-region", config)
+        .get("/admin/get-available-category", config)
         .then((response) => {
           resolve(response);
         })
@@ -112,13 +562,51 @@ class UserService {
         });
     });
   }
-  async fetchAvailableCategories() {
+  async fetchAllBanners() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get("/admin/get-available-category", config)
+        .get("/admin/fetch-all-banners", config)
         .then((response) => {
-          console.log("KKKKKKKKK: ", response)
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async createBanner(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/create-banner", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async uploadBannerImage(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/upload-banner-image", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async uploadBannerTitle(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/update-banner-title", data, config)
+        .then((response) => {
           resolve(response);
         })
         .catch((error) => {
@@ -139,12 +627,11 @@ class UserService {
         });
     });
   }
-
-  async getSingleCustomer(id) {
+  async fetchAllRiders() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
-        .get(`/users/userdetails/${id}`, config)
+        .get("/admin/get-riders", config)
         .then((response) => {
           resolve(response);
         })
@@ -154,11 +641,93 @@ class UserService {
     });
   }
 
+  async getSingleCustomer(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/get-user-details/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getSingleOrderDetails(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/order/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getSingleRider(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/get-rider-details/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getSingleAgency(id) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/get-agency-details/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+
+  async registerAdmin(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/register-admin", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+
   async getServicemen() {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
       axios
         .get("/servicemen", config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async allProducts() {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/all-products", config)
         .then((response) => {
           resolve(response);
         })
@@ -201,6 +770,19 @@ class UserService {
     return new Promise((resolve, reject) => {
       axios
         .post("/admin/register-seller", data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async addSellerAddress(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/admin/create-seller-address", data, config)
         .then((response) => {
           resolve(response);
         })
@@ -288,6 +870,19 @@ class UserService {
         });
     });
   }
+  async updateUserInfo(data) {
+    const config = await authHeader();
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`/admin/update-user-info`,data, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
   async getSellerProduct(data) {
     const config = await authHeader();
     return new Promise((resolve, reject) => {
@@ -345,6 +940,32 @@ class UserService {
           reject(error);
         });
     });
+  }
+
+  async getCategory(id) {
+  
+
+    var data = JSON.stringify({
+      "name": "master"
+    });
+
+    var config = {
+      method: 'get',
+      url: 'http://localhost:8000/api/admin/get-category/3',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   }
 
   async updateService(body, id) {
@@ -552,6 +1173,27 @@ class UserService {
     return new Promise((resolve, reject) => {
       axios
         .get(`/admin/get-seller-details/${id}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  async getUserDetails(id) {
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    // };
+
+    const config = await authHeader();
+
+
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/admin/get-user-details/${id}`, config)
         .then((response) => {
           resolve(response);
         })

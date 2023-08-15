@@ -14,7 +14,8 @@ import { Provider } from "react-redux";
 import store from "./store/index";
 
 axios.defaults.withCredentials = false;
-axios.defaults.baseURL = "http://localhost:8000/api/";
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
+// axios.defaults.baseURL = "http://localhost:8000/api/";
 // axios.defaults.baseURL = "http://localhost:11000/api/v1";
 // axios.defaults.baseURL = "https://fix234.everythingeasyng.com/api/v1";
 

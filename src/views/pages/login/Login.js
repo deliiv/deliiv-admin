@@ -1,7 +1,8 @@
 import React from "react";
-import Logo from "../../../assets/images/_logo.png";
+import Logo from "../../../assets/images/deliiv.svg";
 import AuthService from "../../../services/auth.service";
 import LocalStorage from "../../../utils/localstorage";
+
 import ExpirySession from "../../../utils/expirysession";
 import { useSelector } from "react-redux";
 
@@ -44,7 +45,7 @@ const Login = (props) => {
   const validateFormHandler = () => {
     let updatedState = { ...state };
     if (
-      updatedState.email.trim().includes("@") 
+      updatedState.email.trim().includes("@")
     ) {
       setFormIsValid(true);
     } else {
@@ -59,18 +60,25 @@ const Login = (props) => {
 
     const { email, password } = state;
 
-    AuthService.doLogin({ email, password })
+    AuthService.doLogin({ email: email.toLowerCase(), password })
       .then((res) => {
-        console.log("=========*+", res.data.data);
-        setLoading(false);
-        ExpirySession.set("access", res.data.data.token);
-        LocalStorage.set("user_data", res.data.data.admin);
-       props.history.push("/");
-       window.location.reload();
+        if (!res.data.user.active) {
+          setError("Account not active, contact super Admin")
+
+        } else {
+          setLoading(false);
+          ExpirySession.set("access", res.data.access_token);
+          LocalStorage.set("user_data", res.data.user);
+          props.history.push("/");
+          window.location.reload();
+        }
+        setLoading(false)
+
       })
       .catch((error) => {
         if (error.response) {
-          setError(error.response.data.detail || error.response.data.message);
+          setLoading(false)
+          setError(error.response.data[0].detail || error.response.data[0].message);
         }
       });
   };
@@ -83,16 +91,29 @@ const Login = (props) => {
   const backgroundColor = useSelector((state) => state.UI.backgroundColor);
 
   return (
-    <div className="c-app c-default-layout c-dark-theme flex-row align-items-center">
+    <div className="c-app c-default-layout flex-row align-items-center">
+      {/* <div className="c-app c-default-layout c-dark-theme flex-row align-items-center"> */}
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md="8">
+          <CCol md="12">
             <CCardGroup>
-              <CCard className="p-4">
-                <CCardBody>
+
+              <CCard
+                style={{ backgroundColor: "#E6E9FF" }}
+                className="text-white py-5 d-md-down-none"
+              >
+                <CCardBody className="text-center center-flex">
+                  <div>
+                    <img src={Logo} alt="sendmeerrand logo" width={300} />
+                  </div>
+                </CCardBody>
+              </CCard>
+              <CCard className="p-8">
+                <CCardBody
+                  className=" justify-content-center center-flex">
                   <CForm onSubmit={loginHandler}>
-                    <h1>Login</h1>
-                    <p className="text-muted">Sign In to your account</p>
+                    {/* <h1>Login</h1> */}
+                    <p style={{ fontWeight: "bold" }}>Admin portal login</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
@@ -140,21 +161,11 @@ const Login = (props) => {
                           disabled={!formIsValid}
                         >
                           {loading && <CSpinner size="sm" />}
-                          <span className="ml-2">Login</span>
+                          <span className="ml-2">Sign in</span>
                         </CButton>
                       </CCol>
                     </CRow>
                   </CForm>
-                </CCardBody>
-              </CCard>
-              <CCard
-                className="text-white py-5 d-md-down-none"
-                style={{ width: "44%" }}
-              >
-                <CCardBody className="text-center center-flex">
-                  <div>
-                    <img src={Logo} alt="sendmeerrand logo"  width={300}/>
-                  </div>
                 </CCardBody>
               </CCard>
             </CCardGroup>

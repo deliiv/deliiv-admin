@@ -19,7 +19,7 @@ const DemoTable = () => {
       newDetails.splice(position, 1)
     } else {
       newDetails = [...details, index]
-    } 
+    }
     setDetails(newDetails)
   }
 
@@ -60,16 +60,7 @@ const DemoTable = () => {
         hover
         sorter
         pagination
-        // loading
-        // onRowClick={(item,index,col,e) => console.log(item,index,col,e)}
-        // onPageChange={(val) => console.log('new page:', val)}
-        // onPagesChange={(val) => console.log('new pages:', val)}
-        // onPaginationChange={(val) => console.log('new pagination:', val)}
-        // onFilteredItemsChange={(val) => console.log('new filtered items:', val)}
-        // onSorterValueChange={(val) => console.log('new sorter value:', val)}
-        // onTableFilterChange={(val) => console.log('new table filter:', val)}
-        // onColumnFilterChange={(val) => console.log('new column filter:', val)}
-        scopedSlots = {{
+       scopedSlots = {{
           'status':
             (item)=>(
               <td>

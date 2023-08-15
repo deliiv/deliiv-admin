@@ -10,8 +10,8 @@ export const fetchOrders = () => {
 
     try {
       const res = await fetchData();
-      dispatch(orderActions.setOrders({ ordersData: res.data.orders }));
-      dispatch(orderActions.setNewOrders({ ordersData: res.data.orders }));
+      dispatch(orderActions.setOrders({ ordersData: res.data.order }));
+   //   dispatch(orderActions.setNewOrders({ ordersData: res.data }));
     } catch (error) {
       console.log(error);
     }

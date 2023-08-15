@@ -1,93 +1,81 @@
 import NAVITEM from './_navitem'
+import Dash from './dashboard.svg'
+import Order from './orders.svg'
+import Users from './users.svg'
+import Riders from './riders.svg'
+import Notify from './notify.svg'
+import Pay from './pay.svg'
+import Verify from './verify.svg'
+import Settings from './settings.svg'
+import LocalStorage from "../../src/utils/localstorage";
 
-const _nav = [
+const userData = LocalStorage.get("user_data");
+
+let _nav =  [
   {
     _tag: "CSidebarNavItem",
-    name: "Dashboard",
+    name: <NAVITEM icon={Dash} name={"Dashboard"} />,
     to: "/",
-    icon: "cil-speedometer",
   },
   {
     _tag: "CSidebarNavItem",
-    name: "Orders",
+    name: <NAVITEM icon={Order}
+    name={"Orders"} />,
     to: "/orders",
-    icon: "cil-gift",
   },
   {
     _tag: "CSidebarNavItem",
-    name: "Customers",
+    name: <NAVITEM icon={Users} name={"Customers"} />,
     to: "/customers",
-    icon: "cil-group",
   },
   {
     _tag: "CSidebarNavItem",
-    name: "Seller",
-    to: "/seller",
-    icon: "cil-user",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: "Category",
-    to: "/category",
-    icon: "cil-settings",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: "Parts Categories",
-    to: "/parts-category",
-    icon: "cil-view-column",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: "Costing",
-    to: "/costing",
-    icon: "cil-money",
+    name: <NAVITEM icon={Users} name={"Agencies"} />,
+    to: "/agencies",
   },
 
   {
     _tag: 'CSidebarNavDropdown',
-    name: <NAVITEM icon={<i class="fas fa-tasks"></i>
-  } name={"Extras"} />,
-    route: '/orders',
+    name: <NAVITEM icon={Riders} name={"Riders"} />,
+    route: '/riders',
     _children: [
-      
+
       {
         _tag: 'CSidebarNavItem',
-        name: 'Service Charge', 
-        to: '/service-charge',
+        name: 'Agency Riders',
+        to: '/riders',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Regions', 
-        to: '/regions',
-      },
-      
+        name: 'Solo Riders',
+        to: '/riders-solo',
+      }
+
     ],
   },
 
-  // {
-  //   _tag: "CSidebarNavTitle",
-  //   _children: ["Components"],
-  // },
-  //
-  // {
-  //   _tag: "CSidebarNavDropdown",
-  //   name: "Base",
-  //   route: "/base",
-  //   icon: "cil-puzzle",
-  //   _children: [
-  //     {
-  //       _tag: "CSidebarNavItem",
-  //       name: "Breadcrumb",
-  //       to: "/base/breadcrumbs",
-  //     },
-  //     {
-  //       _tag: "CSidebarNavItem",
-  //       name: "Cards",
-  //       to: "/base/cards",
-  //     },
-  //   ],
-  // },
-];
+  {
+    _tag: "CSidebarNavItem",
+    name: userData.notification_access && <NAVITEM icon={Notify} name={"Notifications"} />,
+    to:  userData.notification_access &&  "/notifications",
+  },
+  {
+    _tag:  "CSidebarNavItem",
+    name: userData.payment_approval && <NAVITEM icon={Pay} name={"Payment"} />,
+    to:  userData.payment_approval && "/payment",
+  },
+  {
+    _tag:  "CSidebarNavItem",
+    name:  userData.account_verification &&<NAVITEM icon={Verify} name={"Verify"} />,
+    to: userData.account_verification &&  "/verification",
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: userData.setting_access && <NAVITEM icon={Settings} name={"Settings"} />,
+    to: userData.setting_access && "/settings",
+  }
+]
 
-export default _nav;
+
+
+ export default _nav;

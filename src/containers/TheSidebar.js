@@ -11,7 +11,7 @@ import {
   CSidebarNavItem,
 } from "@coreui/react";
 
-import Logo from "../assets/images/_logo.png";
+import Logo from "../assets/images/deliiv.svg";
 
 // sidebar nav config
 import navigation from "./_nav";
@@ -30,7 +30,7 @@ const TheSidebar = () => {
       onShowChange={() => dispatch(uiActions.toggleSidebarMobile())}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
-        <img src={Logo} alt="sendmeerrand Logo" style={{ height: "100px" }} />
+        <img src={Logo} alt="sendmeerrand Logo" style={{ height: "100px", paddingTop:20, paddingBottom:20 }} />
       </CSidebarBrand>
 
       <CSidebarNav>

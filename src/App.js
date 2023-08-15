@@ -4,17 +4,12 @@ import ExpirySession from "./utils/expirysession";
 import "./scss/style.scss";
 
 import { useDispatch } from "react-redux";
-import { fetchOrders } from "./store/order-actions";
-import { fetchCustomers } from "./store/customer-actions";
-import { fetchServicemen } from "./store/serviceman-actions";
-import { fetchServices, fetchParts } from "./store/service-actions";
-import { fetchServiceCharge } from './store/service-charge-actions'
-import { fetchRegion } from './store/region-actions'
 
-import {loadBoard, fetchAvailableRegions, fetchAvailableCategory} from './store/dashboard-actions'
-import { fetchAllCategories} from './store/category-actions'
-import {fetchAllSellers, fetchSellerDetails} from './store/sellers-actions'
-import {fetchAllUsers} from './store/users-actions'
+import { fetchAllAdmins } from './store/admin-actions'
+
+import {loadBoard} from './store/dashboard-actions'
+import {fetchAllUsers, fetchAllRiders} from './store/users-actions'
+import {fetchTransactions} from './store/transaction-actions'
 
 const loading = (
   <div className="pt-3 text-center">
@@ -36,49 +31,29 @@ const Page500 = React.lazy(() => import("./views/pages/page500/Page500"));
 
 const App = () => {
   const dispatch = useDispatch();
-
-  //Initial API calls
-  React.useEffect(() => {
-    dispatch(fetchOrders());
-  }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchCustomers());
-  }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchServicemen());
-  }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchServices());
-  }, [dispatch]);
-
-  React.useEffect(() => {
-    dispatch(fetchParts());
-  }, [dispatch]);
-
   React.useEffect(() => {
     dispatch(loadBoard());
   }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchAvailableRegions());
-  }, [dispatch]);
-  React.useEffect(() => {
-    dispatch(fetchAllSellers());
-  }, [dispatch]);
-  // React.useEffect(() => {
-  //   dispatch(fetchSellerDetails(1));
-  // }, [dispatch]);
+
+
   React.useEffect(() => {
     dispatch(fetchAllUsers());
   }, [dispatch]);
+
   React.useEffect(() => {
-    dispatch(fetchAllCategories());
+    dispatch(fetchAllRiders());
   }, [dispatch]);
+
+
+
   React.useEffect(() => {
-    dispatch(fetchServiceCharge());
+    dispatch(fetchAllAdmins());
   }, [dispatch]);
+
   React.useEffect(() => {
-    dispatch(fetchRegion());
+    dispatch(fetchTransactions());
   }, [dispatch]);
+
 
   return (
     <HashRouter>

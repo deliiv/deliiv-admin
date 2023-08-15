@@ -1,88 +1,209 @@
-import { CCard, CCardBody, CCol, CDataTable, CRow } from "@coreui/react";
-import React from "react";
+import { CCard, CCardBody, CButton, CCol, CDataTable, CRow, CInput, CFormGroup } from "@coreui/react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { formateDate, formatTime } from "../../utils/formatDate";
-import { Link, useRouteMatch } from "react-router-dom";
-import WidgetsDropdown from "src/views/widgets/WidgetsDropdown";
+import { useRouteMatch, useHistory } from "react-router-dom";
+import Spinner from "../Spinner";
+import CustomerModals from "./CustomerModals";
+import userService from "src/services/user.service";
+import { toast } from 'react-toastify';
 
 const Customers = (props) => {
-  const { path, url } = useRouteMatch();
+  const { url } = useRouteMatch();
+  const history = useHistory();
+  const [localCUstomers, setLocalCustomers] = useState([])
+  const [secondaryLocalCUstomers, setSecondaryLocalCustomers] = useState([])
+  const [search, setSearch] = useState('')
+  const [loader, setLoader] = useState(true)
+
+  const [action, setAction] = useState('')
+  const [amount, setAmount] = useState(0)
+  const [show, setShow] = useState(false)
+  const [customer, setCustomer] = useState(false)
+
 
   const customers = useSelector((state) => state.users.users);
-  const totalCustomers = useSelector((state) => state.customers.totalCustomers);
 
+  useEffect(() => {
+    if (customers) {
+      setLocalCustomers(customers)
+      setLoader(false)
+    }
+  }, [customers])
   const fields = [
     {
       key: "firstname",
-      _style: { minWidth: "15%" },
       label: "First Name",
     },
     {
       key: "lastname",
-      _style: { minWidth: "15%" },
       label: "Last Name",
     },
-    {
-      key: "customernumber",
-      _style: { minWidth: "15%" },
-      label: "Number",
-    },
-    {
-      key: "customeaddress",
-      _style: { minWidth: "15%" },
-      label: "Address",
-    },
+
     {
       key: "customeremail",
-      _style: { minWidth: "15%" },
       label: "Email",
     },
     {
-      key: "last_login",
-      _style: { minWidth: "1%" },
+      key: "phone",
+      label: "Phone",
     },
-  ];
-
-  const widgetList = [
     {
-      title: "Total Customers",
-      totalAmount: totalCustomers.toString() || "0",
+      key: "view",
+      label: "Action",
+
+    },
+    {
+      key: "fund",
+      label: "Fund Wallet",
+
+    },
+    {
+      key: "debit",
+      label: "Debit Wallet",
+
     },
   ];
 
+  const handleOnChange = (e) => {
+
+    if (e.keyCode === 8) {
+
+      const filteredData = e.target.value.trim().length > 0 && localCUstomers &&
+        localCUstomers.filter(entry => {
+          return (
+            entry.firstName && entry.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.lastName && entry.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.email && entry.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+            || entry.phone_number && entry.phone_number.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          )
+        }
+        );
+      if (filteredData) {
+        setLocalCustomers(filteredData);
+      }
+    }
+    setSearch(e.target.value);
+    const filteredData = e.target.value.trim().length > 0 && localCUstomers &&
+      localCUstomers.filter(entry => {
+        return (
+          entry.firstName && entry.firstName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.lastName && entry.lastName.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.email && entry.email.toLowerCase().includes(e.target.value.trim().toLowerCase())
+          || entry.phone_number && entry.phone_number.toLowerCase().includes(e.target.value.trim().toLowerCase())
+        )
+      }
+      );
+
+    filteredData && filteredData.length > 0 && setSecondaryLocalCustomers(localCUstomers)
+
+    if (filteredData) {
+      setLocalCustomers(filteredData);
+    } else {
+      setLocalCustomers(customers)
+      setSecondaryLocalCustomers(customers)
+    }
+  }
+
+  const handleSuccess = () => {
+
+    let data = {
+      amount: action === 'Credit' ?  parseFloat(amount) : parseFloat(-amount),
+      user: customer
+
+    }
+    userService.creditOrDebitUserWallet(data)
+    .then(customer =>{
+      toast.success(`User successfully ${action}ed`)
+      setShow(false)
+
+    }).catch(err =>{
+      setShow(false)
+
+      console.log(err.response.data[0].message)
+      toast.error(err.response.data[0].message)
+    })
+  }
+  const onKeyUp = (e) => {
+    if (e.keyCode === 8) {
+      setLocalCustomers(secondaryLocalCUstomers)
+    }
+  }
+  const onKeyDown = (e) => {
+    if (e.keyCode === 8) {
+      handleOnChange(e)
+    }
+  }
+  const handleSearchButton = (s) => {
+    const filteredData = s.trim().length > 0 && localCUstomers &&
+      localCUstomers.filter(entry => {
+        return (
+          entry.firstName && entry.firstName.toLowerCase().includes(s.trim().toLowerCase()) > -1
+          || entry.lastName && entry.lastName.toLowerCase().includes(s.trim().toLowerCase())
+          || entry.email && entry.email.toLowerCase().includes(s.trim().toLowerCase())
+          || entry.phone_number && entry.phone_number.toLowerCase().includes(s.trim().toLowerCase())
+        )
+      }
+      );
+    setLocalCustomers(filteredData)
+  }
   return (
     <>
-      <WidgetsDropdown widgetList={widgetList} />
       <CRow>
+        <CustomerModals
+          title={action}
+          show={show}
+          modalColor={"#F9B115"}
+          handleOnChangeSCost={(e)=>{ setAmount(e.target.value)}}
+          handleSuccess={handleSuccess}
+          handleCancel={() => setShow(false)}
+        />
+
         <CCol>
+          {loader && <Spinner width={20} height={20} />}
+
           <CCard>
+            <CFormGroup>
+              <div style={{ width: "40%", display: "flex", flexDirection: 'row', padding: "30px" }}>
+                <CInput placeholder="search" style={{ padding: 20 }}
+                  value={search}
+
+                  onChange={handleOnChange}
+                  onKeyDown={onKeyDown}
+                  onKeyUp={onKeyUp} />
+                <CButton color="primary" style={{ marginLeft: 20, paddingLeft: 20, paddingRight: 20 }}
+                  onClick={() => handleSearchButton(search)}
+
+                >Search</CButton>
+              </div>
+            </CFormGroup>
             <CCardBody>
               {customers && (
                 <CDataTable
-                  items={customers}
+                  items={localCUstomers}
                   fields={fields}
                   items-per-page-select
                   items-per-page="5"
                   hover
                   pagination
-                  columnFilter
-                  table-filter
-                  cleaner
                   overTableSlot={
                     <div className="center-flex">
-                      <h3>Customers</h3>
                     </div>
                   }
                   scopedSlots={{
-                    customername: (customer) => (
+                    firstname: (customer) => (
                       <td>
-                        <Link
-                          to={{
-                            pathname: `${url}/customer-${customer._id}`,
-                          }}
-                        >
-                          {customer ? customer.fullname : null}
-                        </Link>
+                        {customer ? customer.firstName : null}
+                      </td>
+                    ),
+                    lastname: (customer) => (
+                      <td>
+                        {customer ? customer.lastName : null}
+                      </td>
+                    ),
+                    phone: (customer) => (
+                      <td>
+                        {customer ? customer.phone_number : null}
                       </td>
                     ),
                     customernumber: (customer) => (
@@ -102,12 +223,64 @@ const Customers = (props) => {
                         {formatTime(customer.date_created)}
                       </td>
                     ),
+                    view: (customer) => {
+                      return (
+                        <td className="py-2">
+                          <CButton
+                            color="info"
+                            variant="outline"
+                            // shape="square"
+                            size="sm"
+                            onClick={() => history.push(`${url}/details/${customer._id}`)}>
+                            View
+                          </CButton>
+                        </td>
+                      );
+                    },
+                    fund: (customer) => {
+                      return (
+                        <td className="py-2">
+                          <CButton
+                            color="success"
+                            // variant="outline"
+                            // shape="square"
+                            size="sm"
+                            onClick={() => {
+                              setAction("Credit")
+                              setShow(true)
+                              setCustomer(customer._id)
+                            }}>
+                            Fund Wallet
+                          </CButton>
+                        </td>
+                      );
+                    },
+                    debit: (customer) => {
+                      return (
+                        <td className="py-2">
+                          <CButton
+                            color="warning"
+
+                            size="sm"
+                            onClick={() => {
+                              setAction("Debit")
+                              setShow(true)
+                              setCustomer(customer._id)
+
+                            }}>
+                            Debit Wallet
+                          </CButton>
+                        </td>
+                      );
+                    },
                   }}
                 />
               )}
             </CCardBody>
           </CCard>
+
         </CCol>
+
       </CRow>
     </>
   );

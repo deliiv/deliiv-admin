@@ -80,7 +80,6 @@ const initialValues = {
 const onSubmit = (values, { setSubmitting, setErrors }) => {
   setTimeout(() => {
     alert(JSON.stringify(values, null, 2))
-    // console.log('User has been successfully saved!', values)
     setSubmitting(false)
   }, 2000)
 }
@@ -123,14 +122,14 @@ const ValidationForms = () =>  {
         <DocsLink href="https://github.com/jaredpalmer/formik"/>
       </CCardHeader>
       <CCardBody>
-        <a 
-          href="https://github.com/jaredpalmer/formik" 
+        <a
+          href="https://github.com/jaredpalmer/formik"
           target="_blank" rel="noreferrer noopener"
-        >Formik</a> <cite>Build forms in React, without the tears</cite> with 
-          
-        <a 
-          href="https://github.com/jquense/yup" 
-          target="_blank" 
+        >Formik</a> <cite>Build forms in React, without the tears</cite> with
+
+        <a
+          href="https://github.com/jquense/yup"
+          target="_blank"
           rel="noreferrer noopener"
         >Yup</a> <cite>Dead simple Object schema
         validation</cite>
@@ -264,7 +263,7 @@ const ValidationForms = () =>  {
                         valid={!errors.accept}
                         invalid={touched.accept && !!errors.accept}
                         onChange={handleChange}
-                        onBlur={handleBlur} 
+                        onBlur={handleBlur}
                       />
                       <CLabel variant="custom-checkbox" htmlFor="accept">
                         I accept the terms of use
